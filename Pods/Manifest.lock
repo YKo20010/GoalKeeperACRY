@@ -1,0 +1,20 @@
+PODS:
+  - Hero (1.4.0)
+  - lottie-ios (2.5.2)
+
+DEPENDENCIES:
+  - Hero
+  - lottie-ios
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Hero
+    - lottie-ios
+
+SPEC CHECKSUMS:
+  Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
+  lottie-ios: 3fef45d3fabe63e3c7c2eb603dd64ddfffc73062
+
+PODFILE CHECKSUM: 147dfc8200963d8db7bf913bf9bcd35f803c66c2
+
+COCOAPODS: 1.5.3
