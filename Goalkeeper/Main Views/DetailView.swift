@@ -99,14 +99,14 @@ class DetailView: UIViewController, UINavigationControllerDelegate, UITableViewD
         
         d_checkpoints = CustomTableView()
         d_checkpoints.translatesAutoresizingMaskIntoConstraints = false
-       // d_checkpoints.dataSource = self
+        d_checkpoints.dataSource = self
         d_checkpoints.register(DateTVC.self, forCellReuseIdentifier: checkpointCellIdentifier)
         d_checkpoints.estimatedRowHeight = 100
         d_checkpoints.rowHeight = UITableViewAutomaticDimension
         d_checkpoints.backgroundColor = .clear
         d_checkpoints.separatorColor = co_cpTableViewBorder
         d_checkpoints.tintColor = co_cpTableViewText
-       // d_checkpoints.delegate = self
+        d_checkpoints.delegate = self
         d_checkpoints.isScrollEnabled = false
         view.addSubview(d_checkpoints)
         

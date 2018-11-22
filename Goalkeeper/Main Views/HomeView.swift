@@ -41,7 +41,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
     var headerHeightConstraint: NSLayoutConstraint!
     var selectedGoalIndex: Int = 0
     var selectedGoalIndex_goals: Int = 0
-
+    let shadowRadius: CGFloat = 8
 /*  Arrays  */
     var goals: [Goal] = []
     var selected_goals: [Goal] = []
@@ -81,8 +81,8 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = padding
-        layout.minimumLineSpacing = padding
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0.054*view.frame.height
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -113,9 +113,9 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 51),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -33),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0.022*view.frame.width),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            collectionView.widthAnchor.constraint(equalToConstant: view.frame.width)
             ])
     }
     
@@ -129,7 +129,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         collectionView.scrollToItem(at: NSIndexPath(row: goals.count-1, section: 0) as IndexPath, at: .bottom, animated: true)
     }
     
-/******************************** MARK: UITableView: Data Source ********************************/
+/******************************** MARK: UICollectionView: Data Source ********************************/
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selected_goals.count
     }
@@ -138,8 +138,14 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: goalCellIdentifier, for: indexPath) as! GoalCVC
         cell.titleLabel.text = selected_goals[indexPath.row].name
         cell.detailLabel.text = selected_goals[indexPath.row].description
-        cell.backgroundColor = .clear
-        cell.rec.alpha = 0.75
+        cell.backgroundColor = .white
+        cell.layer.shadowColor = UIColor.lightGray.cgColor
+        cell.layer.shadowRadius = shadowRadius
+        cell.layer.cornerRadius = 8
+        cell.layer.masksToBounds = false
+        cell.layer.shadowOpacity = 0.75
+        cell.layer.shadowOffset = CGSize(width: 6, height: 6)
+        cell.clipsToBounds = false
         cell.progressSlider.value = Float(selected_goals[indexPath.row].progress)
         
         return cell
@@ -162,8 +168,8 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let w = collectionView.frame.width
-            return CGSize(width: w, height: w - w/2)
+            let w = 0.797*view.frame.width
+        return CGSize(width: w, height: w/3.0)
     }
     
 /******************************** MARK: UITableView: Delete Cell ********************************/

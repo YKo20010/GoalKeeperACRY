@@ -18,6 +18,13 @@ class CustomTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hero.isEnabled = true
+        self.tabBar.layer.shadowRadius = 6
+        self.tabBar.layer.shadowOffset = CGSize(width: 0, height: -5.0)
+        self.tabBar.layer.shadowColor = UIColor.lightGray.cgColor
+        self.tabBar.layer.shadowOpacity = 0.75
+        self.tabBar.clipsToBounds = false
+        self.tabBar.layer.masksToBounds = false
+    
         
 /*********************     CUSTOMIZE TAB BAR APPEARANCE    ********************/
         view.isOpaque = true
