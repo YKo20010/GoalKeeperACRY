@@ -1,5 +1,5 @@
 //
-//  GoalTVC.swift
+//  GoalCVC.swift
 //  Goalkeeper
 //
 //  Created by Artesia Ko on 11/18/18.
@@ -12,9 +12,11 @@ import UIKit
 class GoalCVC: UICollectionViewCell {
 
     let titleLabel = UILabel()
-    let detailLabel = UILabel()
-    var rec: UIImageView!
     var progressSlider = ProgressSlider()
+    var timeLabel = UILabel()
+    var checkpointsLabel = UILabel()
+    
+    let shadowRadius: CGFloat = 8
 
     var co_recBackground: UIColor = .darkGray
     var co_psMinTrackTint: UIColor = UIColor(red: 174/255, green: 255/255, blue: 0/255, alpha: 1.0) //green
@@ -24,36 +26,18 @@ class GoalCVC: UICollectionViewCell {
     // MARK: Initalizers
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        contentView.backgroundColor = .white
+        contentView.layer.shadowColor = UIColor.lightGray.cgColor
+        contentView.layer.shadowRadius = shadowRadius
+        contentView.layer.cornerRadius = 8
+        contentView.layer.masksToBounds = false
+        contentView.layer.shadowOpacity = 0.75
+        contentView.layer.shadowOffset = CGSize(width: 6, height: 6)
+        contentView.clipsToBounds = false
 
         // Use marginGuide’s anchor instead of the view’s anchors so the recommended padding is utilized
         let marginGuide = contentView.layoutMarginsGuide
-
-        rec = UIImageView()
-        rec.translatesAutoresizingMaskIntoConstraints = false
-        rec.backgroundColor = co_recBackground
-        rec.layer.masksToBounds = true
-        rec.layer.cornerRadius = 5
-        contentView.addSubview(rec)
-
-        contentView.addSubview(titleLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = false
-        titleLabel.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
-        titleLabel.numberOfLines = 0 // make label multi-line
-        titleLabel.textColor = .white
-        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-
-        contentView.addSubview(detailLabel)
-        detailLabel.translatesAutoresizingMaskIntoConstraints = false
-        detailLabel.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = false
-        detailLabel.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
-        detailLabel.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
-        detailLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
-        detailLabel.numberOfLines = 0 // make label multi-line
-        detailLabel.textColor = .white
-        detailLabel.font = UIFont.systemFont(ofSize: 16, weight: .light)
-        detailLabel.isHidden = true
 
         contentView.addSubview(progressSlider)
         progressSlider.translatesAutoresizingMaskIntoConstraints = false
@@ -68,19 +52,72 @@ class GoalCVC: UICollectionViewCell {
         progressSlider.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
         progressSlider.setThumbImage(UIImage(), for: .normal)
         progressSlider.isEnabled = false
+        progressSlider.isHidden = true
+        
+        contentView.addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textColor = .black
+        titleLabel.font = UIFont.systemFont(ofSize: 26/110*contentView.frame.height, weight: .bold)
+        
+        contentView.addSubview(timeLabel)
+        timeLabel.translatesAutoresizingMaskIntoConstraints = false
+        timeLabel.textColor = UIColor(red: 115/255, green: 115/255, blue: 115/255, alpha: 1.0)
+        timeLabel.font = UIFont.systemFont(ofSize: 16/110*contentView.frame.height, weight: .semibold)
+        
+        contentView.addSubview(checkpointsLabel)
+        checkpointsLabel.translatesAutoresizingMaskIntoConstraints = false
+        checkpointsLabel.textColor = UIColor(red: 115/255, green: 115/255, blue: 115/255, alpha: 1.0)
+        checkpointsLabel.font = UIFont.systemFont(ofSize: 16/110*contentView.frame.height, weight: .semibold)
 
         NSLayoutConstraint.activate([
-            rec.heightAnchor.constraint(equalTo: contentView.heightAnchor, constant: -8),
-            rec.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -16),
-            rec.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            rec.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16/330*contentView.frame.width),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12/110*contentView.frame.height),
+            titleLabel.heightAnchor.constraint(equalToConstant: 33/110*contentView.frame.height),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16/330*contentView.frame.width)
             ])
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20)
+            timeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            timeLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5/110*contentView.frame.height),
+            timeLabel.heightAnchor.constraint(equalToConstant: 20/110*contentView.frame.height)
             ])
         NSLayoutConstraint.activate([
-            detailLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
+            checkpointsLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            checkpointsLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 2/110*contentView.frame.height),
+            checkpointsLabel.heightAnchor.constraint(equalToConstant: 20/110*contentView.frame.height)
             ])
+    }
+    
+    func configure(for goal: Goal) {
+        titleLabel.text = goal.name
+        var diffDate = Calendar.current.dateComponents([.year], from: Date(), to: goal.date).year
+        timeLabel.text = diffDate == 1 ? "in \(diffDate!) year" : "in \(diffDate!) years"
+        if (diffDate! == 0) {
+            diffDate = Calendar.current.dateComponents([.month], from: Date(), to: goal.date).month
+            timeLabel.text = diffDate == 1 ? "in \(diffDate!) month" : "in \(diffDate!) months"
+        }
+        if (diffDate! == 0) {
+            diffDate = Calendar.current.dateComponents([.day], from: Date(), to: goal.date).day
+            timeLabel.text = diffDate == 1 ? "in \(diffDate!) day" : "in \(diffDate!) days"
+        }
+        var numCheck = 0
+        if (goal.checkpoints.count > 1) {
+            for i in 0...goal.checkpoints.count-1 {
+                if (goal.checkpoints[i].isFinished) {
+                    numCheck += 1
+                }
+            }
+        }
+        else if (goal.checkpoints.count != 0 && goal.checkpoints[0].isFinished) {
+            numCheck += 1
+        }
+        checkpointsLabel.text = "\(numCheck)" + "/" + "\(goal.checkpoints.count)" + " checkpoints"
+        if (goal.checkpoints.count != 0) {
+            progressSlider.value = Float(Double(numCheck)/Double(goal.checkpoints.count)*100.0)
+        }
+        else {
+            progressSlider.value = 100
+            
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

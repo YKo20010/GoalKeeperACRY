@@ -41,7 +41,6 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
     var headerHeightConstraint: NSLayoutConstraint!
     var selectedGoalIndex: Int = 0
     var selectedGoalIndex_goals: Int = 0
-    let shadowRadius: CGFloat = 8
 /*  Arrays  */
     var goals: [Goal] = []
     var selected_goals: [Goal] = []
@@ -72,11 +71,16 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         /*  TODO: Network and delete this   */
         let c1 = Checkpoint(name: "Checkpoint1", date: Date(), isFinished: false)
         let c2 = Checkpoint(name: "Checkpoint2", date: Date(), isFinished: false)
-        let g1 = Goal(name: "Goal1", date: Date(), description: "description text 1", checkpoints: [], progress: 0)
-        let g2 = Goal(name: "Goal2", date: Date(), description: "description text 2", checkpoints: [], progress: 50)
-        let g3 = Goal(name: "Goal3", date: Date(), description: "text3", checkpoints: [c1], progress: 25)
-        let g4 = Goal(name: "Goal4", date: Date(), description: "text4", checkpoints: [c1, c2], progress: 77)
-        goals = [g1, g2, g3, g4]
+        let c3 = Checkpoint(name: "Checkpoint3", date: Date(), isFinished: true)
+        let c4 = Checkpoint(name: "Checkpoint4", date: Date(), isFinished: true)
+        
+        let g1 = Goal(name: "0/0", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], progress: 0)
+        let g2 = Goal(name: "1/1", date: Date(timeInterval: 13140000, since: Date()), description: "description text 2", checkpoints: [c4], progress: 50)
+        let g3 = Goal(name: "0/1", date: Date(timeInterval: 60*60*24*27+1, since: Date()), description: "text3", checkpoints: [c1], progress: 25)
+        let g4 = Goal(name: "0/2", date: Date(timeInterval: 60*60*24*1+1, since: Date()), description: "text4", checkpoints: [c1, c2], progress: 77)
+        let g5 = Goal(name: "1/3", date: Date(timeInterval: 31540000+1, since: Date()), description: "text5", checkpoints: [c1, c2, c3], progress: 33)
+        let g6 = Goal(name: "2/4", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c1, c2, c3, c4], progress: 25)
+        goals = [g1, g2, g3, g4, g5, g6]
         selected_goals = goals
         
         let layout = UICollectionViewFlowLayout()
@@ -136,18 +140,8 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: goalCellIdentifier, for: indexPath) as! GoalCVC
-        cell.titleLabel.text = selected_goals[indexPath.row].name
-        cell.detailLabel.text = selected_goals[indexPath.row].description
-        cell.backgroundColor = .white
-        cell.layer.shadowColor = UIColor.lightGray.cgColor
-        cell.layer.shadowRadius = shadowRadius
-        cell.layer.cornerRadius = 8
-        cell.layer.masksToBounds = false
-        cell.layer.shadowOpacity = 0.75
-        cell.layer.shadowOffset = CGSize(width: 6, height: 6)
-        cell.clipsToBounds = false
-        cell.progressSlider.value = Float(selected_goals[indexPath.row].progress)
-        
+        let goal = selected_goals[indexPath.row]
+        cell.configure(for: goal)
         return cell
     }
     
