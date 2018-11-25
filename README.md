@@ -1,2 +1,7 @@
 # GoalKeeperACRY
-Hack Challenge w/ Avani, Cecilia, Richard, and Yanlam
+Cornell AppDev Hack Challenge | 
+Team | 
+Avani Aggrwal: iOS | 
+Cecilia Lu: Design | 
+Richard Wang: Backend | 
+Yanlam Ko: iOS | 
