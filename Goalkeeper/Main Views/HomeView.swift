@@ -21,27 +21,31 @@ protocol changeGoal: class {
 }
 
 class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-
     
-/*  Colors  */
+    
+    /*  Colors  */
     let co_background: UIColor = .white
     let co_searchBar: UIColor = .gray
     let co_searchBarTint: UIColor = .white
     let co_tabBar: UIColor = .darkGray
     var co_navBar: UIColor = .darkGray
     var co_text: UIColor = .white
-/*  Views   */
+    /*  Views   */
     var collectionView: UICollectionView!
     var searchController: UISearchController!
     var addBarButton: UIBarButtonItem!
-/*  Other   */
+    var headerView: HeaderView!
+    var addButton: UIButton!
+    var rec: UIImageView!
+    var plusSign: UILabel!
+    /*  Other   */
     var searchBy: SearchType = .title
     let goalCellIdentifier = "GoalCell"
     let headerReuseIdentifier = "headerReuseIdentifier"
     var headerHeightConstraint: NSLayoutConstraint!
     var selectedGoalIndex: Int = 0
     var selectedGoalIndex_goals: Int = 0
-/*  Arrays  */
+    /*  Arrays  */
     var goals: [Goal] = []
     var selected_goals: [Goal] = []
     
@@ -55,6 +59,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.isNavigationBarHidden = true
         
         let button: UIButton = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -86,7 +91,13 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0.054*view.frame.height
+        layout.minimumLineSpacing = 10/895*view.frame.height
+        
+        headerView = HeaderView(frame: .zero, textSize: 40/895*view.frame.height)
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: 211/895*view.frame.height)
+        headerHeightConstraint.isActive = true
+        view.addSubview(headerView)
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -97,6 +108,33 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .clear
         view.addSubview(collectionView)
+        
+        //rec to make addButton opaque
+        rec = UIImageView()
+        rec.translatesAutoresizingMaskIntoConstraints = false
+        rec.backgroundColor = .white
+        rec.layer.cornerRadius = 39/895*view.frame.height/2
+        view.addSubview(rec)
+        
+        addButton = UIButton()
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+        addButton.backgroundColor = UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65)
+        addButton.layer.shadowColor = UIColor(red: 190/255, green: 172/255, blue: 172/255, alpha: 1.0).cgColor
+        addButton.layer.shadowRadius = 8
+        addButton.layer.cornerRadius = 39/895*view.frame.height/2
+        addButton.layer.masksToBounds = false
+        addButton.layer.shadowOpacity = 0.5
+        addButton.layer.shadowOffset = CGSize(width: 6, height: 6)
+        addButton.clipsToBounds = false
+        addButton.addTarget(self, action:#selector(add), for: .touchDown)
+        view.addSubview(addButton)
+        
+        plusSign = UILabel()
+        plusSign.translatesAutoresizingMaskIntoConstraints = false
+        plusSign.text = "+"
+        plusSign.textColor = .white
+        plusSign.font = UIFont.systemFont(ofSize: 30/414*view.frame.width, weight: .semibold)
+        view.addSubview(plusSign)
         
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -111,19 +149,40 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         definesPresentationContext = true
         
         setupConstraints()
-    
+        
     }
-
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0.022*view.frame.width),
+            headerView.topAnchor.constraint(equalTo: view.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            ])
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: (174-211)/895*view.frame.height),
+            collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -8/414*view.frame.width),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             collectionView.widthAnchor.constraint(equalToConstant: view.frame.width)
             ])
+        NSLayoutConstraint.activate([
+            rec.heightAnchor.constraint(equalToConstant: 39/895*view.frame.height),
+            rec.widthAnchor.constraint(equalToConstant: 126/414*view.frame.width),
+            rec.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            rec.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20/895*view.frame.height)
+            ])
+        NSLayoutConstraint.activate([
+            addButton.heightAnchor.constraint(equalToConstant: 39/895*view.frame.height),
+            addButton.widthAnchor.constraint(equalToConstant: 126/414*view.frame.width),
+            addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20/895*view.frame.height)
+            ])
+        NSLayoutConstraint.activate([
+            plusSign.centerXAnchor.constraint(equalTo: addButton.centerXAnchor),
+            plusSign.centerYAnchor.constraint(equalTo: addButton.centerYAnchor)
+            ])
     }
     
-/******************************** MARK: Action Functions ********************************/
+    /******************************** MARK: Action Functions ********************************/
     
     @objc func add() {
         let newGoal = Goal(name: "New Goal", date: Date(), description: "Enter a description here.", checkpoints: [], progress: 0)
@@ -133,7 +192,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         collectionView.scrollToItem(at: NSIndexPath(row: goals.count-1, section: 0) as IndexPath, at: .bottom, animated: true)
     }
     
-/******************************** MARK: UICollectionView: Data Source ********************************/
+    /******************************** MARK: UICollectionView: Data Source ********************************/
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selected_goals.count
     }
@@ -160,13 +219,13 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         self.present(detailView, animated: true, completion: nil)
         collectionView.reloadData()
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let w = 0.797*view.frame.width
-        return CGSize(width: w, height: w/3.0)
+        let w = (414 - 17 - 33)/414*view.frame.width
+        return CGSize(width: w, height: w/(364/148))
     }
     
-/******************************** MARK: UITableView: Delete Cell ********************************/
+    /******************************** MARK: UITableView: Delete Cell ********************************/
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             goals.remove(at: indexPath.row)
@@ -179,7 +238,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         return .delete
     }
     
-/******************************** MARK: UISearchController Filtering ********************************/
+    /******************************** MARK: UISearchController Filtering ********************************/
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
             if !searchText.isEmpty {
@@ -197,7 +256,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         }
     }
     
-/**Return the index of the goal in the "goals" array that corresponds to the goal in the "selected_goals" array.*/
+    /**Return the index of the goal in the "goals" array that corresponds to the goal in the "selected_goals" array.*/
     func selected_goalsToGoals() -> Int {
         if (goals.count>1) {
             for i in 0...goals.count-1 {
@@ -229,19 +288,40 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func animateHeader() {
+        self.headerHeightConstraint.constant = 211/895*view.frame.height
+        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
+    }
 }
 
 /******************************** MARK: Navigation Bar Customization ********************************/
+/******************************** MARK: Sticky Header ********************************/
 extension HomeView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (scrollView.contentOffset.y < 0) {
-                //self.title = "Welcome Back!"
+            self.headerHeightConstraint.constant += abs(scrollView.contentOffset.y)/3
         }
-        else if (scrollView.contentOffset.y > 0) {
-                //self.title = "Goals"
+        else if (scrollView.contentOffset.y > 0 && self.headerHeightConstraint.constant >= 0) {
+            self.headerHeightConstraint.constant -= abs(scrollView.contentOffset.y)
+            if (self.headerHeightConstraint.constant < 0) {
+                self.headerHeightConstraint.constant = 0
+            }
+        }
+        
+    }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if (self.headerHeightConstraint.constant > 211/895*view.frame.height) {
+            animateHeader()
+        }
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if (self.headerHeightConstraint.constant > 211/895*view.frame.height) {
+            animateHeader()
         }
     }
 }
+
 
 extension HomeView: changeGoal {
     func changedName(newName: String) {
@@ -265,14 +345,6 @@ extension HomeView: changeGoal {
         collectionView.reloadData()
     }
 }
-
-
-
-
-
-
-
-
 
 
 

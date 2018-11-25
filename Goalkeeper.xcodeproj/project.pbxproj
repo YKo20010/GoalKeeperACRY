@@ -13,8 +13,6 @@
 		034AD88821A22B0500AB9412 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 034AD88721A22B0500AB9412 /* Assets.xcassets */; };
 		034AD88B21A22B0500AB9412 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 034AD88921A22B0500AB9412 /* LaunchScreen.storyboard */; };
 		034AD89321A22B2000AB9412 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD89221A22B2000AB9412 /* Goal.swift */; };
-		034AD89521A22E1200AB9412 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD89421A22E1200AB9412 /* TabBar.swift */; };
-		034AD89721A22E7B00AB9412 /* TabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD89621A22E7B00AB9412 /* TabItem.swift */; };
 		034AD89921A2348200AB9412 /* GoalCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD89821A2348200AB9412 /* GoalCVC.swift */; };
 		034AD89B21A235A900AB9412 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD89A21A235A900AB9412 /* CalendarView.swift */; };
 		034AD89D21A235C900AB9412 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD89C21A235C900AB9412 /* ProgressView.swift */; };
@@ -25,6 +23,7 @@
 		034AD8CC21A62ABB00AB9412 /* DateTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD8CB21A62ABB00AB9412 /* DateTVC.swift */; };
 		034AD8D021A62D5800AB9412 /* Checkpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD8CF21A62D5800AB9412 /* Checkpoint.swift */; };
 		034AD8D221A65CB600AB9412 /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD8D121A65CB600AB9412 /* CustomTableView.swift */; };
+		034AD8D421AA6E7100AB9412 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD8D321AA6E7100AB9412 /* HeaderView.swift */; };
 		4B5F49DCBB2F0C8B65E2DBBE /* Pods_Goalkeeper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6246DBFDBEA5D5A09E2B75AE /* Pods_Goalkeeper.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,8 +36,6 @@
 		034AD88A21A22B0500AB9412 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		034AD88C21A22B0500AB9412 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		034AD89221A22B2000AB9412 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
-		034AD89421A22E1200AB9412 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
-		034AD89621A22E7B00AB9412 /* TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabItem.swift; sourceTree = "<group>"; };
 		034AD89821A2348200AB9412 /* GoalCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCVC.swift; sourceTree = "<group>"; };
 		034AD89A21A235A900AB9412 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		034AD89C21A235C900AB9412 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
@@ -49,6 +46,7 @@
 		034AD8CB21A62ABB00AB9412 /* DateTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTVC.swift; sourceTree = "<group>"; };
 		034AD8CF21A62D5800AB9412 /* Checkpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkpoint.swift; sourceTree = "<group>"; };
 		034AD8D121A65CB600AB9412 /* CustomTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableView.swift; sourceTree = "<group>"; };
+		034AD8D321AA6E7100AB9412 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		6246DBFDBEA5D5A09E2B75AE /* Pods_Goalkeeper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Goalkeeper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C37F5D0B7D60BF64B8FA22CF /* Pods-Goalkeeper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalkeeper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper.release.xcconfig"; sourceTree = "<group>"; };
 		FABE3B8F79E659B0F3C0F517 /* Pods-Goalkeeper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalkeeper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -95,7 +93,7 @@
 				034AD89821A2348200AB9412 /* GoalCVC.swift */,
 				034AD8CB21A62ABB00AB9412 /* DateTVC.swift */,
 				034AD8CF21A62D5800AB9412 /* Checkpoint.swift */,
-				034AD8CE21A62C7E00AB9412 /* Extra Stuff (may not need) */,
+				034AD8D321AA6E7100AB9412 /* HeaderView.swift */,
 				034AD88421A22B0400AB9412 /* Main.storyboard */,
 				034AD88721A22B0500AB9412 /* Assets.xcassets */,
 				034AD88921A22B0500AB9412 /* LaunchScreen.storyboard */,
@@ -115,15 +113,6 @@
 				034AD89C21A235C900AB9412 /* ProgressView.swift */,
 			);
 			path = "Main Views";
-			sourceTree = "<group>";
-		};
-		034AD8CE21A62C7E00AB9412 /* Extra Stuff (may not need) */ = {
-			isa = PBXGroup;
-			children = (
-				034AD89421A22E1200AB9412 /* TabBar.swift */,
-				034AD89621A22E7B00AB9412 /* TabItem.swift */,
-			);
-			path = "Extra Stuff (may not need)";
 			sourceTree = "<group>";
 		};
 		A4D0474B4B90594B0CB2F605 /* Frameworks */ = {
@@ -268,9 +257,8 @@
 				034AD88121A22B0300AB9412 /* AppDelegate.swift in Sources */,
 				034AD8D021A62D5800AB9412 /* Checkpoint.swift in Sources */,
 				034AD89D21A235C900AB9412 /* ProgressView.swift in Sources */,
+				034AD8D421AA6E7100AB9412 /* HeaderView.swift in Sources */,
 				034AD8A621A389B600AB9412 /* ProgressSlider.swift in Sources */,
-				034AD89721A22E7B00AB9412 /* TabItem.swift in Sources */,
-				034AD89521A22E1200AB9412 /* TabBar.swift in Sources */,
 				034AD8CC21A62ABB00AB9412 /* DateTVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
