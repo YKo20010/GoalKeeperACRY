@@ -49,6 +49,9 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
     var goals: [Goal] = []
     var selected_goals: [Goal] = []
     
+    var viewWidth: CGFloat!
+    var viewHeight: CGFloat!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = co_background
@@ -60,6 +63,9 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.isNavigationBarHidden = true
+        
+        viewWidth = view.frame.width
+        viewHeight = view.frame.height
         
         let button: UIButton = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -91,11 +97,11 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 10/895*view.frame.height
+        layout.minimumLineSpacing = 10/895*viewHeight
         
-        headerView = HeaderView(frame: .zero, textSize: 40/895*view.frame.height)
+        headerView = HeaderView(frame: .zero, textSize: 40/895*viewHeight)
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: 211/895*view.frame.height)
+        headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: 211/895*viewHeight)
         headerHeightConstraint.isActive = true
         view.addSubview(headerView)
         
@@ -113,7 +119,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         rec = UIImageView()
         rec.translatesAutoresizingMaskIntoConstraints = false
         rec.backgroundColor = .white
-        rec.layer.cornerRadius = 39/895*view.frame.height/2
+        rec.layer.cornerRadius = 39/895*viewHeight/2
         view.addSubview(rec)
         
         addButton = UIButton()
@@ -121,7 +127,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         addButton.backgroundColor = UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65)
         addButton.layer.shadowColor = UIColor(red: 190/255, green: 172/255, blue: 172/255, alpha: 1.0).cgColor
         addButton.layer.shadowRadius = 8
-        addButton.layer.cornerRadius = 39/895*view.frame.height/2
+        addButton.layer.cornerRadius = 39/895*viewHeight/2
         addButton.layer.masksToBounds = false
         addButton.layer.shadowOpacity = 0.5
         addButton.layer.shadowOffset = CGSize(width: 6, height: 6)
@@ -133,7 +139,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         plusSign.translatesAutoresizingMaskIntoConstraints = false
         plusSign.text = "+"
         plusSign.textColor = .white
-        plusSign.font = UIFont.systemFont(ofSize: 30/414*view.frame.width, weight: .semibold)
+        plusSign.font = UIFont.systemFont(ofSize: 30/414*viewWidth, weight: .semibold)
         view.addSubview(plusSign)
         
         searchController = UISearchController(searchResultsController: nil)
@@ -159,22 +165,22 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: (174-211)/895*view.frame.height),
-            collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -8/414*view.frame.width),
+            collectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: (174-211)/895*viewHeight),
+            collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -8/414*viewWidth),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            collectionView.widthAnchor.constraint(equalToConstant: view.frame.width)
+            collectionView.widthAnchor.constraint(equalToConstant: viewWidth)
             ])
         NSLayoutConstraint.activate([
-            rec.heightAnchor.constraint(equalToConstant: 39/895*view.frame.height),
-            rec.widthAnchor.constraint(equalToConstant: 126/414*view.frame.width),
+            rec.heightAnchor.constraint(equalToConstant: 39/895*viewHeight),
+            rec.widthAnchor.constraint(equalToConstant: 126/414*viewWidth),
             rec.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            rec.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20/895*view.frame.height)
+            rec.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20/895*viewHeight)
             ])
         NSLayoutConstraint.activate([
-            addButton.heightAnchor.constraint(equalToConstant: 39/895*view.frame.height),
-            addButton.widthAnchor.constraint(equalToConstant: 126/414*view.frame.width),
+            addButton.heightAnchor.constraint(equalToConstant: 39/895*viewHeight),
+            addButton.widthAnchor.constraint(equalToConstant: 126/414*viewWidth),
             addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20/895*view.frame.height)
+            addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20/895*viewHeight)
             ])
         NSLayoutConstraint.activate([
             plusSign.centerXAnchor.constraint(equalTo: addButton.centerXAnchor),
@@ -221,7 +227,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let w = (414 - 17 - 33)/414*view.frame.width
+        let w = (414 - 17 - 33)/414*viewWidth
         return CGSize(width: w, height: w/(364/148))
     }
     
@@ -290,7 +296,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
     }
     
     func animateHeader() {
-        self.headerHeightConstraint.constant = 211/895*view.frame.height
+        self.headerHeightConstraint.constant = 211/895*viewHeight
         UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
     }
 }
@@ -311,12 +317,12 @@ extension HomeView: UIScrollViewDelegate {
         
     }
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if (self.headerHeightConstraint.constant > 211/895*view.frame.height) {
+        if (self.headerHeightConstraint.constant > 211/895*viewHeight) {
             animateHeader()
         }
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if (self.headerHeightConstraint.constant > 211/895*view.frame.height) {
+        if (self.headerHeightConstraint.constant > 211/895*viewHeight) {
             animateHeader()
         }
     }

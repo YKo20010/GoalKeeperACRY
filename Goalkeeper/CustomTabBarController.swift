@@ -13,14 +13,14 @@ import Hero
 class CustomTabBarController: UITabBarController {
     
     let co_tabBarBackground: UIColor = .white
-    let co_tabBarTint: UIColor = .blue
+    let co_tabBarTint: UIColor = UIColor(red: 128/255, green: 128/255, blue: 128/255, alpha: 1.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hero.isEnabled = true
         self.tabBar.layer.shadowRadius = 6
         self.tabBar.layer.shadowOffset = CGSize(width: 0, height: -5.0)
-        self.tabBar.layer.shadowColor = UIColor.lightGray.cgColor
+        self.tabBar.layer.shadowColor = UIColor(red: 190/255, green: 172/255, blue: 172/255, alpha: 1.0).cgColor
         self.tabBar.layer.shadowOpacity = 0.75
         self.tabBar.clipsToBounds = false
         self.tabBar.layer.masksToBounds = false
@@ -37,25 +37,25 @@ class CustomTabBarController: UITabBarController {
         let homeController = HomeView()
         homeController.navigationItem.title = "Goals"
         let nav_home = UINavigationController(rootViewController: homeController)
-        nav_home.title = "Home"
-        nav_home.tabBarItem.image = UIImage()
+        nav_home.title = ""
+        nav_home.tabBarItem.image = UIImage(named: "i_home")
 
 /*********************     CALENDAR VIEW CONTROLLER    ********************/
         let calendarController = CalendarView()
         calendarController.navigationItem.title = "Calendar"
         let nav_calendar = UINavigationController(rootViewController: calendarController)
-        nav_calendar.title = "Calendar"
-        nav_calendar.tabBarItem.image = UIImage(named:"defaultIcon")
+        nav_calendar.title = ""
+        nav_calendar.tabBarItem.image = UIImage(named:"i_cal")
         
 /*********************     PROGRESS VIEW CONTROLLER    ********************/
         let progressController = ProgressView()
         progressController.navigationItem.title = "Progress"
         let nav_progress = UINavigationController(rootViewController: progressController)
-        nav_progress.title = "Progress"
-        nav_progress.tabBarItem.image = UIImage()
+        nav_progress.title = ""
+        nav_progress.tabBarItem.image = UIImage(named: "i_prog")
         
 /*********************     Set ViewControllers for TabBarController    ********************/
-        viewControllers = [nav_calendar, nav_home, nav_progress]
+        viewControllers = [nav_home, nav_calendar, nav_progress]
         //viewControllers = [nav_calendar, nav_progress]
     }
     

@@ -24,6 +24,8 @@
 		034AD8D021A62D5800AB9412 /* Checkpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD8CF21A62D5800AB9412 /* Checkpoint.swift */; };
 		034AD8D221A65CB600AB9412 /* CustomTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD8D121A65CB600AB9412 /* CustomTableView.swift */; };
 		034AD8D421AA6E7100AB9412 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD8D321AA6E7100AB9412 /* HeaderView.swift */; };
+		03FAC13021ACBC5B00DFB2A7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC12F21ACBC5B00DFB2A7 /* LoginView.swift */; };
+		03FAC13221ACBE3E00DFB2A7 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03FAC13121ACBE3E00DFB2A7 /* credentials.plist */; };
 		4B5F49DCBB2F0C8B65E2DBBE /* Pods_Goalkeeper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6246DBFDBEA5D5A09E2B75AE /* Pods_Goalkeeper.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +49,8 @@
 		034AD8CF21A62D5800AB9412 /* Checkpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkpoint.swift; sourceTree = "<group>"; };
 		034AD8D121A65CB600AB9412 /* CustomTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableView.swift; sourceTree = "<group>"; };
 		034AD8D321AA6E7100AB9412 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		03FAC12F21ACBC5B00DFB2A7 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		03FAC13121ACBE3E00DFB2A7 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		6246DBFDBEA5D5A09E2B75AE /* Pods_Goalkeeper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Goalkeeper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C37F5D0B7D60BF64B8FA22CF /* Pods-Goalkeeper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalkeeper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper.release.xcconfig"; sourceTree = "<group>"; };
 		FABE3B8F79E659B0F3C0F517 /* Pods-Goalkeeper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalkeeper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -100,6 +104,7 @@
 				034AD88C21A22B0500AB9412 /* Info.plist */,
 				034AD8A521A389B600AB9412 /* ProgressSlider.swift */,
 				034AD8D121A65CB600AB9412 /* CustomTableView.swift */,
+				03FAC13121ACBE3E00DFB2A7 /* credentials.plist */,
 			);
 			path = Goalkeeper;
 			sourceTree = "<group>";
@@ -107,6 +112,7 @@
 		034AD8CD21A62C6600AB9412 /* Main Views */ = {
 			isa = PBXGroup;
 			children = (
+				03FAC12F21ACBC5B00DFB2A7 /* LoginView.swift */,
 				034AD89A21A235A900AB9412 /* CalendarView.swift */,
 				034AD88221A22B0400AB9412 /* HomeView.swift */,
 				034AD89E21A2364100AB9412 /* DetailView.swift */,
@@ -144,6 +150,7 @@
 				034AD87A21A22B0300AB9412 /* Frameworks */,
 				034AD87B21A22B0300AB9412 /* Resources */,
 				D130906EE826D84A8C6CD88A /* [CP] Embed Pods Frameworks */,
+				F83185C0717435D16B0869AB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -194,6 +201,7 @@
 			files = (
 				034AD88B21A22B0500AB9412 /* LaunchScreen.storyboard in Resources */,
 				034AD8CA21A4DC2A00AB9412 /* check_animation.json in Resources */,
+				03FAC13221ACBE3E00DFB2A7 /* credentials.plist in Resources */,
 				034AD88821A22B0500AB9412 /* Assets.xcassets in Resources */,
 				034AD88621A22B0400AB9412 /* Main.storyboard in Resources */,
 			);
@@ -227,17 +235,41 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F83185C0717435D16B0869AB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -255,6 +287,7 @@
 				034AD89921A2348200AB9412 /* GoalCVC.swift in Sources */,
 				034AD8C821A4A2F900AB9412 /* CustomTabBarController.swift in Sources */,
 				034AD88121A22B0300AB9412 /* AppDelegate.swift in Sources */,
+				03FAC13021ACBC5B00DFB2A7 /* LoginView.swift in Sources */,
 				034AD8D021A62D5800AB9412 /* Checkpoint.swift in Sources */,
 				034AD89D21A235C900AB9412 /* ProgressView.swift in Sources */,
 				034AD8D421AA6E7100AB9412 /* HeaderView.swift in Sources */,

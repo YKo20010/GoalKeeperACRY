@@ -8,5 +8,6 @@ target 'Goalkeeper' do
   # Pods for Goalkeeper
 	pod 'lottie-ios'
     pod 'Hero'
+    pod 'Google/SignIn'
 
 end
