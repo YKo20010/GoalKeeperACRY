@@ -30,6 +30,7 @@
 		03FAC13621ACE2AF00DFB2A7 /* ProgressTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC13521ACE2AF00DFB2A7 /* ProgressTVC.swift */; };
 		03FAC13821AD9CAA00DFB2A7 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC13721AD9CAA00DFB2A7 /* NetworkManager.swift */; };
 		03FAC13A21ADD74D00DFB2A7 /* loading_dots.json in Resources */ = {isa = PBXBuildFile; fileRef = 03FAC13921ADD74D00DFB2A7 /* loading_dots.json */; };
+		03FAC13C21ADE4FB00DFB2A7 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC13B21ADE4FB00DFB2A7 /* ProgressBar.swift */; };
 		4B5F49DCBB2F0C8B65E2DBBE /* Pods_Goalkeeper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6246DBFDBEA5D5A09E2B75AE /* Pods_Goalkeeper.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		03FAC13521ACE2AF00DFB2A7 /* ProgressTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressTVC.swift; sourceTree = "<group>"; };
 		03FAC13721AD9CAA00DFB2A7 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		03FAC13921ADD74D00DFB2A7 /* loading_dots.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading_dots.json; sourceTree = "<group>"; };
+		03FAC13B21ADE4FB00DFB2A7 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		6246DBFDBEA5D5A09E2B75AE /* Pods_Goalkeeper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Goalkeeper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C37F5D0B7D60BF64B8FA22CF /* Pods-Goalkeeper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalkeeper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper.release.xcconfig"; sourceTree = "<group>"; };
 		FABE3B8F79E659B0F3C0F517 /* Pods-Goalkeeper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalkeeper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				034AD88721A22B0500AB9412 /* Assets.xcassets */,
 				034AD88921A22B0500AB9412 /* LaunchScreen.storyboard */,
 				034AD88C21A22B0500AB9412 /* Info.plist */,
+				03FAC13B21ADE4FB00DFB2A7 /* ProgressBar.swift */,
 				034AD8A521A389B600AB9412 /* ProgressSlider.swift */,
 				034AD8D121A65CB600AB9412 /* CustomTableView.swift */,
 				03FAC13121ACBE3E00DFB2A7 /* credentials.plist */,
@@ -300,6 +303,7 @@
 				034AD89F21A2364100AB9412 /* DetailView.swift in Sources */,
 				034AD89B21A235A900AB9412 /* CalendarView.swift in Sources */,
 				034AD89321A22B2000AB9412 /* Goal.swift in Sources */,
+				03FAC13C21ADE4FB00DFB2A7 /* ProgressBar.swift in Sources */,
 				034AD8D221A65CB600AB9412 /* CustomTableView.swift in Sources */,
 				034AD89921A2348200AB9412 /* GoalCVC.swift in Sources */,
 				03FAC13421ACC12600DFB2A7 /* SettingView.swift in Sources */,

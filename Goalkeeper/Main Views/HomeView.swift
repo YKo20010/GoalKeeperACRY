@@ -97,7 +97,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         let g3 = Goal(name: "0/1", date: Date(timeInterval: 60*60*24*27+1, since: Date()), description: "text3", checkpoints: [c1], progress: 25)
         let g4 = Goal(name: "0/2", date: Date(timeInterval: 60*60*24*1+1, since: Date()), description: "text4", checkpoints: [c1, c2], progress: 77)
         let g5 = Goal(name: "1/3", date: Date(timeInterval: 31540000+1, since: Date()), description: "text5", checkpoints: [c1, c2, c3], progress: 33)
-        let g6 = Goal(name: "2/4", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c1, c2, c3, c4], progress: 25)
+        let g6 = Goal(name: "2/4", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c1, c2, c3, c4], progress: 100)
         goals = [g1, g2, g3, g4, g5, g6]
         selected_goals = goals
         
@@ -164,7 +164,8 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         setupConstraints()
         setupDeleteGoalNotification()
     }
-    
+
+    /******************************** MARK: Swipe Delete Notification Setup ********************************/
     private func setupDeleteGoalNotification() {
         deleteIndex = nil
         
@@ -192,7 +193,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         n_label.translatesAutoresizingMaskIntoConstraints = false
         n_label.text = "Do you want to delete the goal: "
         n_label.textColor = .white
-        n_label.font = UIFont.systemFont(ofSize: 30/895*viewHeight, weight: .light)
+        n_label.font = UIFont.systemFont(ofSize: 25/895*viewHeight, weight: .light)
         n_label.textAlignment = .center
         n_label.numberOfLines = 0
         view.addSubview(n_label)
@@ -207,7 +208,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         n_nameLabel.translatesAutoresizingMaskIntoConstraints = false
         n_nameLabel.text = "Goal Name"
         n_nameLabel.textColor = .white
-        n_nameLabel.font = UIFont.systemFont(ofSize: 52/895*viewHeight, weight: .regular)
+        n_nameLabel.font = UIFont.systemFont(ofSize: 45/895*viewHeight, weight: .regular)
         n_nameLabel.textAlignment = .center
         view.addSubview(n_nameLabel)
         n_nameLabel.isHidden = true

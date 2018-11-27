@@ -10,7 +10,7 @@ import UIKit
 
 class ProgressTVC: UITableViewCell {
 
-    var progressSlider = ProgressSlider()
+    var progressSlider = ProgressBar()
     var label = UILabel()
     var percent = UILabel()
     
@@ -19,27 +19,23 @@ class ProgressTVC: UITableViewCell {
         contentView.backgroundColor = .white
         
         progressSlider.translatesAutoresizingMaskIntoConstraints = false
-        progressSlider.minimumTrackTintColor = UIColor(red: 201/255, green: 142/255, blue: 25/255, alpha: 1.0)
-        progressSlider.thumbTintColor = UIColor(red: 201/255, green: 142/255, blue: 25/255, alpha: 1.0)
-        progressSlider.maximumTrackTintColor = UIColor(red: 222/255, green: 236/255, blue: 246/255, alpha: 1.0)
-        progressSlider.minimumValue = 0
-        progressSlider.maximumValue = 100
-        progressSlider.value = 0
-        progressSlider.setThumbImage(UIImage(), for: .normal)
-        progressSlider.isEnabled = false
+        progressSlider.progressTintColor = UIColor(red: 201/255, green: 142/255, blue: 25/255, alpha: 1.0)
+        progressSlider.trackTintColor = UIColor(red: 222/255, green: 236/255, blue: 246/255, alpha: 1.0)
         progressSlider.clipsToBounds = true
-        progressSlider.height = 30/71*contentView.frame.height
+        progressSlider.height = 24/350*contentView.frame.width
+        progressSlider.layer.cornerRadius = 24/350*contentView.frame.width/2
+        
         contentView.addSubview(progressSlider)
         
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 30/71*contentView.frame.height, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 26/350*contentView.frame.width, weight: .semibold)
         label.text = "Goal Name"
         contentView.addSubview(label)
         
         percent.translatesAutoresizingMaskIntoConstraints = false
         percent.textColor = UIColor(red: 115/255, green: 115/255, blue: 115/255, alpha: 1.0)
-        percent.font = UIFont.systemFont(ofSize: 24/71*contentView.frame.height, weight: .medium)
+        percent.font = UIFont.systemFont(ofSize: 15/350*contentView.frame.width, weight: .medium)
         percent.text = "XX%"
         contentView.addSubview(percent)
         
@@ -51,17 +47,18 @@ class ProgressTVC: UITableViewCell {
         NSLayoutConstraint.activate([
             progressSlider.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             progressSlider.widthAnchor.constraint(equalToConstant: 295/350*contentView.frame.width),
-            progressSlider.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 12/71*contentView.frame.height)
+            progressSlider.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 12/71*contentView.frame.height),
+            progressSlider.heightAnchor.constraint(equalToConstant: 24/350*contentView.frame.width)
             ])
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: contentView.topAnchor),
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            label.heightAnchor.constraint(equalToConstant: 37/71*contentView.frame.height),
+            label.heightAnchor.constraint(equalToConstant: 33/350*contentView.frame.width),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
             ])
         NSLayoutConstraint.activate([
             percent.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            percent.heightAnchor.constraint(equalToConstant: 27/71*contentView.frame.height),
+            percent.heightAnchor.constraint(equalToConstant: 18/350*contentView.frame.width),
             percent.centerYAnchor.constraint(equalTo: progressSlider.centerYAnchor)
             ])
     }
@@ -82,11 +79,11 @@ class ProgressTVC: UITableViewCell {
         if (goal.checkpoints.count != 0) {
             let fraction = numCheck*100/goal.checkpoints.count
             percent.text = "\(fraction)%"
-            progressSlider.value = Float(Double(numCheck)/Double(goal.checkpoints.count)*100.0)
+            progressSlider.setProgress(Float(Double(numCheck)/Double(goal.checkpoints.count)), animated: false)
         }
         else {
             percent.text = "100%"
-            progressSlider.value = 100
+            progressSlider.setProgress(100.0, animated: false)
         }
     }
     

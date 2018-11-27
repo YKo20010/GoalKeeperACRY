@@ -45,13 +45,13 @@ class ProgressView: UIViewController, UITableViewDataSource, UITableViewDelegate
         let c3 = Checkpoint(name: "Checkpoint3", date: Date(), isFinished: true)
         let c4 = Checkpoint(name: "Checkpoint4", date: Date(), isFinished: true)
         
-        let g1 = Goal(name: "0/0", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], progress: 0)
+        let g1 = Goal(name: "asdfasdfasdfasdfasdf asdf as dasfdasdf", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], progress: 0)
         let g2 = Goal(name: "1/1", date: Date(timeInterval: 13140000, since: Date()), description: "description text 2", checkpoints: [c4], progress: 50)
         let g3 = Goal(name: "0/1", date: Date(timeInterval: 60*60*24*27+1, since: Date()), description: "text3", checkpoints: [c1], progress: 25)
         let g4 = Goal(name: "0/2", date: Date(timeInterval: 60*60*24*1+1, since: Date()), description: "text4", checkpoints: [c1, c2], progress: 77)
         let g5 = Goal(name: "1/3", date: Date(timeInterval: 31540000+1, since: Date()), description: "text5", checkpoints: [c1, c2, c3], progress: 33)
         let g6 = Goal(name: "2/4", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c1, c2, c3, c4], progress: 25)
-        goals = [g1, g2, g3, g4, g5, g6]
+        goals = [g1, g5, g6, g4, g2, g3]
         
         viewWidth = view.frame.width
         viewHeight = view.frame.height
