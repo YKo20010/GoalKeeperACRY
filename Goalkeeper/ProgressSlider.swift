@@ -9,12 +9,14 @@
 import UIKit
 
 class ProgressSlider: UISlider {
-
+    
+    var height: CGFloat = 26
+    
     /*******    Override Default Slider Thickness   *******/
     override func trackRect(forBounds bounds: CGRect) -> CGRect {
         var bound = super.trackRect(forBounds: bounds)
-        bound.size.height = 6
-        bound.origin.y -= (bound.size.height)/2
+        bound.size.height = height
+        bound.origin.y -= height/2
         return bound
     }
 

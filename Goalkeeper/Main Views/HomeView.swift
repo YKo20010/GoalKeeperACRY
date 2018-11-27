@@ -22,6 +22,7 @@ protocol changeGoal: class {
 
 class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    //weak var delegate: addedGoal?
     
     /*  Colors  */
     let co_background: UIColor = .white
@@ -38,6 +39,13 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
     var addButton: UIButton!
     var rec: UIImageView!
     var plusSign: UILabel!
+    /*  Delete Goal Notification    */
+    var n_background: UIImageView!
+    var n_label: UILabel!
+    var n_nameLabel: UILabel!
+    var n_yesButton: UIButton!
+    var n_noButton: UIButton!
+    var deleteIndex: IndexPath!
     /*  Other   */
     var searchBy: SearchType = .title
     let goalCellIdentifier = "GoalCell"
@@ -76,7 +84,6 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         button.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         addBarButton = UIBarButtonItem(customView: button)
-        //      addBarButton = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(add))
         self.navigationItem.rightBarButtonItem = addBarButton
         
         /*  TODO: Network and delete this   */
@@ -155,7 +162,102 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         definesPresentationContext = true
         
         setupConstraints()
+        setupDeleteGoalNotification()
+    }
+    
+    private func setupDeleteGoalNotification() {
+        deleteIndex = nil
         
+        n_background = UIImageView()
+        n_background.translatesAutoresizingMaskIntoConstraints = false
+        n_background.backgroundColor = UIColor(red: 176/255, green: 210/255, blue: 232/255, alpha: 1.0)
+        n_background.layer.cornerRadius = 8
+        view.addSubview(n_background)
+        n_background.isHidden = true
+        NSLayoutConstraint.activate([
+            n_background.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            n_background.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            n_background.widthAnchor.constraint(equalToConstant: 4/5*viewWidth),
+            n_background.heightAnchor.constraint(equalToConstant: 4/5*viewWidth)
+            ])
+        
+        n_background.layer.shadowColor = UIColor(red: 190/255, green: 172/255, blue: 172/255, alpha: 1.0).cgColor
+        n_background.layer.shadowRadius = 8
+        n_background.layer.shadowOpacity = 0.5
+        n_background.layer.shadowOffset = CGSize(width: 6, height: 6)
+        n_background.clipsToBounds = false
+        n_background.layer.masksToBounds = false
+        
+        n_label = UILabel()
+        n_label.translatesAutoresizingMaskIntoConstraints = false
+        n_label.text = "Do you want to delete the goal: "
+        n_label.textColor = .white
+        n_label.font = UIFont.systemFont(ofSize: 30/895*viewHeight, weight: .light)
+        n_label.textAlignment = .center
+        n_label.numberOfLines = 0
+        view.addSubview(n_label)
+        n_label.isHidden = true
+        NSLayoutConstraint.activate([
+            n_label.leadingAnchor.constraint(equalTo: n_background.leadingAnchor, constant: 20/895*viewHeight),
+            n_label.trailingAnchor.constraint(equalTo: n_background.trailingAnchor, constant: -20/895*viewHeight),
+            n_label.topAnchor.constraint(equalTo: n_background.topAnchor, constant: 20/895*viewHeight)
+            ])
+        
+        n_nameLabel = UILabel()
+        n_nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        n_nameLabel.text = "Goal Name"
+        n_nameLabel.textColor = .white
+        n_nameLabel.font = UIFont.systemFont(ofSize: 52/895*viewHeight, weight: .regular)
+        n_nameLabel.textAlignment = .center
+        view.addSubview(n_nameLabel)
+        n_nameLabel.isHidden = true
+        NSLayoutConstraint.activate([
+            n_nameLabel.leadingAnchor.constraint(equalTo: n_background.leadingAnchor, constant: 20/895*viewHeight),
+            n_nameLabel.trailingAnchor.constraint(equalTo: n_background.trailingAnchor, constant: -20/895*viewHeight),
+            n_nameLabel.topAnchor.constraint(equalTo: n_label.bottomAnchor, constant: 20/895*viewHeight)
+            ])
+
+        n_yesButton = UIButton()
+        n_yesButton.translatesAutoresizingMaskIntoConstraints = false
+        n_yesButton.backgroundColor = UIColor.clear
+        n_yesButton.setTitleColor(UIColor.white, for: .normal)
+        n_yesButton.layer.cornerRadius = 8
+        n_yesButton.layer.masksToBounds = true
+        n_yesButton.addTarget(self, action:#selector(delete(sender:)), for: .touchDown)
+        n_yesButton.setTitle("Yes", for: .normal)
+        n_yesButton.titleLabel?.font = UIFont.systemFont(ofSize: 25/895*viewHeight, weight: .light)
+        n_yesButton.titleLabel?.textAlignment = .center
+        n_yesButton.layer.borderColor = UIColor.white.cgColor
+        n_yesButton.layer.borderWidth = 1
+        view.addSubview(n_yesButton)
+        n_yesButton.isHidden = true
+        NSLayoutConstraint.activate([
+            n_yesButton.bottomAnchor.constraint(equalTo: n_background.bottomAnchor, constant: -20/895*viewHeight),
+            n_yesButton.leadingAnchor.constraint(equalTo: n_background.leadingAnchor, constant: 20/895*viewHeight),
+            n_yesButton.heightAnchor.constraint(equalToConstant: 35/895*viewHeight),
+            n_yesButton.trailingAnchor.constraint(equalTo: n_background.centerXAnchor, constant: -20/895/2*viewHeight)
+            ])
+        
+        n_noButton = UIButton()
+        n_noButton.translatesAutoresizingMaskIntoConstraints = false
+        n_noButton.backgroundColor = UIColor.clear
+        n_noButton.setTitleColor(UIColor.white, for: .normal)
+        n_noButton.layer.cornerRadius = 8
+        n_noButton.layer.masksToBounds = true
+        n_noButton.addTarget(self, action:#selector(delete(sender:)), for: .touchDown)
+        n_noButton.setTitle("No", for: .normal)
+        n_noButton.titleLabel?.font = UIFont.systemFont(ofSize: 25/895*viewHeight, weight: .light)
+        n_noButton.titleLabel?.textAlignment = .center
+        n_noButton.layer.borderColor = UIColor.white.cgColor
+        n_noButton.layer.borderWidth = 1
+        view.addSubview(n_noButton)
+        n_noButton.isHidden = true
+        NSLayoutConstraint.activate([
+            n_noButton.bottomAnchor.constraint(equalTo: n_background.bottomAnchor, constant: -20/895*viewHeight),
+            n_noButton.trailingAnchor.constraint(equalTo: n_background.trailingAnchor, constant: -20/895*viewHeight),
+            n_noButton.heightAnchor.constraint(equalToConstant: 35/895*viewHeight),
+            n_noButton.leadingAnchor.constraint(equalTo: n_background.centerXAnchor, constant: 20/895/2*viewHeight)
+            ])
     }
     
     private func setupConstraints() {
@@ -196,6 +298,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         selected_goals = goals
         collectionView.reloadData()
         collectionView.scrollToItem(at: NSIndexPath(row: goals.count-1, section: 0) as IndexPath, at: .bottom, animated: true)
+        //self.delegate?.addGoal(newGoal: newGoal)
     }
     
     /******************************** MARK: UICollectionView: Data Source ********************************/
@@ -207,6 +310,9 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: goalCellIdentifier, for: indexPath) as! GoalCVC
         let goal = selected_goals[indexPath.row]
         cell.configure(for: goal)
+//        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(delete(sender:)))
+//        swipe.direction = UISwipeGestureRecognizerDirection.left
+//        cell.addGestureRecognizer(swipe)
         return cell
     }
     
@@ -231,7 +337,43 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         return CGSize(width: w, height: w/(364/148))
     }
     
+    
+    
     /******************************** MARK: UITableView: Delete Cell ********************************/
+    func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+        n_nameLabel.text = goals[indexPath.item].name
+        n_background.isHidden = false
+        n_label.isHidden = false
+        n_nameLabel.isHidden = false
+        n_yesButton.isHidden = false
+        n_noButton.isHidden = false
+        addButton.isEnabled = false
+        collectionView.isUserInteractionEnabled = false
+        deleteIndex = indexPath
+//        goals.remove(at: indexPath.item)
+//        selected_goals = goals
+//        collectionView.deleteItems(at: [indexPath])
+    }
+    @objc func delete(sender: UIButton) {
+        if (sender == n_yesButton) {
+            goals.remove(at: (deleteIndex?.item)!)
+            selected_goals = goals
+            collectionView.deleteItems(at: [deleteIndex!])
+        }
+        if (sender == n_noButton) {
+            collectionView.reloadData()
+        }
+        deleteIndex = nil
+        n_background.isHidden = true
+        n_label.isHidden = true
+        n_nameLabel.isHidden = true
+        n_yesButton.isHidden = true
+        n_noButton.isHidden = true
+        addButton.isEnabled = true
+        collectionView.isUserInteractionEnabled = true
+        
+    }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             goals.remove(at: indexPath.row)

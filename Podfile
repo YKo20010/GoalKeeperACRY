@@ -9,5 +9,7 @@ target 'Goalkeeper' do
 	pod 'lottie-ios'
     pod 'Hero'
     pod 'Google/SignIn'
+    pod 'SwiftyJSON'
+    pod 'Alamofire', '~> 4.6'
 
 end

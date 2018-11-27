@@ -26,4 +26,23 @@ class Goal {
     }
 }
 
+//struct Goal: Codable {
+//    var name: String
+//    var date: Date
+//    var checkpoints: [Checkpoint]
+//    var description: String
+//    var progress: Double
+//}
+//
+//struct GoalsResponse: Codable {
+//    var results: [Goal]
+//}
+
+
+
+
+
+
+
+
 

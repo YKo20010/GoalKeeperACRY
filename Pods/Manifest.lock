@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (4.7.3)
   - FirebaseAnalytics (3.9.0):
     - FirebaseCore (~> 3.6)
     - FirebaseInstanceID (~> 1.0)
@@ -36,14 +37,18 @@ PODS:
     - GTMSessionFetcher/Core (= 1.2.0)
   - Hero (1.4.0)
   - lottie-ios (2.5.2)
+  - SwiftyJSON (4.2.0)
 
 DEPENDENCIES:
+  - Alamofire (~> 4.6)
   - Google/SignIn
   - Hero
   - lottie-ios
+  - SwiftyJSON
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - FirebaseAnalytics
     - FirebaseCore
     - FirebaseInstanceID
@@ -54,8 +59,10 @@ SPEC REPOS:
     - GTMSessionFetcher
     - Hero
     - lottie-ios
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   FirebaseAnalytics: e5fe8486efc01bec33f6bf82e2fa9fce4b124052
   FirebaseCore: 9691ee2ade70c098d7cf92440f4303f16d83ca75
   FirebaseInstanceID: b9eedd6846fb5e1f0f7279e1deaa7a7e4cf8392e
@@ -66,7 +73,8 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   lottie-ios: 3fef45d3fabe63e3c7c2eb603dd64ddfffc73062
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: 01344dfde34b4e6819799d32345d0d29577a4ecd
+PODFILE CHECKSUM: 0ff581bbac2fe8218b193b48d473b2fd4ae6772d
 
 COCOAPODS: 1.5.3
