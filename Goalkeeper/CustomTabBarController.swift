@@ -54,8 +54,14 @@ class CustomTabBarController: UITabBarController {
         nav_progress.title = ""
         nav_progress.tabBarItem.image = UIImage(named: "i_prog")
         
+/*********************     SETTINGS VIEW CONTROLLER    ********************/
+        let settingController = SettingView()
+        settingController.navigationItem.title = "Settings"
+        let nav_setting = UINavigationController(rootViewController: settingController)
+        nav_setting.title = ""
+        nav_setting.tabBarItem.image = UIImage()
 /*********************     Set ViewControllers for TabBarController    ********************/
-        viewControllers = [nav_home, nav_calendar, nav_progress]
+        viewControllers = [nav_home, nav_calendar, nav_progress, nav_setting]
         //viewControllers = [nav_calendar, nav_progress]
     }
     

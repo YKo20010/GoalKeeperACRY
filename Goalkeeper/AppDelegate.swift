@@ -7,22 +7,78 @@
 //
 
 import UIKit
+import Google
+import GoogleSignIn
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     var window: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        window = UIWindow(frame: UIScreen.main.bounds)
+    
+        GIDSignIn.sharedInstance().clientID = "25504831138-r9pqbgi84l6m5h5bfdc590463b2jice1.apps.googleusercontent.com"
+        GIDSignIn.sharedInstance().delegate = self
         
+        var configureError: NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
+        if (configureError != nil) {
+            print("We have an error! \(configureError)")
+        }
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
         /*****  TODO: set first window  *****/
-        window?.rootViewController = CustomTabBarController()
+        window?.rootViewController = LoginView()
         window?.makeKeyAndVisible()
         
         return true
+    }
+    
+    func application(_ application: UIApplication,
+                     open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url, sourceApplication: sourceApplication, annotation: annotation)
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
+              withError error: Error!) {
+        if let error = error {
+            print("\(error.localizedDescription)")
+            // [START_EXCLUDE silent]
+            NotificationCenter.default.post(
+                name: Notification.Name(rawValue: "ToggleAuthUINotification"), object: nil, userInfo: nil)
+            // [END_EXCLUDE]
+        } else {
+            // Perform any operations on signed in user here.
+            let userId = user.userID                  // For client-side use only!
+            let idToken = user.authentication.idToken // Safe to send to the server
+            let fullName = user.profile.name
+            let givenName = user.profile.givenName
+            let familyName = user.profile.familyName
+            let email = user.profile.email
+            // [START_EXCLUDE]
+            NotificationCenter.default.post(
+                name: Notification.Name(rawValue: "ToggleAuthUINotification"),
+                object: nil,
+                userInfo: ["statusText": "Signed in user:\n\(fullName)"])
+            // [END_EXCLUDE]
+        }
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
+              withError error: Error!) {
+        // Perform any operations when the user disconnects from app here.
+        // [START_EXCLUDE]
+        NotificationCenter.default.post(
+            name: Notification.Name(rawValue: "ToggleAuthUINotification"),
+            object: nil,
+            userInfo: ["statusText": "User has disconnected."])
+        // [END_EXCLUDE]
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
