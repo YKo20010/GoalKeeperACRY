@@ -28,7 +28,7 @@ class EventsView: UIViewController, CalendarViewDelegate, CalendarViewDataSource
     var goals: [Goal] = []
     var keyEvents: [CalendarEvent] = []
     var dateLabelText: String = ""
-    let goalCellIdentifier = "goalCellIdentifier"
+    let goalCellIdentifier = "keydatesCellIdentifier"
     
     var calendarView: CalendarView!
     var label: UILabel!
@@ -96,7 +96,6 @@ class EventsView: UIViewController, CalendarViewDelegate, CalendarViewDataSource
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 10/895*viewHeight
-        //layout.estimatedItemSize = CGSize(width: viewWidth, height: viewWidth/2)
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -106,9 +105,9 @@ class EventsView: UIViewController, CalendarViewDelegate, CalendarViewDataSource
         collectionView.showsVerticalScrollIndicator = false
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .clear
+        collectionView.allowsSelection = false
         view.addSubview(collectionView)
-        
-        //tableView.rowHeight = UITableViewAutomaticDimension
+    
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: subheaderView.bottomAnchor, constant: 10/895*viewHeight),
             collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -217,6 +216,7 @@ class EventsView: UIViewController, CalendarViewDelegate, CalendarViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: goalCellIdentifier, for: indexPath) as! KeyDatesCVC
         cell.dateLabel.text = dateLabelText
+
         cell.notes = []
         for event in keyEvents {
             cell.notes.append("\(event.title)")

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class KeyDatesCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDelegate {
     
@@ -68,7 +69,7 @@ class KeyDatesCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDeleg
         tableView.isScrollEnabled = false
         tableView.allowsSelection = false
         contentView.addSubview(tableView)
-        
+
         NSLayoutConstraint.activate([
             dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 50/414*contentView.frame.width),
             dateLabel.centerYAnchor.constraint(equalTo: circle.centerYAnchor),
@@ -101,13 +102,6 @@ class KeyDatesCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDeleg
         cell.label.text = notes[indexPath.row]
         return cell
     }
-
-    
-//    /***************************    MARK: CONFIGURE CELL  **************************/
-//    func configure(for goal: Goal) {
-//        dateLabel.text = goal.name
-//
-//    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
