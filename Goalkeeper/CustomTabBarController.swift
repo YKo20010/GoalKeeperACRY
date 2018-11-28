@@ -41,7 +41,7 @@ class CustomTabBarController: UITabBarController {
         nav_home.tabBarItem.image = UIImage(named: "i_home")
 
 /*********************     CALENDAR VIEW CONTROLLER    ********************/
-        let calendarController = CalendarView()
+        let calendarController = EventsView()
         calendarController.navigationItem.title = "Calendar"
         let nav_calendar = UINavigationController(rootViewController: calendarController)
         nav_calendar.title = ""
@@ -62,8 +62,11 @@ class CustomTabBarController: UITabBarController {
         let nav_setting = UINavigationController(rootViewController: settingController)
         nav_setting.title = ""
         nav_setting.tabBarItem.image = UIImage()
+        
+        
+        homeController.delegate = calendarController
 /*********************     Set ViewControllers for TabBarController    ********************/
-        viewControllers = [nav_home, nav_calendar, nav_progress, nav_setting]
+        viewControllers = [nav_calendar, nav_home, nav_progress, nav_setting]
         //viewControllers = [nav_calendar, nav_progress]
     }
     

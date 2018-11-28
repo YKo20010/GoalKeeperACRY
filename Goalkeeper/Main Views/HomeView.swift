@@ -8,6 +8,7 @@
 
 import UIKit
 import Hero
+import EventKit
 
 enum SearchType {
     case title
@@ -23,6 +24,7 @@ protocol changeGoal: class {
 class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     //weak var delegate: addedGoal?
+    weak var delegate: addEvent?
     
     /*  Colors  */
     let co_background: UIColor = .white
@@ -87,30 +89,30 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         self.navigationItem.rightBarButtonItem = addBarButton
         
         /*  TODO: Network and delete this   */
-        let c1 = Checkpoint(name: "Checkpoint1", date: Date(), isFinished: false)
-        let c2 = Checkpoint(name: "Checkpoint2", date: Date(), isFinished: false)
-        let c3 = Checkpoint(name: "Checkpoint3", date: Date(), isFinished: true)
-        let c4 = Checkpoint(name: "Checkpoint4", date: Date(), isFinished: true)
+        let c1 = Checkpoint(name: "Checkpoint1", date: Date(), isFinished: false, startDate: Date())
+        let c2 = Checkpoint(name: "Checkpoint2", date: Date(), isFinished: false, startDate: Date())
+        let c3 = Checkpoint(name: "Checkpoint3", date: Date(), isFinished: true, startDate: Date())
+        let c4 = Checkpoint(name: "Checkpoint4", date: Date(), isFinished: true, startDate: Date())
         
-        let g1 = Goal(name: "0/0", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], progress: 0)
-        let g2 = Goal(name: "1/1", date: Date(timeInterval: 13140000, since: Date()), description: "description text 2", checkpoints: [c4], progress: 50)
-        let g3 = Goal(name: "0/1", date: Date(timeInterval: 60*60*24*27+1, since: Date()), description: "text3", checkpoints: [c1], progress: 25)
-        let g4 = Goal(name: "0/2", date: Date(timeInterval: 60*60*24*1+1, since: Date()), description: "text4", checkpoints: [c1, c2], progress: 77)
-        let g5 = Goal(name: "1/3", date: Date(timeInterval: 31540000+1, since: Date()), description: "text5", checkpoints: [c1, c2, c3], progress: 33)
-        let g6 = Goal(name: "2/4", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c1, c2, c3, c4], progress: 100)
+        let g1 = Goal(name: "0/0", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], progress: 0, startDate: Date())
+        let g2 = Goal(name: "1/1", date: Date(timeInterval: 13140000, since: Date()), description: "description text 2", checkpoints: [c4], progress: 50, startDate: Date())
+        let g3 = Goal(name: "0/1", date: Date(timeInterval: 60*60*24*27+1, since: Date()), description: "text3", checkpoints: [c1], progress: 25, startDate: Date())
+        let g4 = Goal(name: "0/2", date: Date(timeInterval: 60*60*24*1+1, since: Date()), description: "text4", checkpoints: [c1, c2], progress: 77, startDate: Date())
+        let g5 = Goal(name: "1/3", date: Date(timeInterval: 31540000+1, since: Date()), description: "text5", checkpoints: [c1, c2, c3], progress: 33, startDate: Date())
+        let g6 = Goal(name: "2/4", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c1, c2, c3, c4], progress: 100, startDate: Date())
         goals = [g1, g2, g3, g4, g5, g6]
         selected_goals = goals
-        
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 10/895*viewHeight
         
         headerView = HeaderView(frame: .zero, textSize: 40/895*viewHeight)
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: 211/895*viewHeight)
         headerHeightConstraint.isActive = true
         view.addSubview(headerView)
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 10/895*viewHeight
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -294,12 +296,13 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
     /******************************** MARK: Action Functions ********************************/
     
     @objc func add() {
-        let newGoal = Goal(name: "New Goal", date: Date(), description: "Enter a description here.", checkpoints: [], progress: 0)
+        let newGoal = Goal(name: "New Goal", date: Date(), description: "Enter a description here.", checkpoints: [], progress: 0, startDate: Date())
         goals.append(newGoal)
         selected_goals = goals
         collectionView.reloadData()
         collectionView.scrollToItem(at: NSIndexPath(row: goals.count-1, section: 0) as IndexPath, at: .bottom, animated: true)
         //self.delegate?.addGoal(newGoal: newGoal)
+        self.delegate?.addedEvent(title: "goal \"\(newGoal.name)\" set", date: Date())
     }
     
     /******************************** MARK: UICollectionView: Data Source ********************************/

@@ -154,6 +154,7 @@ class GoalCVC: UICollectionViewCell, UIGestureRecognizerDelegate {
         pan = UIPanGestureRecognizer(target: self, action: #selector(onPan(_:)))
         pan.delegate = self
         self.addGestureRecognizer(pan)
+        
     }
     
     @objc func onPan(_ pan: UIPanGestureRecognizer) {

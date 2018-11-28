@@ -14,7 +14,7 @@
 		034AD88B21A22B0500AB9412 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 034AD88921A22B0500AB9412 /* LaunchScreen.storyboard */; };
 		034AD89321A22B2000AB9412 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD89221A22B2000AB9412 /* Goal.swift */; };
 		034AD89921A2348200AB9412 /* GoalCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD89821A2348200AB9412 /* GoalCVC.swift */; };
-		034AD89B21A235A900AB9412 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD89A21A235A900AB9412 /* CalendarView.swift */; };
+		034AD89B21A235A900AB9412 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD89A21A235A900AB9412 /* EventsView.swift */; };
 		034AD89D21A235C900AB9412 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD89C21A235C900AB9412 /* ProgressView.swift */; };
 		034AD89F21A2364100AB9412 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD89E21A2364100AB9412 /* DetailView.swift */; };
 		034AD8A621A389B600AB9412 /* ProgressSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034AD8A521A389B600AB9412 /* ProgressSlider.swift */; };
@@ -31,6 +31,10 @@
 		03FAC13821AD9CAA00DFB2A7 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC13721AD9CAA00DFB2A7 /* NetworkManager.swift */; };
 		03FAC13A21ADD74D00DFB2A7 /* loading_dots.json in Resources */ = {isa = PBXBuildFile; fileRef = 03FAC13921ADD74D00DFB2A7 /* loading_dots.json */; };
 		03FAC13C21ADE4FB00DFB2A7 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC13B21ADE4FB00DFB2A7 /* ProgressBar.swift */; };
+		03FAC13E21AE2E5300DFB2A7 /* calendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC13D21AE2E5300DFB2A7 /* calendarHeaderView.swift */; };
+		03FAC14121AE30BA00DFB2A7 /* subHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC14021AE30BA00DFB2A7 /* subHeader.swift */; };
+		03FAC14321AE379500DFB2A7 /* KeyDatesCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC14221AE379500DFB2A7 /* KeyDatesCVC.swift */; };
+		03FAC14521AE3C3C00DFB2A7 /* keydatesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC14421AE3C3C00DFB2A7 /* keydatesTVC.swift */; };
 		4B5F49DCBB2F0C8B65E2DBBE /* Pods_Goalkeeper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6246DBFDBEA5D5A09E2B75AE /* Pods_Goalkeeper.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,7 +48,7 @@
 		034AD88C21A22B0500AB9412 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		034AD89221A22B2000AB9412 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		034AD89821A2348200AB9412 /* GoalCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCVC.swift; sourceTree = "<group>"; };
-		034AD89A21A235A900AB9412 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		034AD89A21A235A900AB9412 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
 		034AD89C21A235C900AB9412 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		034AD89E21A2364100AB9412 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		034AD8A521A389B600AB9412 /* ProgressSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSlider.swift; sourceTree = "<group>"; };
@@ -61,6 +65,10 @@
 		03FAC13721AD9CAA00DFB2A7 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		03FAC13921ADD74D00DFB2A7 /* loading_dots.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading_dots.json; sourceTree = "<group>"; };
 		03FAC13B21ADE4FB00DFB2A7 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
+		03FAC13D21AE2E5300DFB2A7 /* calendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = calendarHeaderView.swift; sourceTree = "<group>"; };
+		03FAC14021AE30BA00DFB2A7 /* subHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = subHeader.swift; sourceTree = "<group>"; };
+		03FAC14221AE379500DFB2A7 /* KeyDatesCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyDatesCVC.swift; sourceTree = "<group>"; };
+		03FAC14421AE3C3C00DFB2A7 /* keydatesTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = keydatesTVC.swift; sourceTree = "<group>"; };
 		6246DBFDBEA5D5A09E2B75AE /* Pods_Goalkeeper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Goalkeeper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C37F5D0B7D60BF64B8FA22CF /* Pods-Goalkeeper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalkeeper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper.release.xcconfig"; sourceTree = "<group>"; };
 		FABE3B8F79E659B0F3C0F517 /* Pods-Goalkeeper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalkeeper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -106,10 +114,12 @@
 				034AD8CD21A62C6600AB9412 /* Main Views */,
 				034AD89221A22B2000AB9412 /* Goal.swift */,
 				034AD89821A2348200AB9412 /* GoalCVC.swift */,
+				03FAC14221AE379500DFB2A7 /* KeyDatesCVC.swift */,
+				03FAC14421AE3C3C00DFB2A7 /* keydatesTVC.swift */,
 				03FAC13521ACE2AF00DFB2A7 /* ProgressTVC.swift */,
 				034AD8CB21A62ABB00AB9412 /* DateTVC.swift */,
 				034AD8CF21A62D5800AB9412 /* Checkpoint.swift */,
-				034AD8D321AA6E7100AB9412 /* HeaderView.swift */,
+				03FAC13F21AE2EF800DFB2A7 /* Header Views */,
 				034AD88421A22B0400AB9412 /* Main.storyboard */,
 				034AD88721A22B0500AB9412 /* Assets.xcassets */,
 				034AD88921A22B0500AB9412 /* LaunchScreen.storyboard */,
@@ -127,13 +137,23 @@
 			isa = PBXGroup;
 			children = (
 				03FAC12F21ACBC5B00DFB2A7 /* LoginView.swift */,
-				034AD89A21A235A900AB9412 /* CalendarView.swift */,
+				034AD89A21A235A900AB9412 /* EventsView.swift */,
 				034AD88221A22B0400AB9412 /* HomeView.swift */,
 				034AD89E21A2364100AB9412 /* DetailView.swift */,
 				034AD89C21A235C900AB9412 /* ProgressView.swift */,
 				03FAC13321ACC12600DFB2A7 /* SettingView.swift */,
 			);
 			path = "Main Views";
+			sourceTree = "<group>";
+		};
+		03FAC13F21AE2EF800DFB2A7 /* Header Views */ = {
+			isa = PBXGroup;
+			children = (
+				034AD8D321AA6E7100AB9412 /* HeaderView.swift */,
+				03FAC13D21AE2E5300DFB2A7 /* calendarHeaderView.swift */,
+				03FAC14021AE30BA00DFB2A7 /* subHeader.swift */,
+			);
+			path = "Header Views";
 			sourceTree = "<group>";
 		};
 		A4D0474B4B90594B0CB2F605 /* Frameworks */ = {
@@ -256,6 +276,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
+				"${BUILT_PRODUCTS_DIR}/KDCalendar/KDCalendar.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 			);
@@ -266,6 +287,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KDCalendar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 			);
@@ -301,7 +323,8 @@
 			files = (
 				034AD88321A22B0400AB9412 /* HomeView.swift in Sources */,
 				034AD89F21A2364100AB9412 /* DetailView.swift in Sources */,
-				034AD89B21A235A900AB9412 /* CalendarView.swift in Sources */,
+				034AD89B21A235A900AB9412 /* EventsView.swift in Sources */,
+				03FAC14521AE3C3C00DFB2A7 /* keydatesTVC.swift in Sources */,
 				034AD89321A22B2000AB9412 /* Goal.swift in Sources */,
 				03FAC13C21ADE4FB00DFB2A7 /* ProgressBar.swift in Sources */,
 				034AD8D221A65CB600AB9412 /* CustomTableView.swift in Sources */,
@@ -312,9 +335,12 @@
 				03FAC13021ACBC5B00DFB2A7 /* LoginView.swift in Sources */,
 				03FAC13821AD9CAA00DFB2A7 /* NetworkManager.swift in Sources */,
 				034AD8D021A62D5800AB9412 /* Checkpoint.swift in Sources */,
+				03FAC14321AE379500DFB2A7 /* KeyDatesCVC.swift in Sources */,
+				03FAC14121AE30BA00DFB2A7 /* subHeader.swift in Sources */,
 				034AD89D21A235C900AB9412 /* ProgressView.swift in Sources */,
 				034AD8D421AA6E7100AB9412 /* HeaderView.swift in Sources */,
 				034AD8A621A389B600AB9412 /* ProgressSlider.swift in Sources */,
+				03FAC13E21AE2E5300DFB2A7 /* calendarHeaderView.swift in Sources */,
 				03FAC13621ACE2AF00DFB2A7 /* ProgressTVC.swift in Sources */,
 				034AD8CC21A62ABB00AB9412 /* DateTVC.swift in Sources */,
 			);

@@ -40,17 +40,17 @@ class ProgressView: UIViewController, UITableViewDataSource, UITableViewDelegate
         navigationController?.navigationBar.isHidden = true
         
         /*  TODO: Network and delete this   */
-        let c1 = Checkpoint(name: "Checkpoint1", date: Date(), isFinished: false)
-        let c2 = Checkpoint(name: "Checkpoint2", date: Date(), isFinished: false)
-        let c3 = Checkpoint(name: "Checkpoint3", date: Date(), isFinished: true)
-        let c4 = Checkpoint(name: "Checkpoint4", date: Date(), isFinished: true)
+        let c1 = Checkpoint(name: "Checkpoint1", date: Date(), isFinished: false, startDate: Date())
+        let c2 = Checkpoint(name: "Checkpoint2", date: Date(), isFinished: false, startDate: Date())
+        let c3 = Checkpoint(name: "Checkpoint3", date: Date(), isFinished: true, startDate: Date())
+        let c4 = Checkpoint(name: "Checkpoint4", date: Date(), isFinished: true, startDate: Date())
         
-        let g1 = Goal(name: "asdfasdfasdfasdfasdf asdf as dasfdasdf", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], progress: 0)
-        let g2 = Goal(name: "1/1", date: Date(timeInterval: 13140000, since: Date()), description: "description text 2", checkpoints: [c4], progress: 50)
-        let g3 = Goal(name: "0/1", date: Date(timeInterval: 60*60*24*27+1, since: Date()), description: "text3", checkpoints: [c1], progress: 25)
-        let g4 = Goal(name: "0/2", date: Date(timeInterval: 60*60*24*1+1, since: Date()), description: "text4", checkpoints: [c1, c2], progress: 77)
-        let g5 = Goal(name: "1/3", date: Date(timeInterval: 31540000+1, since: Date()), description: "text5", checkpoints: [c1, c2, c3], progress: 33)
-        let g6 = Goal(name: "2/4", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c1, c2, c3, c4], progress: 25)
+        let g1 = Goal(name: "asdfasdfasdfasdfasdf asdf as dasfdasdf", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], progress: 0, startDate: Date())
+        let g2 = Goal(name: "1/1", date: Date(timeInterval: 13140000, since: Date()), description: "description text 2", checkpoints: [c4], progress: 50, startDate: Date())
+        let g3 = Goal(name: "0/1", date: Date(timeInterval: 60*60*24*27+1, since: Date()), description: "text3", checkpoints: [c1], progress: 25, startDate: Date())
+        let g4 = Goal(name: "0/2", date: Date(timeInterval: 60*60*24*1+1, since: Date()), description: "text4", checkpoints: [c1, c2], progress: 77, startDate: Date())
+        let g5 = Goal(name: "1/3", date: Date(timeInterval: 31540000+1, since: Date()), description: "text5", checkpoints: [c1, c2, c3], progress: 33, startDate: Date())
+        let g6 = Goal(name: "2/4", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c1, c2, c3, c4], progress: 25, startDate: Date())
         goals = [g1, g5, g6, g4, g2, g3]
         
         viewWidth = view.frame.width

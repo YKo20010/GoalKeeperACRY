@@ -11,7 +11,7 @@ import GoogleSignIn
 
 class SettingView: UIViewController {
     
-    var headerView: HeaderView!
+    var headerView: calendarHeaderView!
     var headerHeightConstraint: NSLayoutConstraint!
     //var scrollView: UIScrollView!
     
@@ -27,28 +27,17 @@ class SettingView: UIViewController {
         viewWidth = view.frame.width
         viewHeight = view.frame.height
         
-        headerView = HeaderView(frame: .zero, textSize: 40/895*viewHeight)
+        headerView = calendarHeaderView(frame: .zero, textSize: 40/895*viewHeight, viewHeight: viewHeight)
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: 211/895*viewHeight)
+        headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: 127/895*viewHeight)
         headerHeightConstraint.isActive = true
-        headerView.titleLabel.text = "Settings"
+        headerView.titleLabel.text = "settings"
         view.addSubview(headerView)
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.topAnchor),
             headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
-//        scrollView = UIScrollView()
-//        scrollView.translatesAutoresizingMaskIntoConstraints = false
-//        scrollView.alwaysBounceVertical = true
-//        scrollView.showsVerticalScrollIndicator = false
-//        view.addSubview(scrollView)
-//        NSLayoutConstraint.activate([
-//            scrollView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor),
-//            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-//            ])
         
         let signOutButton = UIButton()
         signOutButton.translatesAutoresizingMaskIntoConstraints = false
@@ -65,11 +54,6 @@ class SettingView: UIViewController {
     
     }
     
-    func animateHeader() {
-        self.headerHeightConstraint.constant = 211/895*viewHeight
-        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
-    }
-    
     @IBAction func signOutWasPressed(sender: AnyObject) {
         GIDSignIn.sharedInstance().signOut()
         dismiss(animated: true, completion: nil)
@@ -80,31 +64,5 @@ class SettingView: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-}
-
-/******************************** MARK: Sticky Header ********************************/
-extension SettingView: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y < 0) {
-            self.headerHeightConstraint.constant += abs(scrollView.contentOffset.y)/3
-        }
-        else if (scrollView.contentOffset.y > 0 && self.headerHeightConstraint.constant >= 0) {
-            self.headerHeightConstraint.constant -= abs(scrollView.contentOffset.y)
-            if (self.headerHeightConstraint.constant < 0) {
-                self.headerHeightConstraint.constant = 0
-            }
-        }
-        
-    }
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if (self.headerHeightConstraint.constant > 211/895*viewHeight) {
-            animateHeader()
-        }
-    }
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if (self.headerHeightConstraint.constant > 211/895*viewHeight) {
-            animateHeader()
-        }
-    }
 }
 
