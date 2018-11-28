@@ -35,6 +35,8 @@
 		03FAC14121AE30BA00DFB2A7 /* subHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC14021AE30BA00DFB2A7 /* subHeader.swift */; };
 		03FAC14321AE379500DFB2A7 /* KeyDatesCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC14221AE379500DFB2A7 /* KeyDatesCVC.swift */; };
 		03FAC14521AE3C3C00DFB2A7 /* keydatesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC14421AE3C3C00DFB2A7 /* keydatesTVC.swift */; };
+		03FAC14D21AF487C00DFB2A7 /* HeaderView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC14C21AF487C00DFB2A7 /* HeaderView2.swift */; };
+		03FAC14F21AF490F00DFB2A7 /* GoalDetailCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC14E21AF490F00DFB2A7 /* GoalDetailCVC.swift */; };
 		4B5F49DCBB2F0C8B65E2DBBE /* Pods_Goalkeeper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6246DBFDBEA5D5A09E2B75AE /* Pods_Goalkeeper.framework */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +71,8 @@
 		03FAC14021AE30BA00DFB2A7 /* subHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = subHeader.swift; sourceTree = "<group>"; };
 		03FAC14221AE379500DFB2A7 /* KeyDatesCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyDatesCVC.swift; sourceTree = "<group>"; };
 		03FAC14421AE3C3C00DFB2A7 /* keydatesTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = keydatesTVC.swift; sourceTree = "<group>"; };
+		03FAC14C21AF487C00DFB2A7 /* HeaderView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView2.swift; sourceTree = "<group>"; };
+		03FAC14E21AF490F00DFB2A7 /* GoalDetailCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalDetailCVC.swift; sourceTree = "<group>"; };
 		6246DBFDBEA5D5A09E2B75AE /* Pods_Goalkeeper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Goalkeeper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C37F5D0B7D60BF64B8FA22CF /* Pods-Goalkeeper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalkeeper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper.release.xcconfig"; sourceTree = "<group>"; };
 		FABE3B8F79E659B0F3C0F517 /* Pods-Goalkeeper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalkeeper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -142,6 +146,7 @@
 		03FAC13F21AE2EF800DFB2A7 /* Header Views */ = {
 			isa = PBXGroup;
 			children = (
+				03FAC14C21AF487C00DFB2A7 /* HeaderView2.swift */,
 				034AD8D321AA6E7100AB9412 /* HeaderView.swift */,
 				03FAC13D21AE2E5300DFB2A7 /* calendarHeaderView.swift */,
 				03FAC14021AE30BA00DFB2A7 /* subHeader.swift */,
@@ -162,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				034AD89821A2348200AB9412 /* GoalCVC.swift */,
+				03FAC14E21AF490F00DFB2A7 /* GoalDetailCVC.swift */,
 				03FAC14221AE379500DFB2A7 /* KeyDatesCVC.swift */,
 				03FAC14421AE3C3C00DFB2A7 /* keydatesTVC.swift */,
 				03FAC13521ACE2AF00DFB2A7 /* ProgressTVC.swift */,
@@ -353,6 +359,7 @@
 				03FAC13C21ADE4FB00DFB2A7 /* ProgressBar.swift in Sources */,
 				034AD8D221A65CB600AB9412 /* CustomTableView.swift in Sources */,
 				034AD89921A2348200AB9412 /* GoalCVC.swift in Sources */,
+				03FAC14F21AF490F00DFB2A7 /* GoalDetailCVC.swift in Sources */,
 				03FAC13421ACC12600DFB2A7 /* SettingView.swift in Sources */,
 				034AD8C821A4A2F900AB9412 /* CustomTabBarController.swift in Sources */,
 				034AD88121A22B0300AB9412 /* AppDelegate.swift in Sources */,
@@ -361,6 +368,7 @@
 				034AD8D021A62D5800AB9412 /* Checkpoint.swift in Sources */,
 				03FAC14321AE379500DFB2A7 /* KeyDatesCVC.swift in Sources */,
 				03FAC14121AE30BA00DFB2A7 /* subHeader.swift in Sources */,
+				03FAC14D21AF487C00DFB2A7 /* HeaderView2.swift in Sources */,
 				034AD89D21A235C900AB9412 /* ProgressView.swift in Sources */,
 				034AD8D421AA6E7100AB9412 /* HeaderView.swift in Sources */,
 				034AD8A621A389B600AB9412 /* ProgressSlider.swift in Sources */,
