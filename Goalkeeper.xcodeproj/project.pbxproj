@@ -112,18 +112,16 @@
 				034AD8C721A4A2F900AB9412 /* CustomTabBarController.swift */,
 				034AD8CD21A62C6600AB9412 /* Main Views */,
 				034AD89221A22B2000AB9412 /* Goal.swift */,
-				03FAC14921AEE6EE00DFB2A7 /* Cells */,
 				034AD8CF21A62D5800AB9412 /* Checkpoint.swift */,
+				03FAC13721AD9CAA00DFB2A7 /* NetworkManager.swift */,
+				03FAC14921AEE6EE00DFB2A7 /* Cells */,
 				03FAC13F21AE2EF800DFB2A7 /* Header Views */,
+				03FAC14B21AEED1600DFB2A7 /* Custom Views */,
 				034AD88421A22B0400AB9412 /* Main.storyboard */,
 				034AD88721A22B0500AB9412 /* Assets.xcassets */,
 				034AD88921A22B0500AB9412 /* LaunchScreen.storyboard */,
 				034AD88C21A22B0500AB9412 /* Info.plist */,
-				03FAC13B21ADE4FB00DFB2A7 /* ProgressBar.swift */,
-				034AD8A521A389B600AB9412 /* ProgressSlider.swift */,
-				034AD8D121A65CB600AB9412 /* CustomTableView.swift */,
 				03FAC13121ACBE3E00DFB2A7 /* credentials.plist */,
-				03FAC13721AD9CAA00DFB2A7 /* NetworkManager.swift */,
 			);
 			path = Goalkeeper;
 			sourceTree = "<group>";
@@ -170,6 +168,16 @@
 				034AD8CB21A62ABB00AB9412 /* DateTVC.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		03FAC14B21AEED1600DFB2A7 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				03FAC13B21ADE4FB00DFB2A7 /* ProgressBar.swift */,
+				034AD8A521A389B600AB9412 /* ProgressSlider.swift */,
+				034AD8D121A65CB600AB9412 /* CustomTableView.swift */,
+			);
+			path = "Custom Views";
 			sourceTree = "<group>";
 		};
 		A4D0474B4B90594B0CB2F605 /* Frameworks */ = {

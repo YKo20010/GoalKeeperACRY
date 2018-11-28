@@ -6,6 +6,27 @@
 //  Copyright © 2018 ACRY. All rights reserved.
 //
 
+/*
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ USE ProgressBar INSTEAD
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ */
+
 import UIKit
 
 class ProgressSlider: UISlider {
