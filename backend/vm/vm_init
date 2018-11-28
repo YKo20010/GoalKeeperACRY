@@ -1,0 +1,3 @@
+#! /bin/bash
+chown -R vm-user:vm-user /home/vm-user
+su - vm-user

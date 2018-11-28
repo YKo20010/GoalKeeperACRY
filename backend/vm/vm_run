@@ -1,0 +1,44 @@
+#! /bin/bash
+
+vm_data="vm-data"
+vm_image="seedelano/vm-image"
+vm_container="vm-container"
+vm_user="vm-user"
+
+vm_data_output=$(sudo docker ps -aqf name=$vm_data)
+vm_image_output=$(sudo docker images -q $vm_image)
+vm_container_output=$(sudo docker ps -aqf name=$vm_container)
+
+if [[ $1 == "reset" || -z $vm_data_output ]]
+then
+    if [[ $vm_data_output ]]
+    then
+        echo "Recreating data volume..."
+    else
+        echo "Creating data volume..."
+    fi
+    
+    read -p "Enter a path (on your machine) to use as the home directory: " host_directory
+    host_directory=$(cd ${host_directory/#\~/$HOME} && pwd)
+    echo "Mounting directory $host_directory as /home/$vm_user..."
+
+    sudo docker rm $vm_data 
+    sudo docker create -v $host_directory:/home/$vm_user --name $vm_data busybox /bin/true 
+fi
+
+if [[ $1 == "rebuild" ]]
+then
+    if [[ -z $vm_image_output ]]
+    then
+        echo "Building VM image..."
+    else
+        echo "Rebuilding VM image..."
+    fi
+    
+    sudo docker rmi $vm_image
+    sudo docker build . -t $vm_image
+fi
+
+echo "Running VM..."
+sudo docker rm $vm_container &> /dev/null
+sudo docker run -it -p 5000:5000 --rm --volumes-from $vm_data --name $vm_container $vm_image /tmp/vm_init
