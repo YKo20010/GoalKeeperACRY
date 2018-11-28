@@ -18,7 +18,7 @@ class keydatesTVC: UITableViewCell {
         contentView.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor(red: 115/155, green: 115/155, blue: 115/155, alpha: 1.0)
-        label.font = UIFont.systemFont(ofSize: 16/342*contentView.frame.width, weight: .light)
+        label.font = UIFont.systemFont(ofSize: 16/342*contentView.frame.width, weight: .regular)
         label.textAlignment = .left
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),

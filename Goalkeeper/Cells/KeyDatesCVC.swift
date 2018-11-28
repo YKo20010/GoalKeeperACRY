@@ -60,12 +60,13 @@ class KeyDatesCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDeleg
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.register(keydatesTVC.self, forCellReuseIdentifier: reuseCellIdentifier)
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 20/414*contentView.frame.width
+        tableView.rowHeight = 20/414*contentView.frame.width
         tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
         tableView.delegate = self
         tableView.isScrollEnabled = false
+        tableView.allowsSelection = false
         contentView.addSubview(tableView)
         
         NSLayoutConstraint.activate([
@@ -100,6 +101,7 @@ class KeyDatesCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDeleg
         cell.label.text = notes[indexPath.row]
         return cell
     }
+
     
 //    /***************************    MARK: CONFIGURE CELL  **************************/
 //    func configure(for goal: Goal) {

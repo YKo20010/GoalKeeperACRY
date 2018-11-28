@@ -6,6 +6,8 @@
 //  Copyright © 2018 ACRY. All rights reserved.
 //
 
+//Calendar gets events from Apple Calendar (EventKit), not linked to Google Sign-In
+
 import UIKit
 import EventKit
 import KDCalendar
@@ -108,9 +110,9 @@ class EventsView: UIViewController, CalendarViewDelegate, CalendarViewDataSource
         
         //tableView.rowHeight = UITableViewAutomaticDimension
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: subheaderView.bottomAnchor),
+            collectionView.topAnchor.constraint(equalTo: subheaderView.bottomAnchor, constant: 10/895*viewHeight),
             collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10/895*viewHeight),
             collectionView.widthAnchor.constraint(equalToConstant: viewWidth)
             ])
         }
@@ -182,25 +184,6 @@ class EventsView: UIViewController, CalendarViewDelegate, CalendarViewDataSource
     }
         
     func calendar(_ calendar: CalendarView, didLongPressDate date : Date) {
-//
-//        let alert = UIAlertController(title: "Create New Event", message: "Message", preferredStyle: .alert)
-//
-//        alert.addTextField { (textField: UITextField) in
-//            textField.placeholder = "Event Title"
-//        }
-//
-//        let addEventAction = UIAlertAction(title: "Create", style: .default, handler: { (action) -> Void in
-//            let title = alert.textFields?.first?.text
-//            self.calendarView.addEvent(title!, date: date)
-//        })
-//
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
-//
-//        alert.addAction(addEventAction)
-//        alert.addAction(cancelAction)
-//
-//        self.present(alert, animated: true, completion: nil)
-        
     }
         
     override var prefersStatusBarHidden: Bool {
@@ -244,7 +227,7 @@ class EventsView: UIViewController, CalendarViewDelegate, CalendarViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let w = viewWidth!
-        let h = CGFloat(keyEvents.count + 1)*60/414*viewWidth!
+        let h = CGFloat(keyEvents.count)*20/414*viewWidth! + 34/414*viewWidth! + 21/414*viewWidth!
         return CGSize(width: w, height: h)
     }
     
