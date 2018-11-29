@@ -13,10 +13,13 @@ class Checkpoint {
     var name: String
     var date: Date
     var isFinished: Bool
+    var startDate: Date
+    var endDate: Date?
     
-    init (name: String, date: Date, isFinished: Bool) {
+    init (name: String, date: Date, isFinished: Bool, startDate: Date) {
         self.name = name
         self.date = date
         self.isFinished = isFinished
+        self.startDate = startDate
     }
 }

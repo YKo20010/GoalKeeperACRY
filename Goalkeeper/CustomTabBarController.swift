@@ -10,10 +10,15 @@ import Foundation
 import UIKit
 import Hero
 
+protocol showDetail: class {
+    func presentDetail(detailController: DetailView)
+}
 class CustomTabBarController: UITabBarController {
     
     let co_tabBarBackground: UIColor = .white
     let co_tabBarTint: UIColor = UIColor(red: 128/255, green: 128/255, blue: 128/255, alpha: 1.0)
+    var nav_home: UINavigationController!
+    var settingController: SettingView! = SettingView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,35 +41,44 @@ class CustomTabBarController: UITabBarController {
 /*********************     HOME VIEW CONTROLLER    ********************/
         let homeController = HomeView()
         homeController.navigationItem.title = "Goals"
-        let nav_home = UINavigationController(rootViewController: homeController)
+        homeController.delegateShowDetail = self
+        nav_home = UINavigationController(rootViewController: homeController)
         nav_home.title = ""
-        nav_home.tabBarItem.image = UIImage(named: "i_home")
+        nav_home.tabBarItem.image = UIImage(named: "home")
 
 /*********************     CALENDAR VIEW CONTROLLER    ********************/
-        let calendarController = CalendarView()
+        let calendarController = EventsView()
         calendarController.navigationItem.title = "Calendar"
         let nav_calendar = UINavigationController(rootViewController: calendarController)
         nav_calendar.title = ""
-        nav_calendar.tabBarItem.image = UIImage(named:"i_cal")
+        nav_calendar.tabBarItem.image = UIImage(named:"calendar")
         
 /*********************     PROGRESS VIEW CONTROLLER    ********************/
         let progressController = ProgressView()
         progressController.navigationItem.title = "Progress"
         let nav_progress = UINavigationController(rootViewController: progressController)
         nav_progress.title = ""
-        nav_progress.tabBarItem.image = UIImage(named: "i_prog")
+        nav_progress.tabBarItem.image = UIImage(named: "progress")
         
         //homeController.delegate = progressController
         
 /*********************     SETTINGS VIEW CONTROLLER    ********************/
-        let settingController = SettingView()
-        settingController.navigationItem.title = "Settings"
+        settingController.navigationItem.title = "Profile"
         let nav_setting = UINavigationController(rootViewController: settingController)
         nav_setting.title = ""
-        nav_setting.tabBarItem.image = UIImage()
+        nav_setting.tabBarItem.image = UIImage(named: "profile")
+        
+        
+        homeController.delegate = calendarController
 /*********************     Set ViewControllers for TabBarController    ********************/
-        viewControllers = [nav_home, nav_calendar, nav_progress, nav_setting]
+        viewControllers = [nav_calendar, nav_home, nav_progress, nav_setting]
         //viewControllers = [nav_calendar, nav_progress]
     }
     
+}
+
+extension CustomTabBarController: showDetail {
+    func presentDetail(detailController: DetailView) {
+        self.nav_home.present(detailController, animated: true, completion: nil)
+    }
 }

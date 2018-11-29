@@ -11,5 +11,6 @@ target 'Goalkeeper' do
     pod 'Google/SignIn'
     pod 'SwiftyJSON'
     pod 'Alamofire', '~> 4.6'
+    pod 'KDCalendar', '~> 1.6.5'
 
 end

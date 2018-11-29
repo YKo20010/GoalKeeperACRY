@@ -36,6 +36,7 @@ PODS:
   - GTMSessionFetcher/Full (1.2.0):
     - GTMSessionFetcher/Core (= 1.2.0)
   - Hero (1.4.0)
+  - KDCalendar (1.6.5)
   - lottie-ios (2.5.2)
   - SwiftyJSON (4.2.0)
 
@@ -43,6 +44,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.6)
   - Google/SignIn
   - Hero
+  - KDCalendar (~> 1.6.5)
   - lottie-ios
   - SwiftyJSON
 
@@ -58,6 +60,7 @@ SPEC REPOS:
     - GTMOAuth2
     - GTMSessionFetcher
     - Hero
+    - KDCalendar
     - lottie-ios
     - SwiftyJSON
 
@@ -72,9 +75,10 @@ SPEC CHECKSUMS:
   GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
+  KDCalendar: 15e74f37bd3d206bf7549c594fd08e0347c276f4
   lottie-ios: 3fef45d3fabe63e3c7c2eb603dd64ddfffc73062
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: 0ff581bbac2fe8218b193b48d473b2fd4ae6772d
+PODFILE CHECKSUM: 6b81687930fafeeafdd31279b8dfcb02a1cfeba4
 
 COCOAPODS: 1.5.3
