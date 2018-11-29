@@ -128,8 +128,8 @@
 				034AD88421A22B0400AB9412 /* Main.storyboard */,
 				034AD88721A22B0500AB9412 /* Assets.xcassets */,
 				034AD88921A22B0500AB9412 /* LaunchScreen.storyboard */,
-				034AD88C21A22B0500AB9412 /* Info.plist */,
 				03FAC13121ACBE3E00DFB2A7 /* credentials.plist */,
+				034AD88C21A22B0500AB9412 /* Info.plist */,
 			);
 			path = Goalkeeper;
 			sourceTree = "<group>";

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol buttonClicked: class {
+    func changedCheckpointStatus(name: String, date: Date, isFinished: Bool, startDate: Date, endDate: Date?)
+}
+
 class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     weak var delegate: ChangeMotivationTitleDelegate?
@@ -139,24 +143,47 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
         cell.backgroundColor = .clear
         let checkpoint = checkpoints[indexPath.row]
         cell.configure(for: checkpoint)
+        cell.delegate = self
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("1")
-        checkpoints[indexPath.row].isFinished = !checkpoints[indexPath.row].isFinished
-        if (checkpoints[indexPath.row].isFinished) {
-            checkpoints[indexPath.row].endDate = Date()
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            checkpoints.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.delegate2?.changedCheckpointStatus(newCheckpoint: checkpoints)
         }
-        if (!checkpoints[indexPath.row].isFinished) {
-            checkpoints[indexPath.row].endDate = nil
-        }
-        tableView.reloadData()
-        self.delegate2?.changedCheckpointStatus(newCheckpoint: checkpoints)
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .delete
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension GoalDetailCVC: buttonClicked {
+    func changedCheckpointStatus(name: String, date: Date, isFinished: Bool, startDate: Date, endDate: Date?) {
+        for i in 0...checkpoints.count-1 {
+            if (checkpoints[i].name == name
+                && checkpoints[i].date == date
+                && checkpoints[i].isFinished == isFinished
+                && checkpoints[i].startDate == startDate
+                && ((checkpoints[i].endDate == nil && endDate == nil) || (checkpoints[i].endDate != nil && endDate != nil))) {
+                    checkpoints[i].isFinished = !checkpoints[i].isFinished
+                    if (checkpoints[i].isFinished) {
+                        checkpoints[i].endDate = Date()
+                    }
+                    if (!checkpoints[i].isFinished) {
+                        checkpoints[i].endDate = nil
+                    }
+                    self.tableView.reloadData()
+                    self.delegate2?.changedCheckpointStatus(newCheckpoint: checkpoints)
+                return
+            }
+        }
     }
 }
 

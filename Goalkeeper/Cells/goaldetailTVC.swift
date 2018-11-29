@@ -10,12 +10,19 @@ import UIKit
 
 class goaldetailTVC: UITableViewCell {
     
+    weak var delegate: buttonClicked?
+    
+    var c_name: String = "name"
+    var c_date: Date = Date()
+    var c_isFinished: Bool = false
+    var c_startDate: Date = Date()
+    var c_endDate: Date?
+    
     var circle: UIImageView = UIImageView()
-    var circle2: UIImageView = UIImageView()
+    var circle2: UIButton = UIButton()
     var label: UILabel = UILabel()
     var sublabel: UILabel = UILabel()
 
-    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -35,7 +42,9 @@ class goaldetailTVC: UITableViewCell {
         circle2.backgroundColor = .white
         circle2.layer.cornerRadius = 18/2/267*contentView.frame.width
         circle2.layer.masksToBounds = true
+        circle2.addTarget(self, action: #selector(didClick), for: .touchDown)
         contentView.addSubview(circle2)
+        
         NSLayoutConstraint.activate([
             circle2.centerXAnchor.constraint(equalTo: circle.centerXAnchor),
             circle2.centerYAnchor.constraint(equalTo: circle.centerYAnchor),
@@ -68,8 +77,19 @@ class goaldetailTVC: UITableViewCell {
             ])
     }
     
+    @objc func didClick() {
+        self.delegate?.changedCheckpointStatus(name: c_name, date: c_date, isFinished: c_isFinished, startDate: c_startDate, endDate: c_endDate)
+    }
+    
     func configure(for checkpoint: Checkpoint) {
         label.text = checkpoint.name
+        c_name = checkpoint.name
+        c_date = checkpoint.date
+        c_startDate = checkpoint.startDate
+        c_isFinished = checkpoint.isFinished
+        if let endDate = checkpoint.endDate, endDate != nil {
+            c_endDate = endDate
+        }
         if (checkpoint.isFinished) {
             circle2.backgroundColor = UIColor(red: 201/255, green: 142/255, blue: 25/255, alpha: 1.0)
             let dateFormatter = DateFormatter()
