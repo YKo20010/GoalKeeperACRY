@@ -147,19 +147,6 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print("1")
-//        checkpoints[indexPath.row].isFinished = !checkpoints[indexPath.row].isFinished
-//        if (checkpoints[indexPath.row].isFinished) {
-//            checkpoints[indexPath.row].endDate = Date()
-//        }
-//        if (!checkpoints[indexPath.row].isFinished) {
-//            checkpoints[indexPath.row].endDate = nil
-//        }
-//        tableView.reloadData()
-//        self.delegate2?.changedCheckpointStatus(newCheckpoint: checkpoints)
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -180,7 +167,7 @@ extension GoalDetailCVC: buttonClicked {
                     if (!checkpoints[i].isFinished) {
                         checkpoints[i].endDate = nil
                     }
-                    tableView.reloadData()
+                    self.tableView.reloadData()
                     self.delegate2?.changedCheckpointStatus(newCheckpoint: checkpoints)
                 return
             }
