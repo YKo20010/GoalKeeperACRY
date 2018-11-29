@@ -43,7 +43,9 @@ class ProgressView: UIViewController, UITableViewDataSource, UITableViewDelegate
         let c1 = Checkpoint(name: "Checkpoint1", date: Date(), isFinished: false, startDate: Date())
         let c2 = Checkpoint(name: "Checkpoint2", date: Date(), isFinished: false, startDate: Date())
         let c3 = Checkpoint(name: "Checkpoint3", date: Date(), isFinished: true, startDate: Date())
+        c3.endDate = Date()
         let c4 = Checkpoint(name: "Checkpoint4", date: Date(), isFinished: true, startDate: Date())
+        c4.endDate = Date()
         
         let g1 = Goal(name: "0/0 checkpoints, 0% complete", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], progress: 0, startDate: Date())
         let g2 = Goal(name: "1/1 checkpoints, 50% complete", date: Date(timeInterval: 13140000, since: Date()), description: "description text 2", checkpoints: [c4], progress: 50, startDate: Date())

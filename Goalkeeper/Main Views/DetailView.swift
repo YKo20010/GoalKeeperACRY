@@ -13,13 +13,18 @@ protocol pickDate: class {
     func pickingDate()
 }
 
+protocol ChangeMotivationTitleDelegate: class{
+    func changedMotivationText(newTitle: String)
+}
+
+protocol ChangeCheckpointStatus: class {
+    func changedCheckpointStatus(newCheckpoint: [Checkpoint])
+}
+
 class DetailView: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     weak var delegate: changeGoal?
     
-    var d_description: UITextView!
-    var d_progress: ProgressSlider!
-    //var d_checkpoints: CustomTableView!
     var collectionView: UICollectionView!
     var headerView: HeaderView2!
     var viewWidth: CGFloat!
@@ -41,9 +46,10 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     var t_progress: Double = 0
     var t_Date: Date = Date()
     var t_checkpoints: [Checkpoint] = []
+    var h: CGFloat = 0
     
     let descriptionHeight: CGFloat = 25
-    //let checkpointCellIdentifier = "CheckpointCellIdentifier"
+    let checkpointCellIdentifier = "CheckpointCellIdentifier"
     
     let co_background: UIColor = .white
     let co_textColor: UIColor = .white
@@ -62,43 +68,8 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         
         viewWidth = view.frame.width
         viewHeight = view.frame.height
-        
-        d_progress = ProgressSlider()
-        d_progress.translatesAutoresizingMaskIntoConstraints = false
-        d_progress.minimumValue = 0
-        d_progress.maximumValue = 100
-        d_progress.isEnabled = false
-        d_progress.thumbTintColor = co_psThumbTrackTint
-        d_progress.minimumTrackTintColor = co_psMinTrackTint
-        d_progress.maximumTrackTintColor = co_psMaxTrackTint
-        d_progress.value = Float(t_progress)
-        d_progress.setThumbImage(UIImage(), for: .normal)
-        view.addSubview(d_progress)
-        
-        d_description = UITextView()
-        d_description.translatesAutoresizingMaskIntoConstraints = false
-        d_description.backgroundColor = .clear
-        d_description.textColor = co_textColor
-        d_description.text = t_Description
-        d_description.textAlignment = .center
-        d_description.isEditable = true
-        d_description.scrollsToTop = true
-        d_description.showsVerticalScrollIndicator = false
-        d_description.font = UIFont.systemFont(ofSize: descriptionHeight - 5, weight: .medium)
-        view.addSubview(d_description)
-        
-//        d_checkpoints = CustomTableView()
-//        d_checkpoints.translatesAutoresizingMaskIntoConstraints = false
-//        // d_checkpoints.dataSource = self
-//        // d_checkpoints.register(DateTVC.self, forCellReuseIdentifier: checkpointCellIdentifier)
-//        d_checkpoints.estimatedRowHeight = 100
-//        d_checkpoints.rowHeight = UITableViewAutomaticDimension
-//        d_checkpoints.backgroundColor = .clear
-//        d_checkpoints.separatorColor = co_cpTableViewBorder
-//        d_checkpoints.tintColor = co_cpTableViewText
-//        // d_checkpoints.delegate = self
-//        d_checkpoints.isScrollEnabled = false
-//        view.addSubview(d_checkpoints)
+        //to calculate checkpoints cell height (gives an error if moved to collectionview func)
+        h = 0.14525*viewHeight + 0.059218*viewHeight*CGFloat(t_checkpoints.count)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(DetailView.viewTapped(gestureRecognizer:)))
         view.addGestureRecognizer(tapGesture)
@@ -133,8 +104,8 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        // layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 10/895*viewHeight
+        //layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 61/895*viewHeight
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -144,6 +115,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         collectionView.showsVerticalScrollIndicator = false
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .clear
+        collectionView.allowsSelection = true
         view.addSubview(collectionView)
         
         d_datePicker = UIDatePicker()
@@ -180,27 +152,10 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
             ])
         NSLayoutConstraint.activate([
-            d_description.topAnchor.constraint(equalTo: d_progress.bottomAnchor, constant: 20),
-            d_description.heightAnchor.constraint(equalToConstant: descriptionHeight + 20),
-            d_description.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            d_description.widthAnchor.constraint(equalToConstant: view.frame.width - 40)
-            ])
-        NSLayoutConstraint.activate([
             saveButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             saveButton.heightAnchor.constraint(equalToConstant: 20),
             saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
             ])
-        NSLayoutConstraint.activate([
-            d_progress.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 80),
-            d_progress.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -40),
-            d_progress.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            d_progress.heightAnchor.constraint(equalToConstant: 20)
-            ])
-//        NSLayoutConstraint.activate([
-//            d_checkpoints.topAnchor.constraint(equalTo: d_date.bottomAnchor, constant: 20),
-//            d_checkpoints.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            d_checkpoints.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-//            ])
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -37/895*viewHeight),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -223,19 +178,14 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         if let nameText = headerView.d_name.text, nameText != "" {
             self.delegate?.changedName(newName: nameText)
         }
-        if let descriptionText = d_description.text, descriptionText != "" {
-            self.delegate?.changedDescription(newDescription: descriptionText)
-        }
         
+        self.delegate?.changedCheckpoint(newCheckpoint: t_checkpoints)
+        self.delegate?.changedDescription(newDescription: t_Description)
         self.delegate?.changedDate(newDate: t_Date)
         
         if (headerView.d_name.text == "") {
             alert.message = alert.message! + "Please input a [String] for the name of the goal."
             headerView.d_name.text = t_Name
-        }
-        if (d_description.text == "") {
-            alert.message = alert.message! + "\nPlease input a [String] for the description."
-            d_description.text = t_Description
         }
         if (alert.message != "") {
             self.present(alert, animated: true)
@@ -266,22 +216,39 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         headerView.d_date.setTitle("by " + dateFormatter.string(from: t_Date), for: .normal)
     }
     
-/******************************** MARK: Collection View: Data Source & Delegate ********************************/
+    /******************************** MARK: Collection View: Data Source & Delegate ********************************/
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: detailCellIdentifier, for: indexPath) as! GoalDetailCVC
-        cell.titleLabel.text = self.titles[indexPath.row]
-        //cell.subtitleLabel.text = "Choose to start"
-        // cell.layer.cornerRadius = 10
-        
+        cell.viewHeight = self.viewHeight
+        cell.viewWidth = self.viewWidth
+        cell.checkpoints = t_checkpoints
+        cell.setupConstraints()
+        cell.titleLabel.text = self.titles[indexPath.item]
+        cell.motivationTextView.text = t_Description
+        if (titles[indexPath.item] == "motivation") {
+            cell.motivationTextView.isHidden = false
+            cell.delegate = self
+            cell.tableView.isHidden = true
+        }
+        else {
+            cell.motivationTextView.isHidden = true
+            cell.tableView.isHidden = false
+        }
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let w = (414 - 17 - 33)/414*viewWidth
-        return CGSize(width: w, height: w/(364/148))
+        let w = viewWidth!
+        if (titles[indexPath.item] == "checkpoints") {
+            return CGSize(width: w, height: h)
+        }
+        else {
+            return CGSize(width: w, height: 228/895*viewHeight)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -321,10 +288,23 @@ extension DetailView: UIScrollViewDelegate {
     }
 }
 
+/******************************** MARK: Extensions ********************************/
+extension DetailView: ChangeMotivationTitleDelegate {
+    func changedMotivationText(newTitle: String) {
+        t_Description = newTitle
+    }
+}
+
 extension DetailView: pickDate {
     func pickingDate() {
         d_datePicker.isHidden = false
     }
-    
 }
+
+extension DetailView: ChangeCheckpointStatus {
+    func changedCheckpointStatus(newCheckpoint: [Checkpoint]) {
+        t_checkpoints = newCheckpoint
+    }
+}
+
 

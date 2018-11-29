@@ -1,3 +1,4 @@
+
 //
 //  HeaderView2.swift
 //  Goalkeeper
@@ -5,7 +6,6 @@
 //  Created by Avani Aggrwal on 11/26/18.
 //  Copyright © 2018 ACRY. All rights reserved.
 //
-
 import UIKit
 
 class HeaderView2: UIView {

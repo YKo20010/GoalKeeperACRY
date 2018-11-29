@@ -19,9 +19,14 @@ class SettingView: UIViewController {
     //var scrollView: UIScrollView!
     var profileImage: UIImageView!
     var url: URL!
+    var nameLabel: UILabel!
+    var goalsLabel: UILabel!
     
     var viewWidth: CGFloat!
     var viewHeight: CGFloat!
+    
+    var t_Name: String = "name"
+    var t_Goals: String = "0 goals reached"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +41,8 @@ class SettingView: UIViewController {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: 127/895*viewHeight)
         headerHeightConstraint.isActive = true
-        headerView.titleLabel.text = ""
+        headerView.titleLabel.text = "my profile"
+        headerView.backgroundColor = UIColor(red: 165/255, green: 139/255, blue: 139/255, alpha: 1.0)
         view.addSubview(headerView)
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -45,22 +51,23 @@ class SettingView: UIViewController {
             ])
         
         signOutButton.translatesAutoresizingMaskIntoConstraints = false
-        signOutButton.layer.borderColor = UIColor(red: 235/255, green: 195/255, blue: 143/255, alpha: 1.0).cgColor
+        signOutButton.layer.borderColor = UIColor(red: 165/255, green: 139/255, blue: 139/255, alpha: 1.0).cgColor
         signOutButton.layer.borderWidth = 1
-        signOutButton.layer.cornerRadius = 8
-        signOutButton.setTitle("Sign Out", for: .normal)
-        signOutButton.setTitleColor(UIColor(red: 235/255, green: 195/255, blue: 143/255, alpha: 1.0), for: .normal)
-        signOutButton.setTitleColor(UIColor(red: 185/255, green: 145/255, blue: 93/255, alpha: 1.0), for: .highlighted)
+        signOutButton.layer.cornerRadius = 53/895*viewHeight/2
+        signOutButton.setTitle("sign out", for: .normal)
+        signOutButton.setTitleColor(UIColor(red: 165/255, green: 139/255, blue: 139/255, alpha: 1.0), for: .normal)
+        signOutButton.setTitleColor(UIColor(red: 145/255, green: 119/255, blue: 119/255, alpha: 1.0), for: .highlighted)
         signOutButton.addTarget(self, action: #selector(signOutWasPressed), for: .touchDown)
-        signOutButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .light)
+        signOutButton.titleLabel?.font = UIFont.systemFont(ofSize: 26/895*viewHeight, weight: .light)
+        signOutButton.titleLabel?.textAlignment = .center
         signOutButton.layer.masksToBounds = true
         view.addSubview(signOutButton)
         NSLayoutConstraint.activate([
-            signOutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            signOutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -111/895*viewHeight),
             signOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            signOutButton.widthAnchor.constraint(equalToConstant: 100/414*viewWidth)
+            signOutButton.widthAnchor.constraint(equalToConstant: 149/414*viewWidth),
+            signOutButton.heightAnchor.constraint(equalToConstant: 53/895*viewHeight)
             ])
-        
         
         profileImage = UIImageView()
         profileImage.translatesAutoresizingMaskIntoConstraints = false
@@ -72,16 +79,46 @@ class SettingView: UIViewController {
         }
         profileImage.contentMode = .scaleAspectFill
         profileImage.layer.masksToBounds = true
-        profileImage.layer.cornerRadius = 100/414*viewWidth/2
+        profileImage.clipsToBounds = true
+        profileImage.layer.cornerRadius = 160/414*viewWidth/2
         profileImage.layer.borderColor = UIColor.white.cgColor
         profileImage.layer.borderWidth = 2
         view.addSubview(profileImage)
         NSLayoutConstraint.activate([
             profileImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            profileImage.centerYAnchor.constraint(equalTo: headerView.bottomAnchor),
-            profileImage.widthAnchor.constraint(equalToConstant: 100/414*viewWidth),
-            profileImage.heightAnchor.constraint(equalToConstant: 100/414*viewWidth)
+            profileImage.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 40/895*viewHeight),
+            profileImage.widthAnchor.constraint(equalToConstant: 160/414*viewWidth),
+            profileImage.heightAnchor.constraint(equalToConstant: 160/414*viewWidth)
             ])
+        
+        nameLabel = UILabel()
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.textColor = .black
+        nameLabel.textAlignment = .center
+        nameLabel.font = UIFont.systemFont(ofSize: 26/895*viewHeight, weight: .semibold)
+        nameLabel.text = t_Name
+        view.addSubview(nameLabel)
+        NSLayoutConstraint.activate([
+            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20/414*viewWidth),
+            nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20/414*viewWidth),
+            nameLabel.heightAnchor.constraint(equalToConstant: 33/895*viewHeight),
+            nameLabel.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant:33/895*viewHeight)
+            ])
+        
+        goalsLabel = UILabel()
+        goalsLabel.translatesAutoresizingMaskIntoConstraints = false
+        goalsLabel.textColor = UIColor(red: 115/255, green: 115/255, blue: 115/255, alpha: 1.0)
+        goalsLabel.textAlignment = .center
+        goalsLabel.font = UIFont.systemFont(ofSize: 18/895*viewHeight, weight: .regular)
+        goalsLabel.text = t_Goals
+        view.addSubview(goalsLabel)
+        NSLayoutConstraint.activate([
+            goalsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20/414*viewWidth),
+            goalsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20/414*viewWidth),
+            goalsLabel.heightAnchor.constraint(equalToConstant: 23/895*viewHeight),
+            goalsLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8/895*viewHeight)
+            ])
+        
     }
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
@@ -89,7 +126,7 @@ class SettingView: UIViewController {
     }
     
     @IBAction func signOutWasPressed(sender: AnyObject) {
-        signOutButton.layer.borderColor = UIColor(red: 185/255, green: 145/255, blue: 93/255, alpha: 1.0).cgColor
+        signOutButton.layer.borderColor = UIColor(red: 145/255, green: 119/255, blue: 119/255, alpha: 1.0).cgColor
         GIDSignIn.sharedInstance().signOut()
         dismiss(animated: true, completion: nil)
     }

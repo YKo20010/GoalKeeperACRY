@@ -149,6 +149,7 @@ class LoginView: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
 
             let tabview = CustomTabBarController()
             tabview.settingController.url = user.profile.imageURL(withDimension: 400)
+            tabview.settingController.t_Name = user.profile.name.lowercased()
             DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
                 self.present(tabview, animated: true, completion: nil)
                 self.welcomeLabel.text = "Welcome!"

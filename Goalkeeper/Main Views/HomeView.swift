@@ -19,6 +19,7 @@ protocol changeGoal: class {
     func changedProgress(newProgress: Double)
     func changedDate(newDate: Date)
     func changedDescription(newDescription: String)
+    func changedCheckpoint(newCheckpoint: [Checkpoint])
 }
 
 protocol createGoal: class {
@@ -107,15 +108,23 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         let c1 = Checkpoint(name: "Checkpoint1", date: Date(), isFinished: false, startDate: Date())
         let c2 = Checkpoint(name: "Checkpoint2", date: Date(), isFinished: false, startDate: Date())
         let c3 = Checkpoint(name: "Checkpoint3", date: Date(), isFinished: true, startDate: Date())
+        c3.endDate = Date()
         let c4 = Checkpoint(name: "Checkpoint4", date: Date(), isFinished: true, startDate: Date())
+        c4.endDate = Date()
         
-        let g1 = Goal(name: "0/0lkjas;dlfkadkfj;asdkljf;aslkdfj;askdjf;asjd;fjas;dlfjka", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], progress: 0, startDate: Date())
-        let g2 = Goal(name: "1/1", date: Date(timeInterval: 13140000, since: Date()), description: "description text 2", checkpoints: [c4], progress: 50, startDate: Date())
-        let g3 = Goal(name: "0/1", date: Date(timeInterval: 60*60*24*27+1, since: Date()), description: "text3", checkpoints: [c1], progress: 25, startDate: Date())
-        let g4 = Goal(name: "0/2", date: Date(timeInterval: 60*60*24*1+1, since: Date()), description: "text4", checkpoints: [c1, c2], progress: 77, startDate: Date())
-        let g5 = Goal(name: "1/3", date: Date(timeInterval: 31540000+1, since: Date()), description: "text5", checkpoints: [c1, c2, c3], progress: 33, startDate: Date())
-        let g6 = Goal(name: "2/4", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c1, c2, c3, c4], progress: 100, startDate: Date())
-        goals = [g1, g2, g3, g4, g5, g6]
+        let g1 = Goal(name: "0/0 checkpoints, 0% complete", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], progress: 0, startDate: Date())
+        let g2 = Goal(name: "1/1 checkpoints, 50% complete", date: Date(timeInterval: 13140000, since: Date()), description: "description text 2", checkpoints: [c4], progress: 50, startDate: Date())
+        let g3 = Goal(name: "0/1 checkpoints, 0% complete", date: Date(timeInterval: 60*60*24*27+1, since: Date()), description: "text3", checkpoints: [c1], progress: 25, startDate: Date())
+        let g4 = Goal(name: "0/2 checkpoints, 0% complete", date: Date(timeInterval: 60*60*24*1+1, since: Date()), description: "text4", checkpoints: [c1, c2], progress: 77, startDate: Date())
+        let g5 = Goal(name: "1/3 checkpoints, 25% complete", date: Date(timeInterval: 31540000+1, since: Date()), description: "text5", checkpoints: [c1, c2, c3], progress: 33, startDate: Date())
+        let g6 = Goal(name: "2/4 checkpoints, 40% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c1, c2, c3, c4], progress: 25, startDate: Date())
+        let g7 = Goal(name: "2/2 checkpoints, 100% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c3, c4], progress: 25, startDate: Date())
+        g7.endDate = Date()
+        let g8 = Goal(name: "0/0 checkpoints, 100% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [], progress: 25, startDate: Date())
+        g8.endDate = Date()
+        let g9 = Goal(name: "1/2 checkpoints, 66% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c2, c3], progress: 25, startDate: Date())
+        g9.endDate = Date()
+        goals = [g9, g7, g8, g1, g5, g6, g4, g2, g3]
         selected_goals = goals
         
         headerView = HeaderView(frame: .zero, textSize: 40/895*viewHeight)
@@ -373,6 +382,8 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         detailView.t_progress = goal.progress
         detailView.t_Date = goal.date
         detailView.t_checkpoints = goal.checkpoints
+        detailView.viewHeight = viewHeight
+        detailView.viewWidth = viewWidth
         self.delegateShowDetail?.presentDetail(detailController: detailView)
         collectionView.reloadData()
     }
@@ -535,6 +546,11 @@ extension HomeView: changeGoal {
     func changedDescription(newDescription: String) {
         goals[selectedGoalIndex_goals].description = newDescription
         selected_goals[selectedGoalIndex].description = newDescription
+        collectionView.reloadData()
+    }
+    func changedCheckpoint(newCheckpoint: [Checkpoint]) {
+        goals[selectedGoalIndex_goals].checkpoints = newCheckpoint
+        selected_goals[selectedGoalIndex].checkpoints = newCheckpoint
         collectionView.reloadData()
     }
 }
