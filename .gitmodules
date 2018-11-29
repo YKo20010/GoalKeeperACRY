@@ -1,0 +1,3 @@
+[submodule "backend/vm/proj"]
+	path = backend/vm/proj
+	url = https://github.com/YKo20010/GoalKeeperACRY.git
