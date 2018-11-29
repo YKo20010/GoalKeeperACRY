@@ -18,6 +18,7 @@ class CustomTabBarController: UITabBarController {
     let co_tabBarBackground: UIColor = .white
     let co_tabBarTint: UIColor = UIColor(red: 128/255, green: 128/255, blue: 128/255, alpha: 1.0)
     var nav_home: UINavigationController!
+    var settingController: SettingView! = SettingView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +63,6 @@ class CustomTabBarController: UITabBarController {
         //homeController.delegate = progressController
         
 /*********************     SETTINGS VIEW CONTROLLER    ********************/
-        let settingController = SettingView()
         settingController.navigationItem.title = "Settings"
         let nav_setting = UINavigationController(rootViewController: settingController)
         nav_setting.title = ""

@@ -136,7 +136,7 @@ class LoginView: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
             let givenName = user.profile.givenName
             let familyName = user.profile.familyName
             let email = user.profile.email
-            welcomeLabel.text = "Welcome, \(user.profile.name!)!"
+            welcomeLabel.text = "Welcome, \(user.profile.givenName!)!"
             welcomeLabel.isHidden = false
             rec2.isHidden = false
             loadAnimation.isHidden = false
@@ -147,8 +147,9 @@ class LoginView: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
             subLabel.isHidden = true
             signInButton.isHidden = true
 
+            let tabview = CustomTabBarController()
+            tabview.settingController.url = user.profile.imageURL(withDimension: 400)
             DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
-                let tabview = CustomTabBarController()
                 self.present(tabview, animated: true, completion: nil)
                 self.welcomeLabel.text = "Welcome!"
                 self.welcomeLabel.isHidden = true
@@ -160,6 +161,9 @@ class LoginView: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
                 self.loadAnimation.isHidden = true
             }
         }
+    }
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
 
     override func didReceiveMemoryWarning() {
