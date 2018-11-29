@@ -40,8 +40,8 @@ class HeaderView2: UIView {
         dateFormatter.timeStyle = .none
         dateFormatter.locale = Locale(identifier: "en_US")
         
-        let nameHeight: CGFloat = 40
-        let dateHeight: CGFloat = 25
+        let nameHeight: CGFloat = 40/895*viewHeight
+        let dateHeight: CGFloat = 25/895*viewHeight
         
         d_name = UITextField()
         d_name.translatesAutoresizingMaskIntoConstraints = false
@@ -50,7 +50,7 @@ class HeaderView2: UIView {
         d_name.text = t_Name
         d_name.textAlignment = .center
         d_name.borderStyle = .none
-        d_name.font = UIFont.boldSystemFont(ofSize: nameHeight-5)
+        d_name.font = UIFont.boldSystemFont(ofSize: nameHeight - 5)
         d_name.placeholder = "Goal"
         d_name.clearsOnBeginEditing = true
         self.addSubview(d_name)
@@ -59,7 +59,7 @@ class HeaderView2: UIView {
         d_date.translatesAutoresizingMaskIntoConstraints = false
         d_date.setTitleColor(co_dateColor, for: .normal)
         d_date.setTitle("by " + dateFormatter.string(from: t_Date), for: .normal)
-        d_date.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
+        d_date.titleLabel?.font = UIFont.boldSystemFont(ofSize: dateHeight)
         d_date.addTarget(self, action: #selector(pickDate), for: .touchDown)
         self.addSubview(d_date)
         
@@ -71,7 +71,6 @@ class HeaderView2: UIView {
             ])
         NSLayoutConstraint.activate([
             d_name.bottomAnchor.constraint(equalTo: self.centerYAnchor, constant: 9/895*viewHeight),
-            d_name.heightAnchor.constraint(equalToConstant: 46/895*viewHeight),
             d_name.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 1/414*viewWidth),
             d_name.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -20/414*viewWidth)
             ])

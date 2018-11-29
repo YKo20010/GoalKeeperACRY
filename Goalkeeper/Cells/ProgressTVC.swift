@@ -76,14 +76,24 @@ class ProgressTVC: UITableViewCell {
         else if (goal.checkpoints.count != 0 && goal.checkpoints[0].isFinished) {
             numCheck += 1
         }
-        if (goal.checkpoints.count != 0) {
-            let fraction = numCheck*100/goal.checkpoints.count
-            percent.text = "\(fraction)%"
-            progressSlider.setProgress(Float(Double(numCheck)/Double(goal.checkpoints.count)), animated: false)
+        if (goal.endDate != nil) {
+            numCheck += 1
         }
-        else {
+        if (goal.checkpoints.count != 0) {
+            // count for each checkpoint, plus one for actually completing goal
+            let fraction = numCheck*100/(goal.checkpoints.count + 1)
+            percent.text = "\(fraction)%"
+            progressSlider.setProgress(Float(Double(numCheck)/Double(goal.checkpoints.count + 1)), animated: false)
+        }
+        else if (goal.endDate != nil) {
+            // zero checkpoints, completed goal
             percent.text = "100%"
             progressSlider.setProgress(100.0, animated: false)
+        }
+        else {
+            // no checkpoints and incomplete goal
+            percent.text = "0%"
+            progressSlider.setProgress(0.0, animated: false)
         }
     }
     

@@ -10,10 +10,14 @@ import Foundation
 import UIKit
 import Hero
 
+protocol showDetail: class {
+    func presentDetail(detailController: DetailView)
+}
 class CustomTabBarController: UITabBarController {
     
     let co_tabBarBackground: UIColor = .white
     let co_tabBarTint: UIColor = UIColor(red: 128/255, green: 128/255, blue: 128/255, alpha: 1.0)
+    var nav_home: UINavigationController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +40,8 @@ class CustomTabBarController: UITabBarController {
 /*********************     HOME VIEW CONTROLLER    ********************/
         let homeController = HomeView()
         homeController.navigationItem.title = "Goals"
-        let nav_home = UINavigationController(rootViewController: homeController)
+        homeController.delegateShowDetail = self
+        nav_home = UINavigationController(rootViewController: homeController)
         nav_home.title = ""
         nav_home.tabBarItem.image = UIImage(named: "i_home")
 
@@ -70,4 +75,10 @@ class CustomTabBarController: UITabBarController {
         //viewControllers = [nav_calendar, nav_progress]
     }
     
+}
+
+extension CustomTabBarController: showDetail {
+    func presentDetail(detailController: DetailView) {
+        self.nav_home.present(detailController, animated: true, completion: nil)
+    }
 }
