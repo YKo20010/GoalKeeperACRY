@@ -147,6 +147,18 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
         return cell
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            checkpoints.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.delegate2?.changedCheckpointStatus(newCheckpoint: checkpoints)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .delete
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
