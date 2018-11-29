@@ -43,7 +43,7 @@ def get_goal(goal_id):
   return json.dumps({'success': False, 'error': 'Goal not found!'}), 404
 
 @app.route('/api/goal/<int:goal_id>/', methods=['POST'])
-def update_goal(goal):
+def update_goal(goal_id):
   """Update the goal specified by the user's text."""
   goal = Goal.query.filter_by(id=goal_id).first()
   if goal is not None:
@@ -61,7 +61,7 @@ def update_goal(goal):
 @app.route('/api/goal/<int:goal_id>/', methods=['DELETE'])
 def delete_goal(goal_id):
   """Delete the goal specified by the goal id."""
-  goal = Goal.query.filter_by(id=post_id).first()
+  goal = Goal.query.filter_by(id=goal_id).first()
   if goal is not None:
     db.session.delete(goal)
     db.session.commit()
