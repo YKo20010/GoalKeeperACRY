@@ -19,7 +19,7 @@ class KeyDatesCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDeleg
     var notes: [String] = []
     
     //Shapes
-    var circle: UIView!
+    var circle: UIImageView!
     var line: UIImageView!
     
     let shadowRadius: CGFloat = 8
@@ -33,17 +33,18 @@ class KeyDatesCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDeleg
     
     private func commonInit() {
         self.contentView.backgroundColor = .clear
-        //self.contentView.translatesAutoresizingMaskIntoConstraints = false
-        
-        circle = UIView(frame: CGRect(x: 0, y: 0, width: 11/414*contentView.frame.width, height: 11/414*contentView.frame.width))
+       
+        circle = UIImageView()
         circle.translatesAutoresizingMaskIntoConstraints = false
         circle.backgroundColor = UIColor(red: 212/255, green: 114/255, blue: 114/255, alpha: 1.0)
         circle.layer.cornerRadius = (11/414*contentView.frame.width)/2
-        circle.center = CGPoint(x: 18/414*contentView.frame.width + 11/2/414*contentView.frame.width, y: 18/414*contentView.frame.width + 11/2/414*contentView.frame.width)
+        circle.layer.masksToBounds = true
         contentView.addSubview(circle)
         NSLayoutConstraint.activate([
             circle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 18/414*contentView.frame.width),
-            circle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18/414*contentView.frame.width)
+            circle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18/414*contentView.frame.width),
+            circle.widthAnchor.constraint(equalToConstant: 11/414*contentView.frame.width),
+            circle.heightAnchor.constraint(equalToConstant: 11/414*contentView.frame.width)
             ])
         
         line = UIImageView()

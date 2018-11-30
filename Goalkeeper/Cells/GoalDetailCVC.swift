@@ -11,10 +11,12 @@ import UIKit
 protocol buttonClicked: class {
     func changedCheckpointStatus(name: String, date: Date, isFinished: Bool, startDate: Date, endDate: Date?)
 }
+protocol changeMotivation: class {
+    func changedMotivation(newText: String)
+}
 
-class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate {
+class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDelegate {
     
-    weak var delegate: ChangeMotivationTitleDelegate?
     weak var delegate2: ChangeCheckpointStatus?
     
     var titleLabel: UILabel!
@@ -57,11 +59,11 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
         motivationTextView = UITextView()
         motivationTextView.translatesAutoresizingMaskIntoConstraints = false
         motivationTextView.backgroundColor = .clear
-        motivationTextView.delegate = self
         motivationTextView.text = "type yourself a reminder of why you want to reach this goal"
         motivationTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
         motivationTextView.textColor = UIColor(red: 115/255, green: 115/255, blue: 115/255, alpha: 0.6)
         motivationTextView.showsVerticalScrollIndicator = false
+        motivationTextView.isEditable = false
         contentView.addSubview(motivationTextView)
     }
     
@@ -127,14 +129,6 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
             tableView.leadingAnchor.constraint(equalTo: rec.leadingAnchor, constant: 32/414*viewWidth),
             tableView.trailingAnchor.constraint(equalTo: rec.trailingAnchor, constant: -32/414*viewWidth)
             ])
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        self.delegate?.changedMotivationText(newTitle: motivationTextView.text)
-    }
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        motivationTextView.text = ""
     }
     
     /******************************** MARK: UITableView: Data Source ********************************/
@@ -208,6 +202,12 @@ extension GoalDetailCVC: buttonClicked {
             }
             self.delegate2?.changedCheckpointStatus(nc: c)
         }
+    }
+}
+
+extension GoalDetailCVC: changeMotivation {
+    func changedMotivation(newText: String) {
+        motivationTextView.text = newText
     }
 }
 

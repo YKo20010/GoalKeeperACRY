@@ -16,10 +16,7 @@ class HeaderView2: UIView {
     var d_date: UIButton!
     let dateFormatter = DateFormatter()
     
-    var colorView: UIView!
-    
     let co_dateColor: UIColor = UIColor(red: 120/255, green: 116/255, blue: 116/255, alpha: 1.0)
-    var co_colorView: UIColor = UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65)
     var co_background: UIColor = UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65)
     var co_title: UIColor = .white
     let co_textColor: UIColor = .white
@@ -30,11 +27,6 @@ class HeaderView2: UIView {
         super.init(frame: frame)
         
         self.backgroundColor = co_background
-        
-        colorView = UIView()
-        colorView.translatesAutoresizingMaskIntoConstraints = false
-        colorView.backgroundColor = co_colorView
-        self.addSubview(colorView)
         
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
@@ -53,6 +45,7 @@ class HeaderView2: UIView {
         d_name.font = UIFont.boldSystemFont(ofSize: nameHeight - 5)
         d_name.placeholder = "Goal"
         d_name.clearsOnBeginEditing = true
+        d_name.isEnabled = false
         self.addSubview(d_name)
         
         d_date = UIButton()
@@ -61,14 +54,9 @@ class HeaderView2: UIView {
         d_date.setTitle("by " + dateFormatter.string(from: t_Date), for: .normal)
         d_date.titleLabel?.font = UIFont.boldSystemFont(ofSize: dateHeight)
         d_date.addTarget(self, action: #selector(pickDate), for: .touchDown)
+        d_date.isEnabled = false
         self.addSubview(d_date)
-        
-        NSLayoutConstraint.activate([
-            colorView.topAnchor.constraint(equalTo: self.topAnchor),
-            colorView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            colorView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            colorView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-            ])
+    
         NSLayoutConstraint.activate([
             d_name.bottomAnchor.constraint(equalTo: self.centerYAnchor, constant: 9/895*viewHeight),
             d_name.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 1/414*viewWidth),
