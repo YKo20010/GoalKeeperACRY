@@ -46,7 +46,7 @@ class ProgressTVC: UITableViewCell {
     func setupConstraints() {
         NSLayoutConstraint.activate([
             progressSlider.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            progressSlider.widthAnchor.constraint(equalToConstant: 295/350*contentView.frame.width),
+            progressSlider.trailingAnchor.constraint(equalTo: percent.leadingAnchor, constant: -12/350*contentView.frame.width),
             progressSlider.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 12/71*contentView.frame.height),
             progressSlider.heightAnchor.constraint(equalToConstant: 24/350*contentView.frame.width)
             ])
