@@ -39,6 +39,7 @@
 		03FAC14F21AF490F00DFB2A7 /* GoalDetailCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC14E21AF490F00DFB2A7 /* GoalDetailCVC.swift */; };
 		03FAC15121AF68B000DFB2A7 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC15021AF68B000DFB2A7 /* CreateView.swift */; };
 		03FAC15321B0791000DFB2A7 /* goaldetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC15221B0791000DFB2A7 /* goaldetailTVC.swift */; };
+		03FAC15521B18D1C00DFB2A7 /* CreateCheckpointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC15421B18D1C00DFB2A7 /* CreateCheckpointView.swift */; };
 		4B5F49DCBB2F0C8B65E2DBBE /* Pods_Goalkeeper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6246DBFDBEA5D5A09E2B75AE /* Pods_Goalkeeper.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,7 @@
 		03FAC14E21AF490F00DFB2A7 /* GoalDetailCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalDetailCVC.swift; sourceTree = "<group>"; };
 		03FAC15021AF68B000DFB2A7 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
 		03FAC15221B0791000DFB2A7 /* goaldetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = goaldetailTVC.swift; sourceTree = "<group>"; };
+		03FAC15421B18D1C00DFB2A7 /* CreateCheckpointView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCheckpointView.swift; sourceTree = "<group>"; };
 		6246DBFDBEA5D5A09E2B75AE /* Pods_Goalkeeper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Goalkeeper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C37F5D0B7D60BF64B8FA22CF /* Pods-Goalkeeper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalkeeper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper.release.xcconfig"; sourceTree = "<group>"; };
 		FABE3B8F79E659B0F3C0F517 /* Pods-Goalkeeper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalkeeper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				03FAC15021AF68B000DFB2A7 /* CreateView.swift */,
+				03FAC15421B18D1C00DFB2A7 /* CreateCheckpointView.swift */,
 				03FAC13B21ADE4FB00DFB2A7 /* ProgressBar.swift */,
 				034AD8A521A389B600AB9412 /* ProgressSlider.swift */,
 				034AD8D121A65CB600AB9412 /* CustomTableView.swift */,
@@ -374,6 +377,7 @@
 				034AD8D021A62D5800AB9412 /* Checkpoint.swift in Sources */,
 				03FAC14321AE379500DFB2A7 /* KeyDatesCVC.swift in Sources */,
 				03FAC14121AE30BA00DFB2A7 /* subHeader.swift in Sources */,
+				03FAC15521B18D1C00DFB2A7 /* CreateCheckpointView.swift in Sources */,
 				03FAC14D21AF487C00DFB2A7 /* HeaderView2.swift in Sources */,
 				034AD89D21A235C900AB9412 /* ProgressView.swift in Sources */,
 				034AD8D421AA6E7100AB9412 /* HeaderView.swift in Sources */,

@@ -11,34 +11,39 @@ import UIKit
 protocol buttonClicked: class {
     func changedCheckpointStatus(name: String, date: Date, isFinished: Bool, startDate: Date, endDate: Date?)
 }
+protocol changeMotivation: class {
+    func changedMotivation(newText: String)
+}
 
-class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate {
+class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDelegate {
     
-    weak var delegate: ChangeMotivationTitleDelegate?
     weak var delegate2: ChangeCheckpointStatus?
     
     var titleLabel: UILabel!
     var motivationTextView: UITextView!
     var tableView: CustomTableView!
+    var addCheckpointButton: UIButton!
 
     var rec: UIImageView!
     var circle: UIImageView!
     var line: UIImageView!
     
-    var checkpoints: [Checkpoint] = []
+    var c: [Checkpoint] = []
     
-    var viewHeight: CGFloat = 895
-    var viewWidth: CGFloat = 414
+    var viewHeight: CGFloat = 0
+    var viewWidth: CGFloat = 0
     let shadowRadius: CGFloat = 8
     let reuseCellIdentifier = "tableViewCellReuseIdentifier"
     
     override init(frame: CGRect) {
         super.init(frame:frame)
-    }
-    
-    func setupConstraints() {
         contentView.layer.masksToBounds = false
         contentView.clipsToBounds = false
+       
+        line = UIImageView()
+        line.translatesAutoresizingMaskIntoConstraints = false
+        line.backgroundColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1.0)
+        contentView.addSubview(line)
         
         rec = UIImageView()
         rec.translatesAutoresizingMaskIntoConstraints = false
@@ -52,6 +57,32 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
         rec.clipsToBounds = false
         contentView.addSubview(rec)
         
+        motivationTextView = UITextView()
+        motivationTextView.translatesAutoresizingMaskIntoConstraints = false
+        motivationTextView.backgroundColor = .clear
+        motivationTextView.text = "type yourself a reminder of why you want to reach this goal"
+        motivationTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        motivationTextView.textColor = UIColor(red: 115/255, green: 115/255, blue: 115/255, alpha: 0.6)
+        motivationTextView.showsVerticalScrollIndicator = false
+        motivationTextView.isEditable = false
+        contentView.addSubview(motivationTextView)
+        
+        addCheckpointButton = UIButton()
+        addCheckpointButton.translatesAutoresizingMaskIntoConstraints = false
+        addCheckpointButton.setImage(UIImage(named: "addCheckpointButton"), for: .normal)
+        addCheckpointButton.backgroundColor = .clear
+        addCheckpointButton.contentMode = .scaleAspectFit
+        addCheckpointButton.addTarget(self, action: #selector(addCheckpoint), for: .touchDown)
+        contentView.addSubview(addCheckpointButton)
+    }
+    
+    @objc func addCheckpoint() {
+        tableView.removeFromSuperview()
+        self.delegate2?.beginAddCheckpoint()
+    }
+    
+    func setupConstraints() {
+        
         circle = UIImageView()
         circle.translatesAutoresizingMaskIntoConstraints = false
         circle.backgroundColor = UIColor(red: 201/255, green: 142/255, blue: 25/255, alpha: 1.0)
@@ -59,39 +90,25 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
         circle.layer.masksToBounds = true
         contentView.addSubview(circle)
         
-        line = UIImageView()
-        line.translatesAutoresizingMaskIntoConstraints = false
-        line.backgroundColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1.0)
-        contentView.addSubview(line)
-        
         titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.backgroundColor = .white
         titleLabel.textColor = .black
         titleLabel.font = UIFont.systemFont(ofSize: 26/895*viewHeight, weight: .bold)
         contentView.addSubview(titleLabel)
-        
-        motivationTextView = UITextView()
-        motivationTextView.translatesAutoresizingMaskIntoConstraints = false
-        motivationTextView.backgroundColor = .clear
-        motivationTextView.delegate = self
-        motivationTextView.text = "type yourself a reminder of why you want to reach this goal"
-        motivationTextView.font = UIFont.systemFont(ofSize: 16/895*viewHeight, weight: .light)
-        motivationTextView.textColor = UIColor(red: 115/255, green: 115/255, blue: 115/255, alpha: 0.6)
-        contentView.addSubview(motivationTextView)
         
         tableView = CustomTableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.register(goaldetailTVC.self, forCellReuseIdentifier: reuseCellIdentifier)
-        tableView.estimatedRowHeight = 53/414*viewWidth
-        tableView.rowHeight = 53/414*viewWidth
+        tableView.estimatedRowHeight = 53
         tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
         tableView.delegate = self
         tableView.isScrollEnabled = false
         tableView.allowsSelection = true
         contentView.addSubview(tableView)
-        
+
         NSLayoutConstraint.activate([
             circle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 17/414*viewWidth),
             circle.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -99,7 +116,7 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
             circle.heightAnchor.constraint(equalToConstant: 13/414*viewWidth)
             ])
         NSLayoutConstraint.activate([
-            rec.heightAnchor.constraint(equalToConstant: contentView.frame.height),
+            rec.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -51/895*viewHeight),
             rec.widthAnchor.constraint(equalToConstant: 331/414*viewWidth),
             rec.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32/414*viewWidth),
             rec.topAnchor.constraint(equalTo: contentView.topAnchor)
@@ -114,11 +131,11 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
             titleLabel.leadingAnchor.constraint(equalTo: rec.leadingAnchor, constant: 18.1/414*viewWidth),
             titleLabel.topAnchor.constraint(equalTo: rec.topAnchor, constant: 16/895*viewHeight),
             titleLabel.heightAnchor.constraint(equalToConstant: 33/895*viewHeight),
-            titleLabel.trailingAnchor.constraint(equalTo: rec.trailingAnchor, constant: -18.1/414*viewWidth)
+            titleLabel.trailingAnchor.constraint(equalTo: addCheckpointButton.leadingAnchor, constant: -18/414*viewWidth)
             ])
         NSLayoutConstraint.activate([
             motivationTextView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 6/895*viewHeight),
-            motivationTextView.heightAnchor.constraint(equalToConstant: 150/895*viewHeight),
+            motivationTextView.bottomAnchor.constraint(equalTo: rec.bottomAnchor, constant: -23/895*viewHeight),
             motivationTextView.leadingAnchor.constraint(equalTo: rec.leadingAnchor, constant: 22/414*viewWidth),
             motivationTextView.trailingAnchor.constraint(equalTo: rec.trailingAnchor, constant: -26/414*viewWidth)
             ])
@@ -127,21 +144,28 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
             tableView.leadingAnchor.constraint(equalTo: rec.leadingAnchor, constant: 32/414*viewWidth),
             tableView.trailingAnchor.constraint(equalTo: rec.trailingAnchor, constant: -32/414*viewWidth)
             ])
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        self.delegate?.changedMotivationText(newTitle: motivationTextView.text)
+        NSLayoutConstraint.activate([
+            addCheckpointButton.topAnchor.constraint(equalTo: rec.topAnchor, constant: 22/895*viewHeight),
+            addCheckpointButton.trailingAnchor.constraint(equalTo: rec.trailingAnchor, constant: -18/414*viewWidth),
+            addCheckpointButton.widthAnchor.constraint(equalToConstant: 20/414*viewWidth),
+            addCheckpointButton.heightAnchor.constraint(equalToConstant: 20/414*viewWidth)
+            ])
     }
     
     /******************************** MARK: UITableView: Data Source ********************************/
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return checkpoints.count
+        return c.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 53/895*viewHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseCellIdentifier, for: indexPath) as! goaldetailTVC
-        cell.backgroundColor = .clear
-        let checkpoint = checkpoints[indexPath.row]
+        cell.backgroundColor = .white
+        cell.selectionStyle = .none
+        let checkpoint = c[indexPath.row]
         cell.configure(for: checkpoint)
         cell.delegate = self
         return cell
@@ -149,16 +173,17 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            checkpoints.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            self.delegate2?.changedCheckpointStatus(newCheckpoint: checkpoints)
+            c.remove(at: indexPath.row)
+            titleLabel.removeFromSuperview()
+            tableView.removeFromSuperview()
+            self.delegate2?.changedCheckpointStatus(nc: c)
         }
     }
     
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        return .delete
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -166,24 +191,44 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
 
 extension GoalDetailCVC: buttonClicked {
     func changedCheckpointStatus(name: String, date: Date, isFinished: Bool, startDate: Date, endDate: Date?) {
-        for i in 0...checkpoints.count-1 {
-            if (checkpoints[i].name == name
-                && checkpoints[i].date == date
-                && checkpoints[i].isFinished == isFinished
-                && checkpoints[i].startDate == startDate
-                && ((checkpoints[i].endDate == nil && endDate == nil) || (checkpoints[i].endDate != nil && endDate != nil))) {
-                    checkpoints[i].isFinished = !checkpoints[i].isFinished
-                    if (checkpoints[i].isFinished) {
-                        checkpoints[i].endDate = Date()
-                    }
-                    if (!checkpoints[i].isFinished) {
-                        checkpoints[i].endDate = nil
-                    }
-                    self.tableView.reloadData()
-                    self.delegate2?.changedCheckpointStatus(newCheckpoint: checkpoints)
-                return
-            }
+        if (c.count > 1) {
+            for i in 0...c.count-1 {
+                if (c[i].name == name
+                    && c[i].date == date
+                    && c[i].isFinished == isFinished
+                    && c[i].startDate == startDate
+                    && ((c[i].endDate == nil && endDate == nil) || (c[i].endDate != nil && endDate != nil))) {
+                        c[i].isFinished = !c[i].isFinished
+                        if (c[i].isFinished) {
+                            c[i].endDate = Date()
+                        }
+                        if (!c[i].isFinished) {
+                            c[i].endDate = nil
+                        }
+            }}
         }
+        else if (c[0].name == name
+            && c[0].date == date
+            && c[0].isFinished == isFinished
+            && c[0].startDate == startDate
+            && ((c[0].endDate == nil && endDate == nil) || (c[0].endDate != nil && endDate != nil))) {
+                c[0].isFinished = !c[0].isFinished
+                if (c[0].isFinished) {
+                    c[0].endDate = Date()
+                }
+                if (!c[0].isFinished) {
+                    c[0].endDate = nil
+                }
+        }
+        titleLabel.removeFromSuperview()
+        tableView.removeFromSuperview()
+        self.delegate2?.changedCheckpointStatus(nc: c)
+    }
+}
+
+extension GoalDetailCVC: changeMotivation {
+    func changedMotivation(newText: String) {
+        motivationTextView.text = newText
     }
 }
 

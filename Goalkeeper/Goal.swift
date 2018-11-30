@@ -14,17 +14,15 @@ class Goal {
     var date: Date
     var checkpoints: [Checkpoint]
     var description: String
-    var progress: Double
     var startDate: Date
     var endDate: Date?
     
     
-    init (name: String, date: Date, description: String, checkpoints: [Checkpoint], progress: Double, startDate: Date) {
+    init (name: String, date: Date, description: String, checkpoints: [Checkpoint], startDate: Date) {
         self.name = name
         self.date = date
         self.description = description
         self.checkpoints = checkpoints
-        self.progress = progress
         self.startDate = startDate
     }
 }
