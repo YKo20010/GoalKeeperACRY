@@ -31,12 +31,12 @@ class CreateView: UIView, UITextViewDelegate {
         super.init(frame: frame)
         self.backgroundColor = UIColor(red: 176/255, green: 210/255, blue: 232/255, alpha: 1.0)
         self.layer.cornerRadius = 8
-//        self.layer.shadowColor = UIColor(red: 190/255, green: 172/255, blue: 172/255, alpha: 1.0).cgColor
-//        self.layer.shadowRadius = 8
-//        self.layer.shadowOpacity = 0.5
-//        self.layer.shadowOffset = CGSize(width: 6, height: 6)
-//        self.clipsToBounds = false
-//        self.layer.masksToBounds = false
+        self.layer.shadowColor = UIColor(red: 190/255, green: 172/255, blue: 172/255, alpha: 1.0).cgColor
+        self.layer.shadowRadius = 8
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowOffset = CGSize(width: 6, height: 6)
+        self.clipsToBounds = false
+        self.layer.masksToBounds = false
         
         d_name = UITextField()
         d_name.translatesAutoresizingMaskIntoConstraints = false
@@ -73,7 +73,6 @@ class CreateView: UIView, UITextViewDelegate {
         n_label.font = UIFont.systemFont(ofSize: 16/895*viewHeight, weight: .light)
         n_label.textAlignment = .left
         self.addSubview(n_label)
-        n_label.isHidden = true
         NSLayoutConstraint.activate([
             n_label.leadingAnchor.constraint(equalTo: rec.leadingAnchor),
             n_label.topAnchor.constraint(equalTo: rec.bottomAnchor, constant: 10/895*viewHeight)
@@ -99,10 +98,9 @@ class CreateView: UIView, UITextViewDelegate {
         n_label2.translatesAutoresizingMaskIntoConstraints = false
         n_label2.text = "Description: "
         n_label2.textColor = .white
-        n_label2.font = UIFont.systemFont(ofSize: 25/895*viewHeight, weight: .regular)
+        n_label2.font = UIFont.systemFont(ofSize: 20/895*viewHeight, weight: .regular)
         n_label2.textAlignment = .left
         self.addSubview(n_label2)
-        n_label2.isHidden = true
         NSLayoutConstraint.activate([
             n_label2.leadingAnchor.constraint(equalTo: rec.leadingAnchor),
             n_label2.topAnchor.constraint(equalTo: n_label.bottomAnchor, constant: 10/895*viewHeight)
@@ -152,12 +150,13 @@ class CreateView: UIView, UITextViewDelegate {
         d_description.translatesAutoresizingMaskIntoConstraints = false
         d_description.backgroundColor = .clear
         d_description.textColor = .white
-        d_description.text = "Enter a description of what you want to accomplish, and why you want to achieve this goal."
+        d_description.text = "type yourself a reminder of what you want to accomplish, and why you want to achieve this goal"
         d_description.textAlignment = .left
         d_description.isEditable = true
         d_description.scrollsToTop = true
         d_description.showsVerticalScrollIndicator = false
         d_description.font = UIFont.systemFont(ofSize: 16/895*viewHeight, weight: .light)
+        d_description.delegate = self
         self.addSubview(d_description)
         NSLayoutConstraint.activate([
             d_description.leadingAnchor.constraint(equalTo: rec.leadingAnchor),
@@ -198,7 +197,7 @@ class CreateView: UIView, UITextViewDelegate {
                 self.delegate?.showCreationAlert()
                 return
             }
-            let newGoal = Goal(name: d_name.text!, date: date, description: d_description.text!, checkpoints: [], progress: 0, startDate: Date())
+            let newGoal = Goal(name: d_name.text!, date: date, description: d_description.text!, checkpoints: [], startDate: Date())
             self.delegate?.createdGoal(newGoal: newGoal)
         }
         if (sender.titleLabel?.text == "Set") {

@@ -16,7 +16,6 @@ enum SearchType {
 
 protocol changeGoal: class {
     func changedName(newName: String)
-    func changedProgress(newProgress: Double)
     func changedDate(newDate: Date)
     func changedDescription(newDescription: String)
     func changedCheckpoint(newCheckpoint: [Checkpoint])
@@ -28,7 +27,7 @@ protocol createGoal: class {
     func showCreationAlert()
 }
 
-class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     //weak var delegate: addedGoal?
     weak var delegate: addEvent?
@@ -36,14 +35,11 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
     
     /*  Colors  */
     let co_background: UIColor = .white
-    let co_searchBar: UIColor = .gray
-    let co_searchBarTint: UIColor = .white
     let co_tabBar: UIColor = .darkGray
     var co_navBar: UIColor = .darkGray
     var co_text: UIColor = .white
     /*  Views   */
     var collectionView: UICollectionView!
-    var searchController: UISearchController!
     var addBarButton: UIBarButtonItem!
     var headerView: HeaderView!
     var addButton: UIButton!
@@ -64,11 +60,11 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
     let goalCellIdentifier = "GoalCell"
     let headerReuseIdentifier = "headerReuseIdentifier"
     var headerHeightConstraint: NSLayoutConstraint!
-    var selectedGoalIndex: Int = 0
-    var selectedGoalIndex_goals: Int = 0
+    var selectedGoalIndex: Int = -1
+    //var selectedGoalIndex_goals: Int = 0
     /*  Arrays  */
     var goals: [Goal] = []
-    var selected_goals: [Goal] = []
+    //var selected_goals: [Goal] = []
     var dateFormatter = DateFormatter()
     
     var viewWidth: CGFloat!
@@ -112,20 +108,20 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         let c4 = Checkpoint(name: "Checkpoint4", date: Date(), isFinished: true, startDate: Date())
         c4.endDate = Date()
         
-        let g1 = Goal(name: "0/0 checkpoints, 0% complete", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], progress: 0, startDate: Date())
-        let g2 = Goal(name: "1/1 checkpoints, 50% complete", date: Date(timeInterval: 13140000, since: Date()), description: "description text 2", checkpoints: [c4], progress: 50, startDate: Date())
-        let g3 = Goal(name: "0/1 checkpoints, 0% complete", date: Date(timeInterval: 60*60*24*27+1, since: Date()), description: "text3", checkpoints: [c1], progress: 25, startDate: Date())
-        let g4 = Goal(name: "0/2 checkpoints, 0% complete", date: Date(timeInterval: 60*60*24*1+1, since: Date()), description: "text4", checkpoints: [c1, c2], progress: 77, startDate: Date())
-        let g5 = Goal(name: "1/3 checkpoints, 25% complete", date: Date(timeInterval: 31540000+1, since: Date()), description: "text5", checkpoints: [c1, c2, c3], progress: 33, startDate: Date())
-        let g6 = Goal(name: "2/4 checkpoints, 40% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c1, c2, c3, c4], progress: 25, startDate: Date())
-        let g7 = Goal(name: "2/2 checkpoints, 100% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c3, c4], progress: 25, startDate: Date())
+        let g1 = Goal(name: "0/0 checkpoints, 0% complete", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], startDate: Date())
+        let g2 = Goal(name: "1/1 checkpoints, 50% complete", date: Date(timeInterval: 13140000, since: Date()), description: "description text 2", checkpoints: [c4], startDate: Date())
+        let g3 = Goal(name: "0/1 checkpoints, 0% complete", date: Date(timeInterval: 60*60*24*27+1, since: Date()), description: "text3", checkpoints: [c1], startDate: Date())
+        let g4 = Goal(name: "0/2 checkpoints, 0% complete", date: Date(timeInterval: 60*60*24*1+1, since: Date()), description: "text4", checkpoints: [c1, c2], startDate: Date())
+        let g5 = Goal(name: "1/3 checkpoints, 25% complete", date: Date(timeInterval: 31540000+1, since: Date()), description: "text5", checkpoints: [c1, c2, c3], startDate: Date())
+        let g6 = Goal(name: "2/4 checkpoints, 40% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c1, c2, c3, c4], startDate: Date())
+        let g7 = Goal(name: "2/2 checkpoints, 100% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c3, c4], startDate: Date())
         g7.endDate = Date()
-        let g8 = Goal(name: "0/0 checkpoints, 100% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [], progress: 25, startDate: Date())
+        let g8 = Goal(name: "0/0 checkpoints, 100% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [], startDate: Date())
         g8.endDate = Date()
-        let g9 = Goal(name: "1/2 checkpoints, 66% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c2, c3], progress: 25, startDate: Date())
+        let g9 = Goal(name: "1/2 checkpoints, 66% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c2, c3], startDate: Date())
         g9.endDate = Date()
         goals = [g9, g7, g8, g1, g5, g6, g4, g2, g3]
-        selected_goals = goals
+        //selected_goals = goals
         
         headerView = HeaderView(frame: .zero, textSize: 40/895*viewHeight)
         headerView.translatesAutoresizingMaskIntoConstraints = false
@@ -175,18 +171,6 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         plusSign.font = UIFont.systemFont(ofSize: 30/414*viewWidth, weight: .regular)
         view.addSubview(plusSign)
         
-        searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search by Title"
-        searchController.searchBar.sizeToFit()
-        searchController.searchBar.barTintColor = co_searchBar
-        searchController.searchBar.isTranslucent = false
-        searchController.searchBar.layer.borderWidth = 0
-        searchController.searchBar.tintColor = co_searchBarTint
-        //tableView.tableHeaderView = searchController.searchBar
-        definesPresentationContext = true
-        
         let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.light)
         blurView = UIVisualEffectView(effect: darkBlur)
         blurView.frame = view.bounds
@@ -225,13 +209,12 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
             n_background.widthAnchor.constraint(equalToConstant: 4/5*viewWidth),
             n_background.heightAnchor.constraint(equalToConstant: 4/5*viewWidth)
             ])
-        
-//        n_background.layer.shadowColor = UIColor(red: 190/255, green: 172/255, blue: 172/255, alpha: 1.0).cgColor
-//        n_background.layer.shadowRadius = 8
-//        n_background.layer.shadowOpacity = 0.5
-//        n_background.layer.shadowOffset = CGSize(width: 6, height: 6)
-//        n_background.clipsToBounds = false
-//        n_background.layer.masksToBounds = false
+        n_background.layer.shadowColor = UIColor(red: 190/255, green: 172/255, blue: 172/255, alpha: 1.0).cgColor
+        n_background.layer.shadowRadius = 8
+        n_background.layer.shadowOpacity = 0.5
+        n_background.layer.shadowOffset = CGSize(width: 6, height: 6)
+        n_background.clipsToBounds = false
+        n_background.layer.masksToBounds = false
         
         n_label = UILabel()
         n_label.translatesAutoresizingMaskIntoConstraints = false
@@ -357,29 +340,24 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
     
     /******************************** MARK: UICollectionView: Data Source ********************************/
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return selected_goals.count
+        return goals.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: goalCellIdentifier, for: indexPath) as! GoalCVC
-        let goal = selected_goals[indexPath.row]
+        let goal = goals[indexPath.row]
         cell.configure(for: goal)
-//        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(delete(sender:)))
-//        swipe.direction = UISwipeGestureRecognizerDirection.left
-//        cell.addGestureRecognizer(swipe)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: goalCellIdentifier, for: indexPath) as! GoalCVC
-        let goal = selected_goals[indexPath.row]
+        let goal = goals[indexPath.row]
         selectedGoalIndex = indexPath.row
-        selectedGoalIndex_goals = selected_goalsToGoals()
         let detailView = DetailView()
         detailView.delegate = self
         detailView.t_Name = goal.name
         detailView.t_Description = goal.description
-        detailView.t_progress = goal.progress
         detailView.t_Date = goal.date
         detailView.t_checkpoints = goal.checkpoints
         detailView.viewHeight = viewHeight
@@ -412,7 +390,7 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         if (sender == n_yesButton) {
             self.delegate?.addedEvent(title: "goal \"\(goals[(deleteIndex?.item)!].name)\" deleted", date: Date())
             goals.remove(at: (deleteIndex?.item)!)
-            selected_goals = goals
+            //selected_goals = goals
             collectionView.deleteItems(at: [deleteIndex!])
         }
         if (sender == n_noButton) {
@@ -428,64 +406,6 @@ class HomeView: UIViewController, UISearchResultsUpdating, UICollectionViewDataS
         collectionView.isUserInteractionEnabled = true
         blurView.isHidden = true
         
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == .delete) {
-            goals.remove(at: indexPath.row)
-            selected_goals = goals
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        return .delete
-    }
-    
-    /******************************** MARK: UISearchController Filtering ********************************/
-    func updateSearchResults(for searchController: UISearchController) {
-        if let searchText = searchController.searchBar.text {
-            if !searchText.isEmpty {
-                switch searchBy {
-                case .title:
-                    print("search by title")
-                    selected_goals = goals.filter{$0.name.lowercased().contains(searchText.lowercased())}
-                    collectionView.reloadData()
-                }
-            }
-            else {
-                selected_goals = goals
-                collectionView.reloadData()
-            }
-        }
-    }
-    
-    /**Return the index of the goal in the "goals" array that corresponds to the goal in the "selected_goals" array.*/
-    func selected_goalsToGoals() -> Int {
-        if (goals.count>1) {
-            for i in 0...goals.count-1 {
-                if (goals[i].name == selected_goals[selectedGoalIndex].name
-                    && goals[i].date == selected_goals[selectedGoalIndex].date
-                    && goals[i].description == selected_goals[selectedGoalIndex].description
-                    && goals[i].progress == selected_goals[selectedGoalIndex].progress) {
-                    if (goals[i].checkpoints.count == 0) {
-                        return i
-                    }
-                    else if (goals[i].checkpoints.count > 1) {
-                        for j in 0...goals[i].checkpoints.count-1 {
-                            if (!(goals[i].checkpoints[j] === selected_goals[selectedGoalIndex].checkpoints[j])) {
-                                break
-                            }
-                        }
-                        return i
-                    }
-                    else if (goals[i].checkpoints[0] === selected_goals[selectedGoalIndex].checkpoints[0]) {
-                        return i
-                    }
-                }
-            }
-        }
-        return 0
     }
     
     override func didReceiveMemoryWarning() {
@@ -529,28 +449,19 @@ extension HomeView: UIScrollViewDelegate {
 
 extension HomeView: changeGoal {
     func changedName(newName: String) {
-        goals[selectedGoalIndex_goals].name = newName
-        selected_goals[selectedGoalIndex].name = newName
-        collectionView.reloadData()
-    }
-    func changedProgress(newProgress: Double) {
-        goals[selectedGoalIndex_goals].progress = newProgress
-        selected_goals[selectedGoalIndex].progress = newProgress
+        goals[selectedGoalIndex].name = newName
         collectionView.reloadData()
     }
     func changedDate(newDate: Date) {
-        goals[selectedGoalIndex_goals].date = newDate
-        selected_goals[selectedGoalIndex].date = newDate
+        goals[selectedGoalIndex].date = newDate
         collectionView.reloadData()
     }
     func changedDescription(newDescription: String) {
-        goals[selectedGoalIndex_goals].description = newDescription
-        selected_goals[selectedGoalIndex].description = newDescription
+        goals[selectedGoalIndex].description = newDescription
         collectionView.reloadData()
     }
     func changedCheckpoint(newCheckpoint: [Checkpoint]) {
-        goals[selectedGoalIndex_goals].checkpoints = newCheckpoint
-        selected_goals[selectedGoalIndex].checkpoints = newCheckpoint
+        goals[selectedGoalIndex].checkpoints = newCheckpoint
         collectionView.reloadData()
     }
 }
@@ -558,7 +469,7 @@ extension HomeView: changeGoal {
 extension HomeView: createGoal {
     func createdGoal(newGoal: Goal) {
         goals.append(newGoal)
-        selected_goals = goals
+        //selected_goals = goals
         collectionView.reloadData()
         collectionView.scrollToItem(at: NSIndexPath(row: goals.count-1, section: 0) as IndexPath, at: .bottom, animated: true)
         //self.delegate?.addGoal(newGoal: newGoal)

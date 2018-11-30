@@ -33,6 +33,8 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     let headerReuseIdentifier = "headerReuseIdentifier"
     var headerHeightConstraint: NSLayoutConstraint!
     var d_datePicker: UIDatePicker!
+    var blurView: UIVisualEffectView!
+    var datePickLabel: UILabel!
     
     var titles: [String] = ["checkpoints", "motivation"]
     
@@ -43,7 +45,6 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     
     var t_Name: String = "Title"
     var t_Description: String = "default"
-    var t_progress: Double = 0
     var t_Date: Date = Date()
     var t_checkpoints: [Checkpoint] = []
     var h: CGFloat = 0
@@ -55,9 +56,6 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     let co_textColor: UIColor = .white
     let co_cpTableViewText: UIColor = .white
     let co_cpTableViewBorder: UIColor = .white
-    let co_datePickerTint: UIColor = .white
-    let co_datePickerBackground: UIColor = .blue
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,20 +66,9 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         //to calculate checkpoints cell height (gives an error if moved to collectionview func)
         h = 0.14525*viewHeight + 0.059218*viewHeight*CGFloat(t_checkpoints.count)
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(DetailView.viewTapped(gestureRecognizer:)))
-        view.addGestureRecognizer(tapGesture)
-        
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         dateFormatter.locale = Locale(identifier: "en_US")
-        
-        backButton = UIButton()
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-        backButton.backgroundColor = .clear
-        backButton.setImage(UIImage(named: "back"), for: .normal)
-        backButton.contentMode = .scaleAspectFit
-        backButton.addTarget(self, action: #selector(back), for: .touchDown)
-        view.addSubview(backButton)
         
         viewHeight = view.frame.height
         headerView = HeaderView2(frame: .zero, viewHeight: viewHeight, viewWidth: viewWidth, t_Name: t_Name, t_Date: t_Date)
@@ -90,14 +77,6 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         headerHeightConstraint.isActive = true
         headerView.delegate = self
         view.addSubview(headerView)
-        
-        saveButton = UIButton()
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-        saveButton.backgroundColor = .clear
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.setTitleColor(co_textColor, for: .normal)
-        saveButton.addTarget(self, action: #selector(save), for: .touchDown)
-        view.addSubview(saveButton)
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -115,18 +94,72 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         collectionView.allowsSelection = true
         view.addSubview(collectionView)
         
+        let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        blurView = UIVisualEffectView(effect: darkBlur)
+        blurView.frame = view.bounds
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurView.isHidden = true
+        view.addSubview(blurView)
+        
         d_datePicker = UIDatePicker()
         d_datePicker.translatesAutoresizingMaskIntoConstraints = false
         d_datePicker.minimumDate = Date()
-        d_datePicker.maximumDate = Date(timeInterval: 157700000, since: Date())
+        d_datePicker.maximumDate = Date(timeInterval: 60*60*24*365*10, since: Date())
         d_datePicker.datePickerMode = .date
-        d_datePicker.setValue(co_datePickerTint, forKey: "textColor")
-        d_datePicker.backgroundColor = co_datePickerBackground
+        d_datePicker.setValue(UIColor.white, forKey: "textColor")
+        d_datePicker.backgroundColor = UIColor.clear
         d_datePicker.layer.cornerRadius = 5
         d_datePicker.layer.masksToBounds = true
         d_datePicker.addTarget(self, action: #selector(datePicked), for: .valueChanged)
         d_datePicker.isHidden = true
         view.addSubview(d_datePicker)
+        
+        datePickLabel = UILabel()
+        datePickLabel.translatesAutoresizingMaskIntoConstraints = false
+        datePickLabel.textColor = .white
+        datePickLabel.font = UIFont.systemFont(ofSize: 25/895*viewHeight, weight: .regular)
+        datePickLabel.isHidden = true
+        view.addSubview(datePickLabel)
+        
+        backButton = UIButton()
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.backgroundColor = .white
+        backButton.setTitle("Back", for: .normal)
+        backButton.setTitleColor(UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65), for: .normal)
+        backButton.addTarget(self, action: #selector(back), for: .touchDown)
+        backButton.layer.cornerRadius = 8
+        backButton.layer.masksToBounds = true
+        backButton.titleLabel?.font = UIFont.systemFont(ofSize: 25/895*viewHeight, weight: .light)
+        backButton.titleLabel?.textAlignment = .center
+        backButton.layer.borderColor = UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65).cgColor
+        backButton.layer.borderWidth = 1
+        view.addSubview(backButton)
+        NSLayoutConstraint.activate([
+            backButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20/895*viewHeight),
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50/895*viewHeight),
+            backButton.heightAnchor.constraint(equalToConstant: 35/895*viewHeight),
+            backButton.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -50/895*viewHeight)
+            ])
+        
+        saveButton = UIButton()
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        saveButton.backgroundColor = .white
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.addTarget(self, action: #selector(save), for: .touchDown)
+        saveButton.setTitleColor(UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65), for: .normal)
+        saveButton.layer.cornerRadius = 8
+        saveButton.layer.masksToBounds = true
+        saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 25/895*viewHeight, weight: .light)
+        saveButton.titleLabel?.textAlignment = .center
+        saveButton.layer.borderColor = UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65).cgColor
+        saveButton.layer.borderWidth = 1
+        view.addSubview(saveButton)
+        NSLayoutConstraint.activate([
+            saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20/895*viewHeight),
+            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50/895*viewHeight),
+            saveButton.heightAnchor.constraint(equalToConstant: 35/895*viewHeight),
+            saveButton.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 50/895*viewHeight)
+            ])
         
         alert = UIAlertController()
         alert.title = ""
@@ -143,74 +176,93 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
         NSLayoutConstraint.activate([
-            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            backButton.heightAnchor.constraint(equalToConstant: 20),
-            backButton.widthAnchor.constraint(equalToConstant: 20),
-            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
-            ])
-        NSLayoutConstraint.activate([
-            saveButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            saveButton.heightAnchor.constraint(equalToConstant: 20),
-            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-            ])
-        NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -37/895*viewHeight),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
         NSLayoutConstraint.activate([
             d_datePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             d_datePicker.centerYAnchor.constraint(equalTo: view.centerYAnchor)
             ])
-    }
-    
-    @objc func back() {
-        dismiss(animated: true, completion: nil)
+        NSLayoutConstraint.activate([
+            datePickLabel.bottomAnchor.constraint(equalTo: d_datePicker.topAnchor, constant: -20/895*viewHeight),
+            datePickLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            ])
     }
     
     /******************************** MARK: Action Functions ********************************/
-    @objc func save() {
-        alert.message = ""
-        if let nameText = headerView.d_name.text, nameText != "" {
-            self.delegate?.changedName(newName: nameText)
-        }
-        
-        self.delegate?.changedCheckpoint(newCheckpoint: t_checkpoints)
-        self.delegate?.changedDescription(newDescription: t_Description)
-        self.delegate?.changedDate(newDate: t_Date)
-        
-        if (headerView.d_name.text == "") {
-            alert.message = alert.message! + "Please input a [String] for the name of the goal."
-            headerView.d_name.text = t_Name
-        }
-        if (alert.message != "") {
-            self.present(alert, animated: true)
+    @objc func back() {
+        if (backButton.titleLabel?.text == "Back") {
+            dismiss(animated: true, completion: nil)
         }
         else {
-            saveButton.isEnabled = false
-            let checkAnimation = LOTAnimationView(name: "check_animation")
-            checkAnimation.frame = CGRect(x: 0, y: 0, width: 250, height: 250)
-            checkAnimation.center = self.view.center
-            checkAnimation.contentMode = .scaleAspectFill
-            view.addSubview(checkAnimation)
-            checkAnimation.play()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
-                self.dismiss(animated: true, completion: nil)
-            }
+            backButton.backgroundColor = .white
+            saveButton.backgroundColor = .white
+            d_datePicker.isHidden = true
+            datePickLabel.isHidden = true
+            blurView.isHidden = true
+            headerView.d_date.isEnabled = true
+            headerView.d_name.isEnabled = true
+            saveButton.setTitle("Save", for: .normal)
+            saveButton.setTitleColor(UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65), for: .normal)
+            saveButton.layer.borderColor = UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65).cgColor
+            backButton.setTitle("Back", for: .normal)
+            backButton.setTitleColor(UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65), for: .normal)
+            backButton.layer.borderColor = UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65).cgColor
         }
     }
     
-    /****************   MARK: DatePicker ******************/
-    @objc func viewTapped(gestureRecognizer: UITapGestureRecognizer) {
-        d_datePicker.isHidden = true
-        headerView.d_date.isEnabled = true
-        headerView.d_name.isEnabled = true
+    @objc func save() {
+        if (saveButton.titleLabel?.text == "Save") {
+            alert.message = ""
+            if let nameText = headerView.d_name.text, nameText != "" {
+                self.delegate?.changedName(newName: nameText)
+            }
+            if (headerView.d_name.text == "") {
+                alert.message = alert.message! + "Please input a [String] for the name of the goal."
+                headerView.d_name.text = t_Name
+            }
+            if (alert.message != "") {
+                self.present(alert, animated: true)
+            }
+            else {
+                self.delegate?.changedCheckpoint(newCheckpoint: t_checkpoints)
+                self.delegate?.changedDescription(newDescription: t_Description)
+                self.delegate?.changedDate(newDate: t_Date)
+                saveButton.isEnabled = false
+                let checkAnimation = LOTAnimationView(name: "check_animation")
+                checkAnimation.frame = CGRect(x: 0, y: 0, width: 250, height: 250)
+                checkAnimation.center = self.view.center
+                checkAnimation.contentMode = .scaleAspectFill
+                view.addSubview(checkAnimation)
+                checkAnimation.play()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+        }
+        else {
+            backButton.backgroundColor = .white
+            saveButton.backgroundColor = .white
+            d_datePicker.isHidden = true
+            datePickLabel.isHidden = true
+            blurView.isHidden = true
+            headerView.d_date.isEnabled = true
+            headerView.d_name.isEnabled = true
+            saveButton.setTitle("Save", for: .normal)
+            saveButton.setTitleColor(UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65), for: .normal)
+            saveButton.layer.borderColor = UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65).cgColor
+            backButton.setTitle("Back", for: .normal)
+            backButton.setTitleColor(UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65), for: .normal)
+            backButton.layer.borderColor = UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65).cgColor
+            t_Date = d_datePicker.date
+            headerView.d_date.setTitle("by " + dateFormatter.string(from: t_Date), for: .normal)
+        }
     }
     
     @objc func datePicked() {
-        t_Date = d_datePicker.date
-        headerView.d_date.setTitle("by " + dateFormatter.string(from: t_Date), for: .normal)
+        datePickLabel.text = "\(dateFormatter.string(from: d_datePicker.date))"
     }
     
     /******************************** MARK: Collection View: Data Source & Delegate ********************************/
@@ -295,7 +347,18 @@ extension DetailView: ChangeMotivationTitleDelegate {
 
 extension DetailView: pickDate {
     func pickingDate() {
+        datePickLabel.text = "\(dateFormatter.string(from: d_datePicker.date))"
         d_datePicker.isHidden = false
+        blurView.isHidden = false
+        datePickLabel.isHidden = false
+        saveButton.setTitle("Set", for: .normal)
+        saveButton.setTitleColor(.white, for: .normal)
+        saveButton.backgroundColor = .clear
+        saveButton.layer.borderColor = UIColor.white.cgColor
+        backButton.setTitle("Cancel", for: .normal)
+        backButton.backgroundColor = .clear
+        backButton.setTitleColor(.white, for: .normal)
+        backButton.layer.borderColor = UIColor.white.cgColor
     }
 }
 
