@@ -22,6 +22,7 @@ class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDel
     var titleLabel: UILabel!
     var motivationTextView: UITextView!
     var tableView: CustomTableView!
+    var addCheckpointButton: UIButton!
 
     var rec: UIImageView!
     var circle: UIImageView!
@@ -65,6 +66,18 @@ class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDel
         motivationTextView.showsVerticalScrollIndicator = false
         motivationTextView.isEditable = false
         contentView.addSubview(motivationTextView)
+        
+        addCheckpointButton = UIButton()
+        addCheckpointButton.translatesAutoresizingMaskIntoConstraints = false
+        addCheckpointButton.setImage(UIImage(named: "addCheckpointButton"), for: .normal)
+        addCheckpointButton.backgroundColor = .clear
+        addCheckpointButton.contentMode = .scaleAspectFit
+        addCheckpointButton.addTarget(self, action: #selector(addCheckpoint), for: .touchDown)
+        contentView.addSubview(addCheckpointButton)
+    }
+    
+    @objc func addCheckpoint() {
+        self.delegate2?.beginAddCheckpoint()
     }
     
     func setupConstraints() {
@@ -128,6 +141,12 @@ class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDel
             tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16/895*viewHeight),
             tableView.leadingAnchor.constraint(equalTo: rec.leadingAnchor, constant: 32/414*viewWidth),
             tableView.trailingAnchor.constraint(equalTo: rec.trailingAnchor, constant: -32/414*viewWidth)
+            ])
+        NSLayoutConstraint.activate([
+            addCheckpointButton.topAnchor.constraint(equalTo: rec.topAnchor, constant: 22/895*viewHeight),
+            addCheckpointButton.trailingAnchor.constraint(equalTo: rec.trailingAnchor, constant: -18/414*viewWidth),
+            addCheckpointButton.widthAnchor.constraint(equalToConstant: 20/414*viewWidth),
+            addCheckpointButton.heightAnchor.constraint(equalToConstant: 20/414*viewWidth)
             ])
     }
     

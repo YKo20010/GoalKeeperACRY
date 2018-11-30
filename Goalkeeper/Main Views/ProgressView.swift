@@ -6,14 +6,6 @@
 //  Copyright © 2018 ACRY. All rights reserved.
 //
 
-//
-//  SettingView.swift
-//  Goalkeeper
-//
-//  Created by Artesia Ko on 11/26/18.
-//  Copyright © 2018 ACRY. All rights reserved.
-//
-
 import UIKit
 
 //protocol addedGoal: class {
@@ -70,6 +62,7 @@ class ProgressView: UIViewController, UITableViewDataSource, UITableViewDelegate
         headerHeightConstraint.isActive = true
         headerView.titleLabel.text = "my progress"
         headerView.colorView.backgroundColor = UIColor(red: 244/255, green: 154/255, blue: 154/255, alpha: 1.0)
+        headerView.layer.shadowOpacity = 0.0
         view.addSubview(headerView)
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.topAnchor),

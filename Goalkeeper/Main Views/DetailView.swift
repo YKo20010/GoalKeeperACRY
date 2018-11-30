@@ -19,6 +19,13 @@ protocol ChangeMotivationTitleDelegate: class{
 
 protocol ChangeCheckpointStatus: class {
     func changedCheckpointStatus(nc: [Checkpoint])
+    func beginAddCheckpoint()
+}
+
+protocol createCheckpoint: class {
+    func createdCheckpoint(newCheckpoint: Checkpoint)
+    func cancelCreateCheckpoint()
+    func showCheckpointCreationAlert()
 }
 
 class DetailView: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextViewDelegate {
@@ -39,10 +46,13 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     var datePickLabel: UILabel!
     var e_title: UITextField!
     var e_description: UITextView!
+    var alert: UIAlertController!
+    var createView: CreateCheckpointView!
     
     var titles: [String] = ["checkpoints", "motivation"]
+    var layout: UICollectionViewFlowLayout!
     
-    var alert: UIAlertController!
+    var checkpointCreateAlert: UIAlertController!
     var saveButton: UIButton!
     var backButton: UIButton!
     let dateFormatter = DateFormatter()
@@ -82,9 +92,8 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         headerView.delegate = self
         view.addSubview(headerView)
         
-        let layout = UICollectionViewFlowLayout()
+        layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        //layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 61/895*viewHeight
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -189,11 +198,21 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         e_description.isHidden = true
         view.addSubview(e_description)
         
+        createView = CreateCheckpointView(frame: .zero, viewHeight: viewHeight, viewWidth: viewWidth)
+        createView.translatesAutoresizingMaskIntoConstraints = false
+        createView.delegate = self
+        createView.isHidden = true
+        view.addSubview(createView)
+        
         alert = UIAlertController()
         alert.title = ""
         alert.message = ""
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: .none))
         
+        checkpointCreateAlert = UIAlertController()
+        checkpointCreateAlert.title = "Invalid Checkpoint Name"
+        checkpointCreateAlert.message = "Please input a [String] for the name of the checkpoint."
+        checkpointCreateAlert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: .none))
         setupConstraints()
     }
     
@@ -227,6 +246,12 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
             e_description.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20/414*viewWidth),
             e_description.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20/414*viewWidth)
             ])
+        NSLayoutConstraint.activate([
+            createView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            createView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            createView.widthAnchor.constraint(equalToConstant: 4/5*viewWidth),
+            createView.heightAnchor.constraint(equalToConstant: 7/8*viewWidth)
+            ])
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -258,20 +283,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     
     @objc func save() {
         if (saveButton.titleLabel?.text == "Edit") {
-            datePickLabel.text = "\(dateFormatter.string(from: d_datePicker.date))"
-            d_datePicker.isHidden = false
-            blurView.isHidden = false
-            datePickLabel.isHidden = false
-            saveButton.setTitle("Set", for: .normal)
-            saveButton.setTitleColor(.white, for: .normal)
-            saveButton.backgroundColor = .clear
-            saveButton.layer.borderColor = UIColor.white.cgColor
-            backButton.setTitle("Cancel", for: .normal)
-            backButton.backgroundColor = .clear
-            backButton.setTitleColor(.white, for: .normal)
-            backButton.layer.borderColor = UIColor.white.cgColor
-            e_description.isHidden = false
-            e_title.isHidden = false
+            beginEditingGoal()
         }
         else {
             alert.message = ""
@@ -311,6 +323,23 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         }
     }
     
+    func beginEditingGoal() {
+        datePickLabel.text = "\(dateFormatter.string(from: d_datePicker.date))"
+        d_datePicker.isHidden = false
+        blurView.isHidden = false
+        datePickLabel.isHidden = false
+        saveButton.setTitle("Set", for: .normal)
+        saveButton.setTitleColor(.white, for: .normal)
+        saveButton.backgroundColor = .clear
+        saveButton.layer.borderColor = UIColor.white.cgColor
+        backButton.setTitle("Cancel", for: .normal)
+        backButton.backgroundColor = .clear
+        backButton.setTitleColor(.white, for: .normal)
+        backButton.layer.borderColor = UIColor.white.cgColor
+        e_description.isHidden = false
+        e_title.isHidden = false
+    }
+    
     @objc func datePicked() {
         datePickLabel.text = "\(dateFormatter.string(from: d_datePicker.date))"
     }
@@ -330,19 +359,22 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         cell.motivationTextView.text = t_Description
         if (titles[indexPath.item] == "motivation") {
             cell.motivationTextView.isHidden = false
-            self.delegate2 = cell
             cell.tableView.isHidden = true
+            cell.addCheckpointButton.isHidden = true
+            self.delegate2 = cell
         }
         else if (titles[indexPath.item] == "checkpoints") {
             cell.motivationTextView.isHidden = true
-            cell.delegate2 = self
             cell.tableView.isHidden = false
+            cell.addCheckpointButton.isHidden = false
+            cell.delegate2 = self
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let w = viewWidth!
+        h = 0.14525*viewHeight + 0.059218*viewHeight*CGFloat(t_checkpoints.count)
         if (titles[indexPath.item] == "checkpoints") {
             return CGSize(width: w, height: h)
         }
@@ -392,20 +424,7 @@ extension DetailView: UIScrollViewDelegate {
 
 extension DetailView: pickDate {
     func pickingDate() {
-        datePickLabel.text = "\(dateFormatter.string(from: d_datePicker.date))"
-        d_datePicker.isHidden = false
-        blurView.isHidden = false
-        datePickLabel.isHidden = false
-        saveButton.setTitle("Set", for: .normal)
-        saveButton.setTitleColor(.white, for: .normal)
-        saveButton.backgroundColor = .clear
-        saveButton.layer.borderColor = UIColor.white.cgColor
-        backButton.setTitle("Cancel", for: .normal)
-        backButton.backgroundColor = .clear
-        backButton.setTitleColor(.white, for: .normal)
-        backButton.layer.borderColor = UIColor.white.cgColor
-        e_description.isHidden = false
-        e_title.isHidden = false
+        self.beginEditingGoal()
     }
 }
 
@@ -414,6 +433,38 @@ extension DetailView: ChangeCheckpointStatus {
         t_checkpoints = nc
         self.collectionView.reloadData()
     }
+    func beginAddCheckpoint() {
+        createView.d_name.text = "New Checkpoint"
+        createView.d_dateLabel.text = "by \(dateFormatter.string(from: Date()))"
+        createView.date = Date()
+        createView.d_datePicker.date = Date()
+        createView.isHidden = false
+        blurView.isHidden = false
+        backButton.isHidden = true
+        saveButton.isHidden = true
+    }
+}
+
+extension DetailView: createCheckpoint {
+    func createdCheckpoint(newCheckpoint: Checkpoint) {
+        t_checkpoints.append(newCheckpoint)
+        collectionView.reloadData()
+        createView.isHidden = true
+        blurView.isHidden = true
+        backButton.isHidden = false
+        saveButton.isHidden = false
+        
+    }
+    func showCheckpointCreationAlert() {
+        self.present(alert, animated: true)
+    }
+    func cancelCreateCheckpoint() {
+        createView.isHidden = true
+        blurView.isHidden = true
+        backButton.isHidden = false
+        saveButton.isHidden = false
+    }
+    
 }
 
 
