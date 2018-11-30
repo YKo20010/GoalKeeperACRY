@@ -226,7 +226,7 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             n_background.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             n_background.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             n_background.widthAnchor.constraint(equalToConstant: 4/5*viewWidth),
-            n_background.heightAnchor.constraint(equalToConstant: 4/5*viewWidth)
+            n_background.heightAnchor.constraint(equalToConstant: 3/10*viewHeight)
             ])
         n_background.layer.shadowColor = UIColor(red: 190/255, green: 172/255, blue: 172/255, alpha: 1.0).cgColor
         n_background.layer.shadowRadius = 8
@@ -339,7 +339,7 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             createView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             createView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             createView.widthAnchor.constraint(equalToConstant: 4/5*viewWidth),
-            createView.heightAnchor.constraint(equalToConstant: 4/5*viewWidth)
+            createView.heightAnchor.constraint(equalToConstant: 2/3*viewHeight)
             ])
     }
     
@@ -349,7 +349,6 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         createView.d_name.text = "New Goal"
         createView.d_date.setTitle(dateFormatter.string(from: Date(timeIntervalSinceNow: 60*60*24+1)), for: .normal)
         createView.date = Date(timeIntervalSinceNow: 60*60*24+1)
-        createView.d_description.text = "Enter a description of what you want to accomplish, and why you want to achieve this goal."
         createView.isHidden = false
         addButton.isEnabled = false
         collectionView.isScrollEnabled = false
@@ -390,9 +389,7 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         return CGSize(width: w, height: w/(364/148))
     }
     
-    
-    
-    /******************************** MARK: UITableView: Delete Cell ********************************/
+    /******************************** MARK: UICollectionView: Delete Cell ********************************/
     func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
         n_nameLabel.text = goals[indexPath.item].name
         n_background.isHidden = false
@@ -444,12 +441,17 @@ extension HomeView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (scrollView.contentOffset.y < 0) {
             self.headerHeightConstraint.constant += abs(scrollView.contentOffset.y)/3
+            self.headerView.titleLabel.isHidden = false
         }
         else if (scrollView.contentOffset.y > 0 && self.headerHeightConstraint.constant >= 0) {
             self.headerHeightConstraint.constant -= abs(scrollView.contentOffset.y)
             if (self.headerHeightConstraint.constant < 0) {
                 self.headerHeightConstraint.constant = 0
+                self.headerView.titleLabel.isHidden = true
             }
+        }
+        else {
+            self.headerView.titleLabel.isHidden = false
         }
         
     }

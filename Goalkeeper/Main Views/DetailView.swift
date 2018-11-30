@@ -448,18 +448,13 @@ extension DetailView: ChangeCheckpointStatus {
 extension DetailView: createCheckpoint {
     func createdCheckpoint(newCheckpoint: Checkpoint) {
         t_checkpoints.append(newCheckpoint)
-        collectionView.reloadData()
-        self.reloadInputViews()
-        createView.isHidden = true
-        blurView.isHidden = true
-        backButton.isHidden = false
-        saveButton.isHidden = false
-        
+        cancelCreateCheckpoint()
     }
     func showCheckpointCreationAlert() {
         self.present(alert, animated: true)
     }
     func cancelCreateCheckpoint() {
+        collectionView.reloadData()
         createView.isHidden = true
         blurView.isHidden = true
         backButton.isHidden = false

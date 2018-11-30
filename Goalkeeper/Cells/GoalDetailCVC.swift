@@ -77,6 +77,7 @@ class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDel
     }
     
     @objc func addCheckpoint() {
+        tableView.removeFromSuperview()
         self.delegate2?.beginAddCheckpoint()
     }
     
@@ -91,6 +92,7 @@ class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDel
         
         titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.backgroundColor = .white
         titleLabel.textColor = .black
         titleLabel.font = UIFont.systemFont(ofSize: 26/895*viewHeight, weight: .bold)
         contentView.addSubview(titleLabel)
@@ -129,11 +131,11 @@ class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDel
             titleLabel.leadingAnchor.constraint(equalTo: rec.leadingAnchor, constant: 18.1/414*viewWidth),
             titleLabel.topAnchor.constraint(equalTo: rec.topAnchor, constant: 16/895*viewHeight),
             titleLabel.heightAnchor.constraint(equalToConstant: 33/895*viewHeight),
-            titleLabel.trailingAnchor.constraint(equalTo: rec.trailingAnchor, constant: -18.1/414*viewWidth)
+            titleLabel.trailingAnchor.constraint(equalTo: addCheckpointButton.leadingAnchor, constant: -18/414*viewWidth)
             ])
         NSLayoutConstraint.activate([
             motivationTextView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 6/895*viewHeight),
-            motivationTextView.heightAnchor.constraint(equalToConstant: 150/895*viewHeight),
+            motivationTextView.bottomAnchor.constraint(equalTo: rec.bottomAnchor, constant: -23/895*viewHeight),
             motivationTextView.leadingAnchor.constraint(equalTo: rec.leadingAnchor, constant: 22/414*viewWidth),
             motivationTextView.trailingAnchor.constraint(equalTo: rec.trailingAnchor, constant: -26/414*viewWidth)
             ])
@@ -169,25 +171,17 @@ class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDel
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        c[indexPath.row].isFinished = !c[indexPath.row].isFinished
-        if (c[indexPath.row].isFinished) {
-            c[indexPath.row].endDate = Date()
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            c.remove(at: indexPath.row)
+            titleLabel.removeFromSuperview()
+            tableView.removeFromSuperview()
+            self.delegate2?.changedCheckpointStatus(nc: c)
         }
-        if (!c[indexPath.row].isFinished) {
-            c[indexPath.row].endDate = nil
-        }
-        print("x")
-        self.delegate2?.changedCheckpointStatus(nc: c)
     }
     
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        return .delete
-    }
-    
-    func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
-        c.remove(at: (indexPath?.row)!)
-        self.delegate2?.changedCheckpointStatus(nc: c)
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -204,32 +198,31 @@ extension GoalDetailCVC: buttonClicked {
                     && c[i].isFinished == isFinished
                     && c[i].startDate == startDate
                     && ((c[i].endDate == nil && endDate == nil) || (c[i].endDate != nil && endDate != nil))) {
-                    c[i].isFinished = !c[i].isFinished
-                    if (c[i].isFinished) {
-                        c[i].endDate = Date()
-                    }
-                    if (!c[i].isFinished) {
-                        c[i].endDate = nil
-                    }
-                    self.delegate2?.changedCheckpointStatus(nc: c)
-                    return
-                }
-            }
+                        c[i].isFinished = !c[i].isFinished
+                        if (c[i].isFinished) {
+                            c[i].endDate = Date()
+                        }
+                        if (!c[i].isFinished) {
+                            c[i].endDate = nil
+                        }
+            }}
         }
         else if (c[0].name == name
             && c[0].date == date
             && c[0].isFinished == isFinished
             && c[0].startDate == startDate
             && ((c[0].endDate == nil && endDate == nil) || (c[0].endDate != nil && endDate != nil))) {
-            c[0].isFinished = !c[0].isFinished
-            if (c[0].isFinished) {
-                c[0].endDate = Date()
-            }
-            if (!c[0].isFinished) {
-                c[0].endDate = nil
-            }
-            self.delegate2?.changedCheckpointStatus(nc: c)
+                c[0].isFinished = !c[0].isFinished
+                if (c[0].isFinished) {
+                    c[0].endDate = Date()
+                }
+                if (!c[0].isFinished) {
+                    c[0].endDate = nil
+                }
         }
+        titleLabel.removeFromSuperview()
+        tableView.removeFromSuperview()
+        self.delegate2?.changedCheckpointStatus(nc: c)
     }
 }
 

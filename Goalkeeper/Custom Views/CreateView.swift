@@ -176,12 +176,13 @@ class CreateView: UIView, UITextViewDelegate {
         d_datePicker.layer.masksToBounds = true
         d_datePicker.addTarget(self, action: #selector(datePicked), for: .valueChanged)
         d_datePicker.isHidden = true
+        d_datePicker.tintColor = .white
         self.addSubview(d_datePicker)
         NSLayoutConstraint.activate([
-            d_datePicker.topAnchor.constraint(equalTo: n_label2.topAnchor),
-            d_datePicker.leadingAnchor.constraint(equalTo: rec.leadingAnchor),
-            d_datePicker.trailingAnchor.constraint(equalTo: rec.trailingAnchor),
-            d_datePicker.bottomAnchor.constraint(equalTo: n_noButton.topAnchor, constant: -25/895*viewHeight)
+            d_datePicker.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20/414*viewWidth),
+            d_datePicker.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20/414*viewWidth),
+            d_datePicker.bottomAnchor.constraint(equalTo: n_noButton.topAnchor, constant: -25/895*viewHeight),
+            d_datePicker.heightAnchor.constraint(equalTo:d_datePicker.widthAnchor)
             ])
         
     }
