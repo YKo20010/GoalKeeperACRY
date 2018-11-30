@@ -25,7 +25,7 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
     var circle: UIImageView!
     var line: UIImageView!
     
-    var checkpoints: [Checkpoint] = []
+    var c: [Checkpoint] = []
     
     var viewHeight: CGFloat = 0
     var viewWidth: CGFloat = 0
@@ -37,6 +37,11 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
         contentView.layer.masksToBounds = false
         contentView.clipsToBounds = false
        
+        line = UIImageView()
+        line.translatesAutoresizingMaskIntoConstraints = false
+        line.backgroundColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1.0)
+        contentView.addSubview(line)
+        
         rec = UIImageView()
         rec.translatesAutoresizingMaskIntoConstraints = false
         rec.backgroundColor = .white
@@ -56,6 +61,7 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
         motivationTextView.text = "type yourself a reminder of why you want to reach this goal"
         motivationTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
         motivationTextView.textColor = UIColor(red: 115/255, green: 115/255, blue: 115/255, alpha: 0.6)
+        motivationTextView.showsVerticalScrollIndicator = false
         contentView.addSubview(motivationTextView)
     }
     
@@ -68,11 +74,6 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
         circle.layer.masksToBounds = true
         contentView.addSubview(circle)
         
-        line = UIImageView()
-        line.translatesAutoresizingMaskIntoConstraints = false
-        line.backgroundColor = UIColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1.0)
-        contentView.addSubview(line)
-        
         titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textColor = .black
@@ -83,15 +84,14 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.register(goaldetailTVC.self, forCellReuseIdentifier: reuseCellIdentifier)
-        tableView.estimatedRowHeight = 53/414*viewWidth
-        tableView.rowHeight = 53/414*viewWidth
+        tableView.estimatedRowHeight = 53
         tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
         tableView.delegate = self
         tableView.isScrollEnabled = false
-        tableView.allowsSelection = false
+        tableView.allowsSelection = true
         contentView.addSubview(tableView)
-        
+
         NSLayoutConstraint.activate([
             circle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 17/414*viewWidth),
             circle.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -139,18 +139,35 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
     
     /******************************** MARK: UITableView: Data Source ********************************/
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return checkpoints.count
+        return c.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 53/895*viewHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseCellIdentifier, for: indexPath) as! goaldetailTVC
         cell.backgroundColor = .white
-        let checkpoint = checkpoints[indexPath.row]
+        cell.selectionStyle = .none
+        let checkpoint = c[indexPath.row]
         cell.configure(for: checkpoint)
         cell.delegate = self
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        c[indexPath.row].isFinished = !c[indexPath.row].isFinished
+        if (c[indexPath.row].isFinished) {
+            c[indexPath.row].endDate = Date()
+        }
+        if (!c[indexPath.row].isFinished) {
+            c[indexPath.row].endDate = nil
+        }
+        print("x")
+        self.delegate2?.changedCheckpointStatus(nc: c)
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -158,40 +175,38 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
 
 extension GoalDetailCVC: buttonClicked {
     func changedCheckpointStatus(name: String, date: Date, isFinished: Bool, startDate: Date, endDate: Date?) {
-        if (checkpoints.count > 1) {
-            for i in 0...checkpoints.count-1 {
-                if (checkpoints[i].name == name
-                    && checkpoints[i].date == date
-                    && checkpoints[i].isFinished == isFinished
-                    && checkpoints[i].startDate == startDate
-                    && ((checkpoints[i].endDate == nil && endDate == nil) || (checkpoints[i].endDate != nil && endDate != nil))) {
-                        checkpoints[i].isFinished = !checkpoints[i].isFinished
-                        if (checkpoints[i].isFinished) {
-                            checkpoints[i].endDate = Date()
-                        }
-                        if (!checkpoints[i].isFinished) {
-                            checkpoints[i].endDate = nil
-                        }
-                        self.tableView.reloadData()
-                        self.delegate2?.changedCheckpointStatus(newCheckpoint: checkpoints)
+        if (c.count > 1) {
+            for i in 0...c.count-1 {
+                if (c[i].name == name
+                    && c[i].date == date
+                    && c[i].isFinished == isFinished
+                    && c[i].startDate == startDate
+                    && ((c[i].endDate == nil && endDate == nil) || (c[i].endDate != nil && endDate != nil))) {
+                    c[i].isFinished = !c[i].isFinished
+                    if (c[i].isFinished) {
+                        c[i].endDate = Date()
+                    }
+                    if (!c[i].isFinished) {
+                        c[i].endDate = nil
+                    }
+                    self.delegate2?.changedCheckpointStatus(nc: c)
                     return
                 }
             }
         }
-        else if (checkpoints[0].name == name
-            && checkpoints[0].date == date
-            && checkpoints[0].isFinished == isFinished
-            && checkpoints[0].startDate == startDate
-            && ((checkpoints[0].endDate == nil && endDate == nil) || (checkpoints[0].endDate != nil && endDate != nil))) {
-            checkpoints[0].isFinished = !checkpoints[0].isFinished
-            if (checkpoints[0].isFinished) {
-                checkpoints[0].endDate = Date()
+        else if (c[0].name == name
+            && c[0].date == date
+            && c[0].isFinished == isFinished
+            && c[0].startDate == startDate
+            && ((c[0].endDate == nil && endDate == nil) || (c[0].endDate != nil && endDate != nil))) {
+            c[0].isFinished = !c[0].isFinished
+            if (c[0].isFinished) {
+                c[0].endDate = Date()
             }
-            if (!checkpoints[0].isFinished) {
-                checkpoints[0].endDate = nil
+            if (!c[0].isFinished) {
+                c[0].endDate = nil
             }
-            self.tableView.reloadData()
-            self.delegate2?.changedCheckpointStatus(newCheckpoint: checkpoints)
+            self.delegate2?.changedCheckpointStatus(nc: c)
         }
     }
 }

@@ -18,7 +18,7 @@ protocol ChangeMotivationTitleDelegate: class{
 }
 
 protocol ChangeCheckpointStatus: class {
-    func changedCheckpointStatus(newCheckpoint: [Checkpoint])
+    func changedCheckpointStatus(nc: [Checkpoint])
 }
 
 class DetailView: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -91,7 +91,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         collectionView.showsVerticalScrollIndicator = false
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .clear
-        collectionView.allowsSelection = true
+        collectionView.allowsSelection = false
         view.addSubview(collectionView)
         
         let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.dark)
@@ -194,6 +194,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     /******************************** MARK: Action Functions ********************************/
     @objc func back() {
         if (backButton.titleLabel?.text == "Back") {
+            self.delegate?.changedCheckpoint(newCheckpoint: t_checkpoints)
             dismiss(animated: true, completion: nil)
         }
         else {
@@ -274,7 +275,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: detailCellIdentifier, for: indexPath) as! GoalDetailCVC
         cell.viewHeight = self.viewHeight
         cell.viewWidth = self.viewWidth
-        cell.checkpoints = t_checkpoints
+        cell.c = t_checkpoints
         cell.setupConstraints()
         cell.titleLabel.text = self.titles[indexPath.item]
         cell.motivationTextView.text = t_Description
@@ -283,7 +284,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
             cell.delegate = self
             cell.tableView.isHidden = true
         }
-        else {
+        else if (titles[indexPath.item] == "checkpoints") {
             cell.motivationTextView.isHidden = true
             cell.delegate2 = self
             cell.tableView.isHidden = false
@@ -363,8 +364,8 @@ extension DetailView: pickDate {
 }
 
 extension DetailView: ChangeCheckpointStatus {
-    func changedCheckpointStatus(newCheckpoint: [Checkpoint]) {
-        t_checkpoints = newCheckpoint
+    func changedCheckpointStatus(nc: [Checkpoint]) {
+        t_checkpoints = nc
         self.collectionView.reloadData()
     }
 }

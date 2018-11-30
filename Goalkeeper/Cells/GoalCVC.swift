@@ -144,12 +144,6 @@ class GoalCVC: UICollectionViewCell, UIGestureRecognizerDelegate {
             checkpointsLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 2/148*contentView.frame.height),
             checkpointsLabel.heightAnchor.constraint(equalToConstant: 20/148*contentView.frame.height)
             ])
-        
-/***************************    MARK: SWIPE TO DELETE CELL  **************************/
-//        deleteLabel = UILabel()
-//        deleteLabel.text = "delete"
-//        deleteLabel.textColor = .white
-//        self.insertSubview(deleteLabel, belowSubview: self.contentView)
     
         pan = UIPanGestureRecognizer(target: self, action: #selector(onPan(_:)))
         pan.delegate = self
