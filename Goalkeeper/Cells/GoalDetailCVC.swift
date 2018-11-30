@@ -27,19 +27,16 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
     
     var checkpoints: [Checkpoint] = []
     
-    var viewHeight: CGFloat = 895
-    var viewWidth: CGFloat = 414
+    var viewHeight: CGFloat = 0
+    var viewWidth: CGFloat = 0
     let shadowRadius: CGFloat = 8
     let reuseCellIdentifier = "tableViewCellReuseIdentifier"
     
     override init(frame: CGRect) {
         super.init(frame:frame)
-    }
-    
-    func setupConstraints() {
         contentView.layer.masksToBounds = false
         contentView.clipsToBounds = false
-        
+       
         rec = UIImageView()
         rec.translatesAutoresizingMaskIntoConstraints = false
         rec.backgroundColor = .white
@@ -51,6 +48,9 @@ class GoalDetailCVC: UICollectionViewCell, UITextViewDelegate, UITableViewDataSo
         rec.layer.shadowOffset = CGSize(width: 6, height: 6)
         rec.clipsToBounds = false
         contentView.addSubview(rec)
+    }
+    
+    func setupConstraints() {
         
         circle = UIImageView()
         circle.translatesAutoresizingMaskIntoConstraints = false

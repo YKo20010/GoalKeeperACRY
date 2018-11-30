@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class NetworkManager {
     
-    private static let goalsURL = ""
+    private static let goalsURL = "http://104.196.28.226/api/goals/"
     
     
 }
