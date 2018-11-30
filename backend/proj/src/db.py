@@ -4,30 +4,54 @@ db = SQLAlchemy()
 class Goal(db.Model):
   __tablename__ = 'goal'
   id = db.Column(db.Integer, primary_key=True)
-  text = db.Column(db.String, nullable=False)
-  subgoals = db.relationship('Subgoal', cascade='delete')
+  name = db.Column(db.String, nullable=False)
+  date = db.Column(db.String, nullable=False)
+  description = db.Column(db.String, nullable=False)
+  startDate = db.Column(db.String, nullable=False)
+  endDate = db.Column(db.String, nullable=False)
+  checkpoints = db.relationship('Checkpoint', cascade='delete')
 
   def __init__(self, **kwargs):
-    self.text = kwargs.get('text', '')
+    self.name = kwargs.get('name', '')
+    self.date = kwargs.get('date', '')
+    self.description = kwargs.get('description', '')
+    self.startDate = kwargs.get('startDate', '')
+    self.endDate = kwargs.get('endDate', '')
 
   def serialize(self):
     return {
         'id': self.id,
-        'text': self.text
+        'name': self.name,
+        'date': self.date,
+        'description': self.description,
+        'startDate': self.startDate,
+        'endDate': self.endDate
     }
 
-class Subgoal(db.Model):
-  __tablename__ = 'subgoal'
+class Checkpoint(db.Model):
+  __tablename__ = 'checkpoint'
   id = db.Column(db.Integer, primary_key=True)
-  text = db.Column(db.String, nullable=False)
+  name = db.Column(db.String, nullable=False)
+  date = db.Column(db.String, nullable=False)
+  isFinished = db.Column(db.Boolean, nullable=False)
+  startDate = db.Column(db.String, nullable=False)
+  endDate = db.Column(db.String, nullable=False)
   goal_id = db.Column(db.Integer, db.ForeignKey('goal.id'), nullable=False)
 
   def __init__(self, **kwargs):
-    self.text = kwargs.get('text', '')
+    self.name = kwargs.get('name', '')
+    self.date = kwargs.get('date', '')
+    self.isFinished = kwargs.get('isFinished', False)
+    self.startDate = kwargs.get('startDate', '')
+    self.endDate = kwargs.get('endDate', '')
     self.goal_id = kwargs.get('goal_id')
 
   def serialize(self):
     return {
         'id': self.id,
-        'text': self.text
+        'name': self.name,
+        'date': self.date,
+        'isFinshed': self.isFinished,
+        'startDate': self.startDate,
+        'endDate': self.endDate
     }

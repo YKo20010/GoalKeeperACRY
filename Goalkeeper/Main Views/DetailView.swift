@@ -53,9 +53,6 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     
     let co_background: UIColor = .white
     let co_textColor: UIColor = .white
-    var co_psMinTrackTint: UIColor = UIColor(red: 174/255, green: 255/255, blue: 0/255, alpha: 1.0) //green
-    var co_psThumbTrackTint: UIColor = UIColor(red: 174/255, green: 255/255, blue: 0/255, alpha: 1.0) //green
-    var co_psMaxTrackTint: UIColor = .gray
     let co_cpTableViewText: UIColor = .white
     let co_cpTableViewBorder: UIColor = .white
     let co_datePickerTint: UIColor = .white
@@ -236,6 +233,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         }
         else {
             cell.motivationTextView.isHidden = true
+            cell.delegate2 = self
             cell.tableView.isHidden = false
         }
         return cell
@@ -304,6 +302,7 @@ extension DetailView: pickDate {
 extension DetailView: ChangeCheckpointStatus {
     func changedCheckpointStatus(newCheckpoint: [Checkpoint]) {
         t_checkpoints = newCheckpoint
+        self.collectionView.reloadData()
     }
 }
 
