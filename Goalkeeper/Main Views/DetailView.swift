@@ -94,7 +94,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         
         layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 61/895*viewHeight
+        layout.minimumLineSpacing = 10/895*viewHeight
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -449,6 +449,7 @@ extension DetailView: createCheckpoint {
     func createdCheckpoint(newCheckpoint: Checkpoint) {
         t_checkpoints.append(newCheckpoint)
         collectionView.reloadData()
+        self.reloadInputViews()
         createView.isHidden = true
         blurView.isHidden = true
         backButton.isHidden = false

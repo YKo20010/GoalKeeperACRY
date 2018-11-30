@@ -114,7 +114,7 @@ class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDel
             circle.heightAnchor.constraint(equalToConstant: 13/414*viewWidth)
             ])
         NSLayoutConstraint.activate([
-            rec.heightAnchor.constraint(equalToConstant: contentView.frame.height),
+            rec.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -51/895*viewHeight),
             rec.widthAnchor.constraint(equalToConstant: 331/414*viewWidth),
             rec.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32/414*viewWidth),
             rec.topAnchor.constraint(equalTo: contentView.topAnchor)
@@ -178,6 +178,15 @@ class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDel
             c[indexPath.row].endDate = nil
         }
         print("x")
+        self.delegate2?.changedCheckpointStatus(nc: c)
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
+        c.remove(at: (indexPath?.row)!)
         self.delegate2?.changedCheckpointStatus(nc: c)
     }
 
