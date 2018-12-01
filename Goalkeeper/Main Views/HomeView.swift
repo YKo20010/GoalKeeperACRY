@@ -10,10 +10,6 @@ import UIKit
 import Hero
 import EventKit
 
-enum SearchType {
-    case title
-}
-
 protocol changeGoal: class {
     func changedName(newName: String)
     func changedDate(newDate: Date)
@@ -56,7 +52,6 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var n_noButton: UIButton!
     var deleteIndex: IndexPath!
     /*  Other   */
-    var searchBy: SearchType = .title
     let goalCellIdentifier = "GoalCell"
     let headerReuseIdentifier = "headerReuseIdentifier"
     var headerHeightConstraint: NSLayoutConstraint!

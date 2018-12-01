@@ -116,7 +116,7 @@ class EventsView: UIViewController, CalendarViewDelegate, CalendarViewDataSource
                 calendarView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 20/895*viewHeight),
                 calendarView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20/895*viewHeight),
                 calendarView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20/895*viewHeight),
-                calendarView.heightAnchor.constraint(equalTo: view.widthAnchor, constant: -40/895*viewHeight)
+                calendarView.heightAnchor.constraint(equalToConstant: 373/895*viewHeight)
                 ])
         }
     
@@ -155,7 +155,7 @@ class EventsView: UIViewController, CalendarViewDelegate, CalendarViewDataSource
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         dateFormatter.dateFormat = "MM/dd"
-        let dateShow = Date(timeInterval: 60*60*24 + 1, since: date)
+        let dateShow = date
         dateLabelText = dateFormatter.string(from: dateShow)
         
         keyEvents = events

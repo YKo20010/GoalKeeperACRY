@@ -61,7 +61,12 @@ class CustomTabBarController: UITabBarController {
         nav_progress.tabBarItem.image = UIImage(named: "progress")
         
         //homeController.delegate = progressController
-        
+/*********************     HISTORY VIEW CONTROLLER    ********************/
+        let historyController = HistoryView()
+        historyController.navigationItem.title = "History"
+        let nav_history = UINavigationController(rootViewController: historyController)
+        nav_history.title = ""
+        nav_history.tabBarItem.image = UIImage(named: "history")
 /*********************     SETTINGS VIEW CONTROLLER    ********************/
         settingController.navigationItem.title = "Profile"
         let nav_setting = UINavigationController(rootViewController: settingController)
@@ -69,10 +74,10 @@ class CustomTabBarController: UITabBarController {
         nav_setting.tabBarItem.image = UIImage(named: "profile")
         
         
+        
         homeController.delegate = calendarController
 /*********************     Set ViewControllers for TabBarController    ********************/
-        viewControllers = [nav_calendar, nav_home, nav_progress, nav_setting]
-        //viewControllers = [nav_calendar, nav_progress]
+        viewControllers = [nav_calendar, nav_progress, nav_home, nav_history, nav_setting]
     }
     
 }

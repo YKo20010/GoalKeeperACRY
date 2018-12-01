@@ -84,7 +84,7 @@ public class CalendarView: UIView {
     
     public lazy var calendar : Calendar = {
         var gregorian = Calendar(identifier: .gregorian)
-        gregorian.timeZone = TimeZone(abbreviation: "UTC")!
+        gregorian.timeZone = TimeZone(abbreviation: "EST")!
         return gregorian
     }()
     
