@@ -15,6 +15,7 @@ protocol changeGoal: class {
     func changedDate(newDate: Date)
     func changedDescription(newDescription: String)
     func changedCheckpoint(newCheckpoint: [Checkpoint])
+    func completedGoal()
 }
 
 protocol createGoal: class {
@@ -480,6 +481,12 @@ extension HomeView: changeGoal {
         goals[selectedGoalIndex].checkpoints = newCheckpoint
         collectionView.reloadData()
     }
+    func completedGoal() {
+        goals[selectedGoalIndex].endDate = Date()
+        self.delegate?.addedEvent(title: "goal \"\(goals[selectedGoalIndex].name)\" met", date: Date())
+        collectionView.reloadData()
+    }
+    //TODO: Network and filter for incomplete goals
 }
 
 extension HomeView: createGoal {
@@ -506,7 +513,6 @@ extension HomeView: createGoal {
     func showCreationAlert() {
         self.present(alert, animated: true)
     }
-    
 }
 
 

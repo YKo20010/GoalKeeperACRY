@@ -55,6 +55,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     var checkpointCreateAlert: UIAlertController!
     var saveButton: UIButton!
     var backButton: UIButton!
+    var completeButton: UIButton!
     let dateFormatter = DateFormatter()
     
     var t_Name: String = "Title"
@@ -139,7 +140,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         backButton.setTitle("Back", for: .normal)
         backButton.setTitleColor(UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65), for: .normal)
         backButton.addTarget(self, action: #selector(back), for: .touchDown)
-        backButton.layer.cornerRadius = 8
+        backButton.layer.cornerRadius = 35/895*viewHeight/2
         backButton.layer.masksToBounds = true
         backButton.titleLabel?.font = UIFont.systemFont(ofSize: 25/895*viewHeight, weight: .light)
         backButton.titleLabel?.textAlignment = .center
@@ -150,7 +151,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
             backButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20/895*viewHeight),
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50/895*viewHeight),
             backButton.heightAnchor.constraint(equalToConstant: 35/895*viewHeight),
-            backButton.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -50/895*viewHeight)
+            backButton.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -55/895*viewHeight)
             ])
         
         saveButton = UIButton()
@@ -159,7 +160,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         saveButton.setTitle("Edit", for: .normal)
         saveButton.addTarget(self, action: #selector(save), for: .touchDown)
         saveButton.setTitleColor(UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65), for: .normal)
-        saveButton.layer.cornerRadius = 8
+        saveButton.layer.cornerRadius = 35/895*viewHeight/2
         saveButton.layer.masksToBounds = true
         saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 25/895*viewHeight, weight: .light)
         saveButton.titleLabel?.textAlignment = .center
@@ -170,8 +171,29 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
             saveButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20/895*viewHeight),
             saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50/895*viewHeight),
             saveButton.heightAnchor.constraint(equalToConstant: 35/895*viewHeight),
-            saveButton.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 50/895*viewHeight)
+            saveButton.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 55/895*viewHeight)
             ])
+        
+        completeButton = UIButton()
+        completeButton.translatesAutoresizingMaskIntoConstraints = false
+        completeButton.backgroundColor = .white
+        completeButton.setTitle("Done", for: .normal)
+        completeButton.addTarget(self, action: #selector(completedGoal), for: .touchDown)
+        completeButton.setTitleColor(UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65), for: .normal)
+        completeButton.layer.cornerRadius = 35/895*viewHeight/2
+        completeButton.layer.masksToBounds = true
+        completeButton.titleLabel?.font = UIFont.systemFont(ofSize: 25/895*viewHeight, weight: .light)
+        completeButton.titleLabel?.textAlignment = .center
+        completeButton.layer.borderColor = UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65).cgColor
+        completeButton.layer.borderWidth = 1
+        view.addSubview(completeButton)
+        NSLayoutConstraint.activate([
+            completeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            completeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20/895*viewHeight),
+            completeButton.widthAnchor.constraint(equalTo: saveButton.widthAnchor),
+            completeButton.heightAnchor.constraint(equalToConstant: 35/895*viewHeight)
+            ])
+        updateCompleteButton()
         
         e_title = UITextField()
         e_title = UITextField()
@@ -259,6 +281,22 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     }
     
     /******************************** MARK: Action Functions ********************************/
+    func updateCompleteButton() {
+        completeButton.isHidden = false
+        for checkpoint in t_checkpoints {
+            if (checkpoint.endDate == nil) {
+                completeButton.isHidden = true
+            }
+        }
+        if (!blurView.isHidden) {
+            completeButton.isHidden = true
+        }
+    }
+    
+    @objc func completedGoal() {
+        self.delegate?.completedGoal()
+        self.dismiss(animated: true, completion: nil)
+    }
     @objc func back() {
         if (backButton.titleLabel?.text == "Back") {
             self.delegate?.changedCheckpoint(newCheckpoint: t_checkpoints)
@@ -278,6 +316,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
             backButton.setTitle("Back", for: .normal)
             backButton.setTitleColor(UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65), for: .normal)
             backButton.layer.borderColor = UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65).cgColor
+            updateCompleteButton()
         }
     }
     
@@ -338,6 +377,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         backButton.layer.borderColor = UIColor.white.cgColor
         e_description.isHidden = false
         e_title.isHidden = false
+        updateCompleteButton()
     }
     
     @objc func datePicked() {
@@ -425,12 +465,14 @@ extension DetailView: UIScrollViewDelegate {
 extension DetailView: pickDate {
     func pickingDate() {
         self.beginEditingGoal()
+        updateCompleteButton()
     }
 }
 
 extension DetailView: ChangeCheckpointStatus {
     func changedCheckpointStatus(nc: [Checkpoint]) {
         t_checkpoints = nc
+        updateCompleteButton()
         self.collectionView.reloadData()
     }
     func beginAddCheckpoint() {
@@ -442,6 +484,7 @@ extension DetailView: ChangeCheckpointStatus {
         blurView.isHidden = false
         backButton.isHidden = true
         saveButton.isHidden = true
+        updateCompleteButton()
     }
 }
 
@@ -454,6 +497,7 @@ extension DetailView: createCheckpoint {
         self.present(alert, animated: true)
     }
     func cancelCreateCheckpoint() {
+        updateCompleteButton()
         collectionView.reloadData()
         createView.isHidden = true
         blurView.isHidden = true
