@@ -31,27 +31,33 @@ class ProgressView: UIViewController, UITableViewDataSource, UITableViewDelegate
         
         navigationController?.navigationBar.isHidden = true
         
-        /*  TODO: Network and delete this   */
-        let c1 = Checkpoint(name: "Checkpoint1", date: Date(), isFinished: false, startDate: Date())
-        let c2 = Checkpoint(name: "Checkpoint2", date: Date(), isFinished: false, startDate: Date())
-        let c3 = Checkpoint(name: "Checkpoint3", date: Date(), isFinished: true, startDate: Date())
-        c3.endDate = Date()
-        let c4 = Checkpoint(name: "Checkpoint4", date: Date(), isFinished: true, startDate: Date())
-        c4.endDate = Date()
-        
-        let g1 = Goal(name: "0/0 checkpoints, 0% complete", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], startDate: Date())
-        let g2 = Goal(name: "1/1 checkpoints, 50% complete", date: Date(timeInterval: 13140000, since: Date()), description: "description text 2", checkpoints: [c4], startDate: Date())
-        let g3 = Goal(name: "0/1 checkpoints, 0% complete", date: Date(timeInterval: 60*60*24*27+1, since: Date()), description: "text3", checkpoints: [c1], startDate: Date())
-        let g4 = Goal(name: "0/2 checkpoints, 0% complete", date: Date(timeInterval: 60*60*24*1+1, since: Date()), description: "text4", checkpoints: [c1, c2], startDate: Date())
-        let g5 = Goal(name: "1/3 checkpoints, 25% complete", date: Date(timeInterval: 31540000+1, since: Date()), description: "text5", checkpoints: [c1, c2, c3], startDate: Date())
-        let g6 = Goal(name: "2/4 checkpoints, 40% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c1, c2, c3, c4], startDate: Date())
-        let g7 = Goal(name: "2/2 checkpoints, 100% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c3, c4], startDate: Date())
-        g7.endDate = Date()
-        let g8 = Goal(name: "0/0 checkpoints, 100% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [], startDate: Date())
-        g8.endDate = Date()
-        let g9 = Goal(name: "1/2 checkpoints, 66% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c2, c3], startDate: Date())
-        g9.endDate = Date()
-        goals = [g9, g7, g8, g1, g5, g6, g4, g2, g3]
+//        /*  TODO: Network and delete this   */
+//        let c1 = Checkpoint(name: "Checkpoint1", date: Date(), isFinished: false, startDate: Date())
+//        let c2 = Checkpoint(name: "Checkpoint2", date: Date(), isFinished: false, startDate: Date())
+//        let c3 = Checkpoint(name: "Checkpoint3", date: Date(), isFinished: true, startDate: Date())
+//        c3.endDate = Date()
+//        let c4 = Checkpoint(name: "Checkpoint4", date: Date(), isFinished: true, startDate: Date())
+//        c4.endDate = Date()
+//        
+//        let g1 = Goal(name: "0/0 checkpoints, 0% complete", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], startDate: Date())
+//        let g2 = Goal(name: "1/1 checkpoints, 50% complete", date: Date(timeInterval: 13140000, since: Date()), description: "description text 2", checkpoints: [c4], startDate: Date())
+//        let g3 = Goal(name: "0/1 checkpoints, 0% complete", date: Date(timeInterval: 60*60*24*27+1, since: Date()), description: "text3", checkpoints: [c1], startDate: Date())
+//        let g4 = Goal(name: "0/2 checkpoints, 0% complete", date: Date(timeInterval: 60*60*24*1+1, since: Date()), description: "text4", checkpoints: [c1, c2], startDate: Date())
+//        let g5 = Goal(name: "1/3 checkpoints, 25% complete", date: Date(timeInterval: 31540000+1, since: Date()), description: "text5", checkpoints: [c1, c2, c3], startDate: Date())
+//        let g6 = Goal(name: "2/4 checkpoints, 40% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c1, c2, c3, c4], startDate: Date())
+//        let g7 = Goal(name: "2/2 checkpoints, 100% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c3, c4], startDate: Date())
+//        g7.endDate = Date()
+//        let g8 = Goal(name: "0/0 checkpoints, 100% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [], startDate: Date())
+//        g8.endDate = Date()
+//        let g9 = Goal(name: "1/2 checkpoints, 66% complete", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c2, c3], startDate: Date())
+//        g9.endDate = Date()
+        //goals = [g9, g7, g8, g1, g5, g6, g4, g2, g3]
+        NetworkManager.getGoals() { (goals) in
+            self.goals = goals
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
         
         viewWidth = view.frame.width
         viewHeight = view.frame.height

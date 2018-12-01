@@ -17,9 +17,15 @@ class historyTVC: UITableViewCell {
     var reachedDate: UILabel = UILabel()
     var byDate: UILabel = UILabel()
     
+    var netDateFormatter = DateFormatter()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .clear
+        
+        netDateFormatter.dateStyle = .medium
+        netDateFormatter.timeStyle = .none
+        netDateFormatter.dateFormat = "MM/dd/yyyy"
         
         rec.translatesAutoresizingMaskIntoConstraints = false
         rec.backgroundColor = .white
@@ -105,15 +111,10 @@ class historyTVC: UITableViewCell {
         
         title.text = goal.name
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        dateFormatter.dateFormat = "MM/dd/yyyy"
-        
-        startDate.text = "start: \(dateFormatter.string(from: goal.startDate))"
-        byDate.text = "by: \(dateFormatter.string(from: goal.date))"
+        startDate.text = "start: \(goal.startDate)"
+        byDate.text = "by: \(goal.date)"
         if goal.endDate != nil {
-            reachedDate.text = "reached: \(dateFormatter.string(from: goal.endDate!))"
+            reachedDate.text = "reached: \(goal.endDate!)"
         }
         else {
             reachedDate.text = ""

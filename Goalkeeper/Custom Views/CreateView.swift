@@ -27,6 +27,8 @@ class CreateView: UIView, UITextViewDelegate {
     var n_noButton: UIButton!
     var rec: UIImageView!
     
+    var netDateFormatter: DateFormatter = DateFormatter()
+    
     init(frame: CGRect, viewHeight: CGFloat, viewWidth: CGFloat) {
         super.init(frame: frame)
         self.backgroundColor = UIColor(red: 176/255, green: 210/255, blue: 232/255, alpha: 1.0)
@@ -37,6 +39,10 @@ class CreateView: UIView, UITextViewDelegate {
         self.layer.shadowOffset = CGSize(width: 6, height: 6)
         self.clipsToBounds = false
         self.layer.masksToBounds = false
+        
+        netDateFormatter.dateStyle = .medium
+        netDateFormatter.timeStyle = .none
+        netDateFormatter.dateFormat = "MM/dd/yyyy"
         
         d_name = UITextField()
         d_name.translatesAutoresizingMaskIntoConstraints = false
@@ -198,7 +204,8 @@ class CreateView: UIView, UITextViewDelegate {
                 self.delegate?.showCreationAlert()
                 return
             }
-            let newGoal = Goal(name: d_name.text!, date: date, description: d_description.text!, checkpoints: [], startDate: Date())
+//            let newGoal = Goal(name: d_name.text!, date: netDateFormatter.string(from: date), description: d_description.text!, checkpoints: [], startDate: netDateFormatter.string(from: Date()), endDate: nil)
+            let newGoal = Goal(id: -1, name: d_name.text!, date: netDateFormatter.string(from: date), description: d_description.text!, startDate: netDateFormatter.string(from: Date()), endDate: nil)
             self.delegate?.createdGoal(newGoal: newGoal)
         }
         if (sender.titleLabel?.text == "Set") {

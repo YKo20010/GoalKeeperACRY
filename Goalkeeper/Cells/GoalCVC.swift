@@ -35,6 +35,8 @@ class GoalCVC: UICollectionViewCell, UIGestureRecognizerDelegate {
     var co_psMinTrackTint: UIColor = UIColor(red: 174/255, green: 255/255, blue: 0/255, alpha: 1.0) //green
     var co_psThumbTrackTint: UIColor = UIColor(red: 174/255, green: 255/255, blue: 0/255, alpha: 1.0) //green
     var co_psMaxTrackTint: UIColor = .gray
+    
+    var netDateFormatter: DateFormatter = DateFormatter()
 
     // MARK: Initalizers
     override init(frame: CGRect) {
@@ -46,6 +48,10 @@ class GoalCVC: UICollectionViewCell, UIGestureRecognizerDelegate {
         self.contentView.backgroundColor = .clear
         //self.backgroundColor = UIColor(red: 201/255, green: 142/255, blue: 25/255, alpha: 1.0)
         let marginGuide = contentView.layoutMarginsGuide
+        
+        netDateFormatter.dateStyle = .medium
+        netDateFormatter.timeStyle = .none
+        netDateFormatter.dateFormat = "MM/dd/yyyy"
 
         rec = UIImageView()
         rec.translatesAutoresizingMaskIntoConstraints = false
@@ -196,35 +202,35 @@ class GoalCVC: UICollectionViewCell, UIGestureRecognizerDelegate {
 /***************************    MARK: CONFIGURE CELL  **************************/
     func configure(for goal: Goal) {
         titleLabel.text = goal.name
-        var diffDate = Calendar.current.dateComponents([.year], from: Date(), to: goal.date).year
+        var diffDate = Calendar.current.dateComponents([.year], from: Date(), to: netDateFormatter.date(from: goal.date)!).year
         timeLabel.text = diffDate == 1 ? "in \(diffDate!) year" : "in \(diffDate!) years"
         if (diffDate! == 0) {
-            diffDate = Calendar.current.dateComponents([.month], from: Date(), to: goal.date).month
+            diffDate = Calendar.current.dateComponents([.month], from: Date(), to: netDateFormatter.date(from: goal.date)!).month
             timeLabel.text = diffDate == 1 ? "in \(diffDate!) month" : "in \(diffDate!) months"
         }
         if (diffDate! == 0) {
-            diffDate = Calendar.current.dateComponents([.day], from: Date(), to: goal.date).day
+            diffDate = Calendar.current.dateComponents([.day], from: Date(), to: netDateFormatter.date(from: goal.date)!).day
             timeLabel.text = diffDate == 1 ? "in \(diffDate!) day" : "in \(diffDate!) days"
         }
         var numCheck = 0
-        if (goal.checkpoints.count > 1) {
-            for i in 0...goal.checkpoints.count-1 {
-                if (goal.checkpoints[i].isFinished) {
-                    numCheck += 1
-                }
-            }
-        }
-        else if (goal.checkpoints.count != 0 && goal.checkpoints[0].isFinished) {
-            numCheck += 1
-        }
-        checkpointsLabel.text = "\(numCheck)" + "/" + "\(goal.checkpoints.count)" + " checkpoints"
-        if (goal.checkpoints.count != 0) {
-            progressSlider.value = Float(Double(numCheck)/Double(goal.checkpoints.count)*100.0)
-        }
-        else {
+//        if (goal.checkpoints.count > 1) {
+//            for i in 0...goal.checkpoints.count-1 {
+//                if (goal.checkpoints[i].isFinished) {
+//                    numCheck += 1
+//                }
+//            }
+//        }
+//        else if (goal.checkpoints.count != 0 && goal.checkpoints[0].isFinished) {
+//            numCheck += 1
+//        }
+//        checkpointsLabel.text = "\(numCheck)" + "/" + "\(goal.checkpoints.count)" + " checkpoints"
+//        if (goal.checkpoints.count != 0) {
+//            progressSlider.value = Float(Double(numCheck)/Double(goal.checkpoints.count)*100.0)
+//        }
+//        else {
             progressSlider.value = 100
             
-        }
+        //}
     }
 
     required init?(coder aDecoder: NSCoder) {

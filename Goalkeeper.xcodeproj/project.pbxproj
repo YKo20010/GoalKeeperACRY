@@ -125,8 +125,7 @@
 				034AD88021A22B0300AB9412 /* AppDelegate.swift */,
 				034AD8C721A4A2F900AB9412 /* CustomTabBarController.swift */,
 				034AD8CD21A62C6600AB9412 /* Main Views */,
-				034AD89221A22B2000AB9412 /* Goal.swift */,
-				034AD8CF21A62D5800AB9412 /* Checkpoint.swift */,
+				03FAC15A21B23DE700DFB2A7 /* Models */,
 				03FAC13721AD9CAA00DFB2A7 /* NetworkManager.swift */,
 				03FAC14921AEE6EE00DFB2A7 /* Cells */,
 				03FAC13F21AE2EF800DFB2A7 /* Header Views */,
@@ -199,6 +198,15 @@
 				034AD8D121A65CB600AB9412 /* CustomTableView.swift */,
 			);
 			path = "Custom Views";
+			sourceTree = "<group>";
+		};
+		03FAC15A21B23DE700DFB2A7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				034AD89221A22B2000AB9412 /* Goal.swift */,
+				034AD8CF21A62D5800AB9412 /* Checkpoint.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		A4D0474B4B90594B0CB2F605 /* Frameworks */ = {
