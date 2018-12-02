@@ -43,6 +43,14 @@
 		03FAC15721B1E0CA00DFB2A7 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC15621B1E0CA00DFB2A7 /* HistoryView.swift */; };
 		03FAC15921B1E75E00DFB2A7 /* historyTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FAC15821B1E75E00DFB2A7 /* historyTVC.swift */; };
 		03FAC15C21B36A5E00DFB2A7 /* confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = 03FAC15B21B36A5E00DFB2A7 /* confetti.json */; };
+		03FAC16621B48AB200DFB2A7 /* CircularStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03FAC15E21B48AB200DFB2A7 /* CircularStd-Book.otf */; };
+		03FAC16721B48AB200DFB2A7 /* CircularStd-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03FAC15F21B48AB200DFB2A7 /* CircularStd-Black.otf */; };
+		03FAC16821B48AB200DFB2A7 /* CircularStd-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03FAC16021B48AB200DFB2A7 /* CircularStd-Bold.otf */; };
+		03FAC16921B48AB200DFB2A7 /* CircularStd-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03FAC16121B48AB200DFB2A7 /* CircularStd-BookItalic.otf */; };
+		03FAC16A21B48AB200DFB2A7 /* CircularStd-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03FAC16221B48AB200DFB2A7 /* CircularStd-BlackItalic.otf */; };
+		03FAC16B21B48AB200DFB2A7 /* CircularStd-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03FAC16321B48AB200DFB2A7 /* CircularStd-MediumItalic.otf */; };
+		03FAC16C21B48AB200DFB2A7 /* CircularStd-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03FAC16421B48AB200DFB2A7 /* CircularStd-BoldItalic.otf */; };
+		03FAC16D21B48AB200DFB2A7 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 03FAC16521B48AB200DFB2A7 /* CircularStd-Medium.otf */; };
 		4B5F49DCBB2F0C8B65E2DBBE /* Pods_Goalkeeper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6246DBFDBEA5D5A09E2B75AE /* Pods_Goalkeeper.framework */; };
 /* End PBXBuildFile section */
 
@@ -85,6 +93,14 @@
 		03FAC15621B1E0CA00DFB2A7 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		03FAC15821B1E75E00DFB2A7 /* historyTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = historyTVC.swift; sourceTree = "<group>"; };
 		03FAC15B21B36A5E00DFB2A7 /* confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = confetti.json; sourceTree = "<group>"; };
+		03FAC15E21B48AB200DFB2A7 /* CircularStd-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Book.otf"; sourceTree = "<group>"; };
+		03FAC15F21B48AB200DFB2A7 /* CircularStd-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Black.otf"; sourceTree = "<group>"; };
+		03FAC16021B48AB200DFB2A7 /* CircularStd-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Bold.otf"; sourceTree = "<group>"; };
+		03FAC16121B48AB200DFB2A7 /* CircularStd-BookItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-BookItalic.otf"; sourceTree = "<group>"; };
+		03FAC16221B48AB200DFB2A7 /* CircularStd-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-BlackItalic.otf"; sourceTree = "<group>"; };
+		03FAC16321B48AB200DFB2A7 /* CircularStd-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-MediumItalic.otf"; sourceTree = "<group>"; };
+		03FAC16421B48AB200DFB2A7 /* CircularStd-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-BoldItalic.otf"; sourceTree = "<group>"; };
+		03FAC16521B48AB200DFB2A7 /* CircularStd-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Medium.otf"; sourceTree = "<group>"; };
 		6246DBFDBEA5D5A09E2B75AE /* Pods_Goalkeeper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Goalkeeper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C37F5D0B7D60BF64B8FA22CF /* Pods-Goalkeeper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalkeeper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper.release.xcconfig"; sourceTree = "<group>"; };
 		FABE3B8F79E659B0F3C0F517 /* Pods-Goalkeeper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Goalkeeper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Goalkeeper/Pods-Goalkeeper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -123,6 +139,7 @@
 		034AD87F21A22B0300AB9412 /* Goalkeeper */ = {
 			isa = PBXGroup;
 			children = (
+				03FAC15D21B48AB200DFB2A7 /* circular-std-book-cufonfonts */,
 				03FAC14821AEE6A100DFB2A7 /* Animations */,
 				034AD88021A22B0300AB9412 /* AppDelegate.swift */,
 				034AD8C721A4A2F900AB9412 /* CustomTabBarController.swift */,
@@ -212,6 +229,22 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		03FAC15D21B48AB200DFB2A7 /* circular-std-book-cufonfonts */ = {
+			isa = PBXGroup;
+			children = (
+				03FAC15E21B48AB200DFB2A7 /* CircularStd-Book.otf */,
+				03FAC15F21B48AB200DFB2A7 /* CircularStd-Black.otf */,
+				03FAC16021B48AB200DFB2A7 /* CircularStd-Bold.otf */,
+				03FAC16121B48AB200DFB2A7 /* CircularStd-BookItalic.otf */,
+				03FAC16221B48AB200DFB2A7 /* CircularStd-BlackItalic.otf */,
+				03FAC16321B48AB200DFB2A7 /* CircularStd-MediumItalic.otf */,
+				03FAC16421B48AB200DFB2A7 /* CircularStd-BoldItalic.otf */,
+				03FAC16521B48AB200DFB2A7 /* CircularStd-Medium.otf */,
+			);
+			name = "circular-std-book-cufonfonts";
+			path = "Resources/circular-std-book-cufonfonts";
+			sourceTree = SOURCE_ROOT;
+		};
 		A4D0474B4B90594B0CB2F605 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,10 +326,18 @@
 				034AD88B21A22B0500AB9412 /* LaunchScreen.storyboard in Resources */,
 				034AD8CA21A4DC2A00AB9412 /* check_animation.json in Resources */,
 				03FAC13221ACBE3E00DFB2A7 /* credentials.plist in Resources */,
+				03FAC16721B48AB200DFB2A7 /* CircularStd-Black.otf in Resources */,
+				03FAC16621B48AB200DFB2A7 /* CircularStd-Book.otf in Resources */,
+				03FAC16D21B48AB200DFB2A7 /* CircularStd-Medium.otf in Resources */,
+				03FAC16821B48AB200DFB2A7 /* CircularStd-Bold.otf in Resources */,
+				03FAC16921B48AB200DFB2A7 /* CircularStd-BookItalic.otf in Resources */,
 				03FAC15C21B36A5E00DFB2A7 /* confetti.json in Resources */,
 				034AD88821A22B0500AB9412 /* Assets.xcassets in Resources */,
+				03FAC16B21B48AB200DFB2A7 /* CircularStd-MediumItalic.otf in Resources */,
 				03FAC13A21ADD74D00DFB2A7 /* loading_dots.json in Resources */,
+				03FAC16A21B48AB200DFB2A7 /* CircularStd-BlackItalic.otf in Resources */,
 				034AD88621A22B0400AB9412 /* Main.storyboard in Resources */,
+				03FAC16C21B48AB200DFB2A7 /* CircularStd-BoldItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
