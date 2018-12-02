@@ -142,7 +142,7 @@ class SettingView: UIViewController {
             }
             var numCheck = 0
             for checkpoint in checkpoints {
-                if (checkpoint.isFinshed) {
+                if (checkpoint.isFinished) {
                     numCheck += 1
                 }
             }

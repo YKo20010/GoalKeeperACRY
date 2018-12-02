@@ -74,7 +74,7 @@ class NetworkManager {
         let parameters: Parameters = [
             "name": checkpoint.name,
             "date": checkpoint.date,
-            "isFinished": checkpoint.isFinshed,
+            "isFinished": checkpoint.isFinished,
             "startDate": checkpoint.startDate,
             "endDate": checkpoint.endDate
         ]
@@ -113,7 +113,7 @@ class NetworkManager {
         let parameters: Parameters = [
             "name": checkpoint.name,
             "date": checkpoint.date,
-            "isFinished": checkpoint.isFinshed,
+            "isFinished": checkpoint.isFinished,
             "startDate": checkpoint.startDate,
             "endDate": checkpoint.endDate
         ]

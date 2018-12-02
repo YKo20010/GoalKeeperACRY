@@ -43,7 +43,6 @@ class ProgressTVC: UITableViewCell {
         contentView.addSubview(percent)
         
         setupConstraints()
-        getCheckpoints()
     }
     
     func setupConstraints() {
@@ -66,51 +65,45 @@ class ProgressTVC: UITableViewCell {
             ])
     }
 
-    func getCheckpoints() {
+    func getCheckpoints(goal: Goal) {
         NetworkManager.getCheckpoints(id: goalID) { (checkpoints) in
             self.t_checkpoints = checkpoints
-        }
-    }
-    
-    func recalculateProgressValue(goal: Goal) {
-        var numCheck = 0
-        if (t_checkpoints.count > 1) {
-            for i in 0...t_checkpoints.count-1 {
-                if (t_checkpoints[i].isFinshed) {
-                    numCheck += 1
+            var numCheck = 0
+            if (self.t_checkpoints.count > 1) {
+                for i in 0...self.t_checkpoints.count-1 {
+                    if (self.t_checkpoints[i].isFinished) {
+                        numCheck += 1
+                    }
                 }
             }
-        }
-        else if (t_checkpoints.count != 0 && t_checkpoints[0].isFinshed) {
-            numCheck += 1
-        }
-        if (goal.endDate != "") {
-            numCheck += 1
-        }
-        if (t_checkpoints.count != 0) {
-            // count for each checkpoint, plus one for actually completing goal
-            let fraction = numCheck*100/(t_checkpoints.count + 1)
-            percent.text = "\(fraction)%"
-            progressSlider.setProgress(Float(Double(numCheck)/Double(t_checkpoints.count + 1)), animated: false)
-        }
-        else if (goal.endDate != "") {
-            // zero checkpoints, completed goal
-            percent.text = "100%"
-            progressSlider.setProgress(100.0, animated: false)
-        }
-        else {
-            // no checkpoints and incomplete goal
-            percent.text = "0%"
-            progressSlider.setProgress(0.0, animated: false)
+            else if (self.t_checkpoints.count != 0 && self.t_checkpoints[0].isFinished) {
+                numCheck += 1
+            }
+            if (goal.endDate != "") {
+                numCheck += 1
+            }
+            if (self.t_checkpoints.count != 0) {
+                // count for each checkpoint, plus one for actually completing goal
+                let fraction = numCheck*100/(self.t_checkpoints.count + 1)
+                self.percent.text = "\(fraction)%"
+                self.progressSlider.setProgress(Float(Double(numCheck)/Double(self.t_checkpoints.count + 1)), animated: false)
+            }
+            else if (goal.endDate != "") {
+                // zero checkpoints, completed goal
+                self.percent.text = "100%"
+                self.progressSlider.setProgress(100.0, animated: false)
+            }
+            else {
+                // no checkpoints and incomplete goal
+                self.percent.text = "0%"
+                self.progressSlider.setProgress(0.0, animated: false)
+            }
         }
     }
     
     func configure(for goal: Goal) {
         label.text = goal.name
-        getCheckpoints()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.recalculateProgressValue(goal: goal)
-        }
+        getCheckpoints(goal: goal)
     }
     
     required init?(coder aDecoder: NSCoder) {

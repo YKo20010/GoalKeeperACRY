@@ -34,7 +34,6 @@ class ProgressView: UIViewController, UITableViewDataSource, UITableViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
         navigationController?.navigationBar.isHidden = true
     
         netReload()

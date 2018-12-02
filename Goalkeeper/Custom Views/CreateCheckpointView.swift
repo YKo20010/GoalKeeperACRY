@@ -146,7 +146,7 @@ class CreateCheckpointView: UIView {
             d_dateLabel.text = "by \(dateFormatter.string(from: date))"
             n_yesButton.setTitle("Save", for: .normal)
             n_noButton.setTitle("Cancel", for: .normal)
-            let newCheckpoint = Checkpoint(id: -1, name: d_name.text!, date: netDateFormatter.string(from: date), isFinshed: false, startDate: netDateFormatter.string(from: Date()), endDate: "")
+            let newCheckpoint = Checkpoint(id: -1, name: d_name.text!, date: netDateFormatter.string(from: date), isFinished: false, startDate: netDateFormatter.string(from: Date()), endDate: "")
             self.delegate?.createdCheckpoint(newCheckpoint: newCheckpoint)
         }
     }

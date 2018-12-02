@@ -68,6 +68,10 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var viewWidth: CGFloat!
     var viewHeight: CGFloat!
     
+    override func viewDidAppear(_ animated: Bool) {
+        netReloadCollectionView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = co_background
@@ -350,7 +354,6 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             detailView.updateCompleteButton()
         }
-        collectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -375,15 +378,12 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         if (sender == n_yesButton) {
             self.delegate?.addedEvent(title: "goal \"\(goals[(deleteIndex?.item)!].name)\" deleted", date: Date())
             NetworkManager.deleteGoal(id: goals[(deleteIndex?.item)!].id)
-            //goals.remove(at: (deleteIndex?.item)!)
-            //selected_goals = goals
-            //collectionView.deleteItems(at: [deleteIndex!])
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.netReloadCollectionView()
+            }
         }
-//        if (sender == n_noButton) {
-//            collectionView.reloadData()
-//        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.netReloadCollectionView()
+        if (sender == n_noButton) {
+            collectionView.reloadData()
         }
         deleteIndex = nil
         n_background.isHidden = true

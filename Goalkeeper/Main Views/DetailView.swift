@@ -245,6 +245,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
             self.t_checkpoints = checkpoints
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
+                self.updateCompleteButton()
             }
         }
     }
@@ -498,7 +499,6 @@ extension DetailView: pickDate {
 extension DetailView: ChangeCheckpointStatus {
     func changedCheckpointStatus() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.updateCompleteButton()
             self.reloadCheckpoints()
         }
     }

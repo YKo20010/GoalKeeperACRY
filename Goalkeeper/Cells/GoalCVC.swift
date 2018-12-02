@@ -215,12 +215,15 @@ class GoalCVC: UICollectionViewCell, UIGestureRecognizerDelegate {
             diffDate = Calendar.current.dateComponents([.day], from: Date(), to: netDateFormatter.date(from: goal.date)!).day
             timeLabel.text = diffDate == 1 ? "in \(diffDate!) day" : "in \(diffDate!) days"
         }
-        var numCheck = 0
         getCheckpoints()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            print(self.t_checkpoints)
+    }
+    
+    func getCheckpoints() {
+        NetworkManager.getCheckpoints(id: goalID) { (checkpoints) in
+            self.t_checkpoints = checkpoints
+            var numCheck = 0
             for checkpoint in self.t_checkpoints {
-                if (checkpoint.isFinshed) {
+                if (checkpoint.isFinished) {
                     numCheck += 1
                 }
             }
@@ -231,12 +234,6 @@ class GoalCVC: UICollectionViewCell, UIGestureRecognizerDelegate {
             else {
                 self.progressSlider.value = 100
             }
-        }
-    }
-    
-    func getCheckpoints() {
-        NetworkManager.getCheckpoints(id: goalID) { (checkpoints) in
-            self.t_checkpoints = checkpoints
         }
     }
 
