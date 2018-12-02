@@ -54,7 +54,7 @@ class Checkpoint(db.Model):
         'id': self.id,
         'name': self.name,
         'date': self.date,
-        'isFinshed': self.isFinished,
+        'isFinished': self.isFinished,
         'startDate': self.startDate,
         'endDate': self.endDate
     }
