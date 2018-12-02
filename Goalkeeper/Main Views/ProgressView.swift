@@ -90,6 +90,7 @@ class ProgressView: UIViewController, UITableViewDataSource, UITableViewDelegate
         cell.configure(for: goal)
         cell.setNeedsUpdateConstraints()
         cell.selectionStyle = .none
+        cell.goalID = goal.id
         return cell
     }
     

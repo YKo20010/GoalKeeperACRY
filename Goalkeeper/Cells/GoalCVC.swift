@@ -11,6 +11,9 @@ import UIKit
 
 class GoalCVC: UICollectionViewCell, UIGestureRecognizerDelegate {
 
+    var goalID: Int = -1
+    var t_checkpoints: [Checkpoint] = []
+    
     //Labels
     let titleLabel = UILabel()
     var progressSlider = ProgressSlider()
@@ -213,24 +216,28 @@ class GoalCVC: UICollectionViewCell, UIGestureRecognizerDelegate {
             timeLabel.text = diffDate == 1 ? "in \(diffDate!) day" : "in \(diffDate!) days"
         }
         var numCheck = 0
-//        if (goal.checkpoints.count > 1) {
-//            for i in 0...goal.checkpoints.count-1 {
-//                if (goal.checkpoints[i].isFinished) {
-//                    numCheck += 1
-//                }
-//            }
-//        }
-//        else if (goal.checkpoints.count != 0 && goal.checkpoints[0].isFinished) {
-//            numCheck += 1
-//        }
-//        checkpointsLabel.text = "\(numCheck)" + "/" + "\(goal.checkpoints.count)" + " checkpoints"
-//        if (goal.checkpoints.count != 0) {
-//            progressSlider.value = Float(Double(numCheck)/Double(goal.checkpoints.count)*100.0)
-//        }
-//        else {
-            progressSlider.value = 100
-            
-        //}
+        getCheckpoints()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            print(self.t_checkpoints)
+            for checkpoint in self.t_checkpoints {
+                if (checkpoint.isFinshed) {
+                    numCheck += 1
+                }
+            }
+            self.checkpointsLabel.text = "\(numCheck)" + "/" + "\(self.t_checkpoints.count)" + " checkpoints"
+            if (self.t_checkpoints.count != 0) {
+                self.progressSlider.value = Float(Double(numCheck)/Double(self.t_checkpoints.count)*100.0)
+            }
+            else {
+                self.progressSlider.value = 100
+            }
+        }
+    }
+    
+    func getCheckpoints() {
+        NetworkManager.getCheckpoints(id: goalID) { (checkpoints) in
+            self.t_checkpoints = checkpoints
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

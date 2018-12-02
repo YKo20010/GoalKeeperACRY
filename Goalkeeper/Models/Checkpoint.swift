@@ -37,6 +37,10 @@ struct CheckpointsResponse: Codable {
     var data: [Checkpoint]
 }
 
+struct CheckpointResponse: Codable {
+    var data: Checkpoint
+}
+
 
 
 

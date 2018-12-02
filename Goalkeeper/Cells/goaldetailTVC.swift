@@ -87,8 +87,9 @@ class goaldetailTVC: UITableViewCell {
     }
     
     @objc func didClick() {
-        self.delegate?.changedCheckpointStatus()
-        NetworkManager.editCheckpoint(id: goalID, ckptID: c_id, checkpoint: Checkpoint(id: c_id, name: c_name, date: c_date, isFinshed: !c_isFinished, startDate: c_startDate, endDate: c_endDate))
+        NetworkManager.editCheckpoint(id: goalID, ckptID: c_id, checkpoint: Checkpoint(id: c_id, name: c_name, date: c_date, isFinshed: !c_isFinished, startDate: c_startDate, endDate: c_endDate)) { (checkpoint) in
+            self.delegate?.changedCheckpointStatus()
+        }
     }
     
     func configure(for checkpoint: Checkpoint) {

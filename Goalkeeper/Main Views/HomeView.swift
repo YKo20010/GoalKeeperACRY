@@ -329,6 +329,7 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: goalCellIdentifier, for: indexPath) as! GoalCVC
         let goal = goals[indexPath.row]
+        cell.goalID = goal.id
         cell.configure(for: goal)
         return cell
     }
@@ -346,6 +347,9 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         detailView.viewHeight = viewHeight
         detailView.viewWidth = viewWidth
         self.delegateShowDetail?.presentDetail(detailController: detailView)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            detailView.updateCompleteButton()
+        }
         collectionView.reloadData()
     }
     
@@ -467,9 +471,9 @@ extension HomeView: changeGoal {
         }
     }
     func changedCheckpoint(newCheckpoint: [Checkpoint]) {
-        for checkpoint in newCheckpoint {
-            NetworkManager.editCheckpoint(id: goals[selectedGoalIndex].id, ckptID: checkpoint.id, checkpoint: checkpoint)
-        }
+//        for checkpoint in newCheckpoint {
+//            NetworkManager.editCheckpoint(id: goals[selectedGoalIndex].id, ckptID: checkpoint.id, checkpoint: checkpoint)
+//        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.netReloadCollectionView()
         }

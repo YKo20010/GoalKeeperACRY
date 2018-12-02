@@ -108,20 +108,23 @@ class NetworkManager {
         }
     }
     ///api/goal/{goal_id}/checkpoint/{checkpoint_id}/
-    static func editCheckpoint(id: Int, ckptID: Int, checkpoint: Checkpoint) -> Void {
+    static func editCheckpoint(id: Int, ckptID: Int, checkpoint: Checkpoint, _ didEditCheckpoint: @escaping (Checkpoint) -> Void) -> Void {
         let editCID = "\(localBaseURL)goal/\(id)/checkpoint/\(ckptID)/"
         let parameters: Parameters = [
-            "id": checkpoint.id,
             "name": checkpoint.name,
             "date": checkpoint.date,
             "isFinished": checkpoint.isFinshed,
             "startDate": checkpoint.startDate,
             "endDate": checkpoint.endDate
         ]
-        Alamofire.request(editCID, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+        Alamofire.request(editCID, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseData { (response) in
             switch response.result {
             case .success(let data):
                 print(data)
+                let decoder = JSONDecoder()
+                if let checkpointResponse = try? decoder.decode(CheckpointResponse.self, from: data) {
+                    didEditCheckpoint(checkpointResponse.data)
+                }
             case .failure(let error):
                 print(error)
             }

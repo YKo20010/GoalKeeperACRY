@@ -323,7 +323,9 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     @objc func back() {
         if (backButton.titleLabel?.text == "Back") {
             self.delegate?.changedCheckpoint(newCheckpoint: t_checkpoints)
-            dismiss(animated: true, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.09) {
+                self.dismiss(animated: true, completion: nil)
+            }
         }
         else {
             e_description.isHidden = true
@@ -456,14 +458,6 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         self.headerHeightConstraint.constant = 211/895*viewHeight
         UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
     }
-    func netReloadData() {
-        NetworkManager.getCheckpoints(id: t_id) { (checkpoints) in
-            self.t_checkpoints = checkpoints
-            DispatchQueue.main.async{
-               self.collectionView.reloadData()
-            }
-        }
-    }
 }
 
 /******************************** MARK: Sticky Header ********************************/
@@ -503,9 +497,9 @@ extension DetailView: pickDate {
 
 extension DetailView: ChangeCheckpointStatus {
     func changedCheckpointStatus() {
-        updateCompleteButton()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.netReloadData()
+            self.updateCompleteButton()
+            self.reloadCheckpoints()
         }
     }
     func beginAddCheckpoint() {
