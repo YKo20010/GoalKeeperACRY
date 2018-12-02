@@ -1,4 +1,4 @@
-# GoalKeeper &#169;2018 by A.C.R.Y.
+# GoalKeeper
 Created by: <i>Yanlam Ko (iOS), Avani Aggrwal (iOS), Richard Wang (Backend)</i> | Designed by: <i>Cecilia Lu</i>
 
 <strong> Set goals for yourself, mark and track your progress. </strong> 
@@ -28,4 +28,5 @@ iOS:
 Backend:
 
 <p>Note: ProgressView displays percentage of <i>entire</i> goal reached -- in calculations, the weight of completing the actual goal is identical to the weight of each checkpoint</p>
-
+<p> </p>
+<p>&#169;2018 by A.C.R.Y.</p>
