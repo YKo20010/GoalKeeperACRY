@@ -116,8 +116,9 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         footer.layer.masksToBounds = false
         footer.clipsToBounds = false
         footer.layer.shadowColor = UIColor.white.cgColor
-        footer.layer.shadowRadius = 8
-        footer.layer.shadowOffset = CGSize(width: 0, height: 6)
+        footer.layer.shadowOffset = CGSize(width: 5, height: -35/895/3*viewHeight)
+        footer.layer.shadowRadius = 10
+        footer.layer.shadowOpacity = 1.0
         view.addSubview(footer)
         
         let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.dark)
@@ -303,6 +304,15 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
             footer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             footer.topAnchor.constraint(equalTo: saveButton.centerYAnchor)
             ])
+        
+//        let blurLayer = CAGradientLayer()
+//        blurLayer.frame = footer.frame
+//        blurLayer.shadowRadius = 50
+//        blurLayer.shadowPath = CGPath(roundedRect: CGRect(x: footer.frame.origin.x, y: footer.frame.origin.y, width: footer.frame.width, height: footer.frame.height), cornerWidth: footer.frame.height/6, cornerHeight: footer.frame.height/6, transform: nil)
+//        blurLayer.shadowOpacity = 1.0
+//        blurLayer.shadowOffset = CGSize.zero
+//        blurLayer.shadowColor = UIColor.white.cgColor
+//        footer.layer.mask = blurLayer
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
