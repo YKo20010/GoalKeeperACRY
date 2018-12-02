@@ -18,7 +18,12 @@ class CustomTabBarController: UITabBarController {
     let co_tabBarBackground: UIColor = .white
     let co_tabBarTint: UIColor = UIColor(red: 128/255, green: 128/255, blue: 128/255, alpha: 1.0)
     var nav_home: UINavigationController!
+    
     var settingController: SettingView! = SettingView()
+    var homeController: HomeView! = HomeView()
+    var calendarController: EventsView! = EventsView()
+    var progressController: ProgressView! = ProgressView()
+    var historyController: HistoryView! = HistoryView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +44,6 @@ class CustomTabBarController: UITabBarController {
         self.tabBar.shadowImage = UIImage()
         
 /*********************     HOME VIEW CONTROLLER    ********************/
-        let homeController = HomeView()
         homeController.navigationItem.title = "Goals"
         homeController.delegateShowDetail = self
         nav_home = UINavigationController(rootViewController: homeController)
@@ -47,14 +51,12 @@ class CustomTabBarController: UITabBarController {
         nav_home.tabBarItem.image = UIImage(named: "home")
 
 /*********************     CALENDAR VIEW CONTROLLER    ********************/
-        let calendarController = EventsView()
         calendarController.navigationItem.title = "Calendar"
         let nav_calendar = UINavigationController(rootViewController: calendarController)
         nav_calendar.title = ""
         nav_calendar.tabBarItem.image = UIImage(named:"calendar")
         
 /*********************     PROGRESS VIEW CONTROLLER    ********************/
-        let progressController = ProgressView()
         progressController.navigationItem.title = "Progress"
         let nav_progress = UINavigationController(rootViewController: progressController)
         nav_progress.title = ""
@@ -62,7 +64,6 @@ class CustomTabBarController: UITabBarController {
         
         //homeController.delegate = progressController
 /*********************     HISTORY VIEW CONTROLLER    ********************/
-        let historyController = HistoryView()
         historyController.navigationItem.title = "History"
         let nav_history = UINavigationController(rootViewController: historyController)
         nav_history.title = ""

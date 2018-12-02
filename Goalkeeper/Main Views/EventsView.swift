@@ -18,6 +18,8 @@ protocol addEvent: class {
 
 class EventsView: UIViewController, CalendarViewDelegate, CalendarViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    var user: String = "acry@default.com"
+    
     var headerView: calendarHeaderView!
     var headerHeightConstraint: NSLayoutConstraint!
     var scrollview: UIScrollView!

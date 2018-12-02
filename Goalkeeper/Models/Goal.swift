@@ -11,11 +11,12 @@ import UIKit
 struct Goal: Codable {
     let id: Int
     var name: String
+    var user: String
     var date: String
     var description: String
-    //var checkpoints: [Checkpoint]
     var startDate: String
     var endDate: String?
+    //var checkpoints: [Checkpoint]
 }
 
 struct GoalsResponse: Codable {

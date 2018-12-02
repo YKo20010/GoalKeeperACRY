@@ -14,6 +14,8 @@ import UIKit
 
 class ProgressView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    var user: String = "acry@default.com"
+    
     var headerView: HeaderView!
     var headerHeightConstraint: NSLayoutConstraint!
     

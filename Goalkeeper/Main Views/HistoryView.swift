@@ -9,6 +9,7 @@
 import UIKit
 
 class HistoryView: UIViewController, UISearchBarDelegate, UISearchDisplayDelegate, UITableViewDelegate, UITableViewDataSource {
+    var user: String = "acry@default.com"
 
     /*  Views   */
     var tableView: UITableView!
@@ -96,6 +97,7 @@ class HistoryView: UIViewController, UISearchBarDelegate, UISearchDisplayDelegat
         headerView.layer.shadowOpacity = 0.0
         headerView.titleLabel.text = "history"
         headerView.backgroundColor = UIColor(red: 159/255, green: 171/255, blue: 184/255, alpha: 1.0)
+        headerView.colorView.backgroundColor = UIColor(red: 159/255, green: 171/255, blue: 184/255, alpha: 1.0)
         view.addSubview(headerView)
         
         tableView = UITableView()

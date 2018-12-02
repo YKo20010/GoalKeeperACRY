@@ -30,6 +30,8 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     weak var delegate: addEvent?
     weak var delegateShowDetail: showDetail?
     
+    var user: String = "acry@default.com"
+    
     /*  Colors  */
     let co_background: UIColor = .white
     let co_tabBar: UIColor = .darkGray
@@ -211,6 +213,7 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         createView.translatesAutoresizingMaskIntoConstraints = false
         createView.delegate = self
         createView.isHidden = true
+        createView.user = user
         view.addSubview(createView)
         
         alert = UIAlertController()
@@ -416,6 +419,7 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     @objc func delete(sender: UIButton) {
         if (sender == n_yesButton) {
             self.delegate?.addedEvent(title: "goal \"\(goals[(deleteIndex?.item)!].name)\" deleted", date: Date())
+            NetworkManager.deleteGoal(id: goals[(deleteIndex?.item)!].id)
             goals.remove(at: (deleteIndex?.item)!)
             //selected_goals = goals
             collectionView.deleteItems(at: [deleteIndex!])

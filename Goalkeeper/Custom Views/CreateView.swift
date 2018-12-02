@@ -10,6 +10,8 @@ import UIKit
 
 class CreateView: UIView, UITextViewDelegate {
     
+    var user: String = "acry@default.com"
+    
     weak var delegate: createGoal?
     
     var d_name: UITextField!
@@ -205,7 +207,7 @@ class CreateView: UIView, UITextViewDelegate {
                 return
             }
 //            let newGoal = Goal(name: d_name.text!, date: netDateFormatter.string(from: date), description: d_description.text!, checkpoints: [], startDate: netDateFormatter.string(from: Date()), endDate: nil)
-            let newGoal = Goal(id: -1, name: d_name.text!, date: netDateFormatter.string(from: date), description: d_description.text!, startDate: netDateFormatter.string(from: Date()), endDate: nil)
+            let newGoal = Goal(id: -1, name: d_name.text!, user: user, date: netDateFormatter.string(from: date), description: d_description.text!, startDate: netDateFormatter.string(from: Date()), endDate: nil)
             self.delegate?.createdGoal(newGoal: newGoal)
         }
         if (sender.titleLabel?.text == "Set") {

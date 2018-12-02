@@ -294,8 +294,20 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     }
     
     @objc func completedGoal() {
-        self.delegate?.completedGoal()
-        self.dismiss(animated: true, completion: nil)
+        saveButton.isEnabled = false
+        backButton.isEnabled = false
+        completeButton.isEnabled = false
+        let checkAnimation = LOTAnimationView(name: "confetti")
+        checkAnimation.frame = CGRect(x: 0, y: 7/8*viewHeight, width: 500, height: 500)
+        checkAnimation.center = self.view.center
+        checkAnimation.contentMode = .scaleAspectFill
+        view.addSubview(checkAnimation)
+        checkAnimation.play()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
+            checkAnimation.removeFromSuperview()
+            self.delegate?.completedGoal()
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     @objc func back() {
         if (backButton.titleLabel?.text == "Back") {

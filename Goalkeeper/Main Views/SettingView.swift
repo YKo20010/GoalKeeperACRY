@@ -13,11 +13,13 @@ import Google
 
 class SettingView: UIViewController {
     
+    var user: String = "acry@default.com"
+    var url: URL!
+    
     let signOutButton = UIButton()
     var headerView: calendarHeaderView!
     var headerHeightConstraint: NSLayoutConstraint!
     var profileImage: UIImageView!
-    var url: URL!
     var nameLabel: UILabel!
     var goalsLabel: UILabel!
     

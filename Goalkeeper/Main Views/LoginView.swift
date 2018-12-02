@@ -64,6 +64,7 @@ class LoginView: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
         signInButton.clipsToBounds = false
         signInButton.layer.shadowOffset = CGSize(width: 6, height: 6)
         signInButton.center = view.center
+        signInButton.colorScheme = .light
         view.addSubview(signInButton)
         NSLayoutConstraint.activate([
             signInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -149,6 +150,12 @@ class LoginView: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
             let tabview = CustomTabBarController()
             tabview.settingController.url = user.profile.imageURL(withDimension: 400)
             tabview.settingController.t_Name = user.profile.name.lowercased()
+            
+            tabview.settingController.user = user.profile.email
+            tabview.homeController.user = user.profile.email
+            tabview.progressController.user = user.profile.email
+            tabview.calendarController.user = user.profile.email
+            tabview.historyController.user = user.profile.email
             DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
                 self.present(tabview, animated: true, completion: nil)
                 self.welcomeLabel.text = "Welcome!"
