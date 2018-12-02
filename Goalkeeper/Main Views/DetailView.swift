@@ -40,6 +40,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     let detailCellIdentifier = "DetailCellIdentifier"
     let headerReuseIdentifier = "headerReuseIdentifier"
     var headerHeightConstraint: NSLayoutConstraint!
+    var footer: UIImageView!
     
     var d_datePicker: UIDatePicker!
     var blurView: UIVisualEffectView!
@@ -108,6 +109,16 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         collectionView.backgroundColor = .clear
         collectionView.allowsSelection = false
         view.addSubview(collectionView)
+        
+        footer = UIImageView()
+        footer.translatesAutoresizingMaskIntoConstraints = false
+        footer.backgroundColor = .white
+        footer.layer.masksToBounds = false
+        footer.clipsToBounds = false
+        footer.layer.shadowColor = UIColor.white.cgColor
+        footer.layer.shadowRadius = 8
+        footer.layer.shadowOffset = CGSize(width: 0, height: 6)
+        view.addSubview(footer)
         
         let darkBlur = UIBlurEffect(style: UIBlurEffectStyle.dark)
         blurView = UIVisualEffectView(effect: darkBlur)
@@ -221,7 +232,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         e_description.isHidden = true
         view.addSubview(e_description)
         
-        createView = CreateCheckpointView(frame: .zero, viewHeight: viewHeight, viewWidth: viewWidth)
+        createView = CreateCheckpointView(frame: .zero, viewHeight: viewHeight, viewWidth: viewWidth, goalDate: t_Date, goalID: t_id)
         createView.translatesAutoresizingMaskIntoConstraints = false
         createView.delegate = self
         createView.isHidden = true
@@ -260,7 +271,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
             collectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -37/895*viewHeight),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: saveButton.topAnchor, constant: -20/895*viewHeight)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
         NSLayoutConstraint.activate([
             d_datePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -286,6 +297,12 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
             createView.widthAnchor.constraint(equalToConstant: 4/5*viewWidth),
             createView.heightAnchor.constraint(equalToConstant: 7/8*viewWidth)
             ])
+        NSLayoutConstraint.activate([
+            footer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            footer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            footer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            footer.topAnchor.constraint(equalTo: saveButton.centerYAnchor)
+            ])
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -295,6 +312,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     /******************************** MARK: Action Functions ********************************/
     func updateCompleteButton() {
         completeButton.isHidden = false
+        
         for checkpoint in t_checkpoints {
             if (checkpoint.endDate == "") {
                 completeButton.isHidden = true
@@ -507,7 +525,6 @@ extension DetailView: ChangeCheckpointStatus {
         createView.d_dateLabel.text = "by \(dateFormatter.string(from: Date()))"
         createView.date = Date()
         createView.d_datePicker.date = Date()
-        createView.goalID = t_id
         createView.isHidden = false
         blurView.isHidden = false
         backButton.isHidden = true

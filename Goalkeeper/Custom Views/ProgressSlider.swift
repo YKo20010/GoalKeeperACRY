@@ -46,8 +46,6 @@ class ProgressSlider: UISlider {
         self.layer.cornerRadius = height/2
         self.clipsToBounds = true
         self.heightAnchor.constraint(equalToConstant: height)
-        //self.layer.sublayers![1].cornerRadius = height/2
-        //self.subviews[1].clipsToBounds = true
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -339,7 +339,6 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: goalCellIdentifier, for: indexPath) as! GoalCVC
         let goal = goals[indexPath.row]
         selectedGoalIndex = indexPath.row
         let detailView = DetailView()

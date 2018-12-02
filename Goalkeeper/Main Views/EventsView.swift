@@ -234,4 +234,3 @@ extension EventsView: addEvent {
     }
 }
 
-

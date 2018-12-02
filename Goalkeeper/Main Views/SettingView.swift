@@ -22,14 +22,15 @@ class SettingView: UIViewController {
     var profileImage: UIImageView!
     var nameLabel: UILabel!
     var goalsLabel: UILabel!
+    var progressLabel: UILabel!
     
     var viewWidth: CGFloat!
     var viewHeight: CGFloat!
     var completedGoals: Int = 0
+    var activeGoals: Int = 0
     var goals: [Goal] = []
     
     var t_Name: String = "name"
-    var t_Goals: String = "0 goals reached"
     
     override func viewDidAppear(_ animated: Bool) {
         netReload()
@@ -43,8 +44,6 @@ class SettingView: UIViewController {
         
         viewWidth = view.frame.width
         viewHeight = view.frame.height
-        
-        netReload()
     
         headerView = calendarHeaderView(frame: .zero, textSize: 40/895*viewHeight, viewHeight: viewHeight)
         headerView.translatesAutoresizingMaskIntoConstraints = false
@@ -119,7 +118,7 @@ class SettingView: UIViewController {
         goalsLabel.textColor = UIColor(red: 115/255, green: 115/255, blue: 115/255, alpha: 1.0)
         goalsLabel.textAlignment = .center
         goalsLabel.font = UIFont.systemFont(ofSize: 18/895*viewHeight, weight: .regular)
-        goalsLabel.text = t_Goals
+        goalsLabel.text = "0 goals reached"
         view.addSubview(goalsLabel)
         NSLayoutConstraint.activate([
             goalsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20/414*viewWidth),
@@ -128,33 +127,50 @@ class SettingView: UIViewController {
             goalsLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8/895*viewHeight)
             ])
         
+        progressLabel = UILabel()
+        progressLabel.translatesAutoresizingMaskIntoConstraints = false
+        progressLabel.textColor = UIColor(red: 115/255, green: 115/255, blue: 115/255, alpha: 1.0)
+        progressLabel.textAlignment = .center
+        progressLabel.font = UIFont.systemFont(ofSize: 18/895*viewHeight, weight: .regular)
+        progressLabel.text = "0 goals in progress"
+        view.addSubview(progressLabel)
+        NSLayoutConstraint.activate([
+            progressLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20/414*viewWidth),
+            progressLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20/414*viewWidth),
+            progressLabel.heightAnchor.constraint(equalToConstant: 23/895*viewHeight),
+            progressLabel.topAnchor.constraint(equalTo: goalsLabel.bottomAnchor, constant: 8/895*viewHeight)
+            ])
+        netReload()
     }
     
     func netReload() {
         NetworkManager.getGoals() { (goals) in
             self.goals = goals.filter{$0.user == self.user}
-        }
-        /*************************  Math for # goals reached    **********************/
-        for goal in goals {
-            var checkpoints: [Checkpoint] = []
-            NetworkManager.getCheckpoints(id: goal.id) { (c) in
-                checkpoints = c
-            }
-            var numCheck = 0
-            for checkpoint in checkpoints {
-                if (checkpoint.isFinished) {
-                    numCheck += 1
+            self.completedGoals = 0
+            self.activeGoals = 0
+            /*************************  Math for # goals reached, in progress    **********************/
+            for goal in self.goals {
+                if (goal.endDate != "") {
+                    self.completedGoals += 1
+                }
+                else {
+                    self.activeGoals += 1
                 }
             }
-            if (goal.endDate != "") {
-                numCheck += 1
+            if (self.completedGoals == 1) {
+                self.goalsLabel.text = "\(self.completedGoals) goal reached"
             }
-            if (numCheck == checkpoints.count + 1) {
-                completedGoals += 1
+            else {
+                self.goalsLabel.text = "\(self.completedGoals) goals reached"
             }
+            if (self.activeGoals == 1) {
+                self.progressLabel.text = "\(self.activeGoals) goal in progress"
+            }
+            else {
+                self.progressLabel.text = "\(self.activeGoals) goals in progress"
+            }
+            /**************************  Math for # goals reached, in progress    **********************/
         }
-        t_Goals = "\(completedGoals) goals reached"
-        /**************************  Math for # goals reached    **********************/
     }
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {

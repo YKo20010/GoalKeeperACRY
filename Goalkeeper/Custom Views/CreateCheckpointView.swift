@@ -12,8 +12,6 @@ class CreateCheckpointView: UIView {
     
     weak var delegate: createCheckpoint?
     
-    var goalID: Int = -1
-    
     var d_name: UITextField = UITextField()
     var d_dateLabel: UILabel = UILabel()
     
@@ -27,7 +25,7 @@ class CreateCheckpointView: UIView {
     
     var netDateFormatter = DateFormatter()
     
-    init(frame: CGRect, viewHeight: CGFloat, viewWidth: CGFloat) {
+    init(frame: CGRect, viewHeight: CGFloat, viewWidth: CGFloat, goalDate: Date, goalID: Int) {
         super.init(frame: frame)
         self.backgroundColor = .clear
         
@@ -120,7 +118,7 @@ class CreateCheckpointView: UIView {
         d_datePicker = UIDatePicker()
         d_datePicker.translatesAutoresizingMaskIntoConstraints = false
         d_datePicker.minimumDate = Date()
-        d_datePicker.maximumDate = Date(timeIntervalSinceNow: 60*60*24*365*5)
+        d_datePicker.maximumDate = goalDate
         d_datePicker.datePickerMode = .date
         d_datePicker.setValue(UIColor.white, forKey: "textColor")
         d_datePicker.backgroundColor = .clear
