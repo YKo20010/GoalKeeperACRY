@@ -12,19 +12,27 @@ class goaldetailTVC: UITableViewCell {
     
     weak var delegate: buttonClicked?
     
+    var c_id: Int = -1
     var c_name: String = "name"
-    var c_date: Date = Date()
+    var c_date: String = ""
     var c_isFinished: Bool = false
-    var c_startDate: Date = Date()
-    var c_endDate: Date?
+    var c_startDate: String = ""
+    var c_endDate: String = ""
     
     var circle: UIImageView = UIImageView()
     var circle2: UIButton = UIButton()
     var label: UILabel = UILabel()
     var sublabel: UILabel = UILabel()
+    
+    var netDateFormatter = DateFormatter()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        netDateFormatter.dateStyle = .medium
+        netDateFormatter.timeStyle = .none
+        netDateFormatter.timeZone = .current
+        netDateFormatter.dateFormat = "MM/dd/yyyy"
         
         circle.translatesAutoresizingMaskIntoConstraints = false
         circle.backgroundColor = UIColor(red: 201/255, green: 142/255, blue: 25/255, alpha: 1.0)
@@ -78,25 +86,25 @@ class goaldetailTVC: UITableViewCell {
     }
     
     @objc func didClick() {
-        self.delegate?.changedCheckpointStatus(name: c_name, date: c_date, isFinished: c_isFinished, startDate: c_startDate, endDate: c_endDate)
+        self.delegate?.changedCheckpointStatus(id: c_id, name: c_name, date: c_date, isFinished: c_isFinished, startDate: c_startDate, endDate: c_endDate)
     }
     
     func configure(for checkpoint: Checkpoint) {
         label.text = checkpoint.name
         c_name = checkpoint.name
+        c_id = checkpoint.id
         c_date = checkpoint.date
         c_startDate = checkpoint.startDate
         c_isFinished = checkpoint.isFinished
-        if let endDate = checkpoint.endDate, endDate != nil {
-            c_endDate = endDate
-        }
+        c_endDate = checkpoint.endDate
+        
         if (checkpoint.isFinished) {
             circle2.backgroundColor = UIColor(red: 201/255, green: 142/255, blue: 25/255, alpha: 1.0)
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
             dateFormatter.timeStyle = .none
             dateFormatter.dateFormat = "MM/dd/yy"
-            sublabel.text = "completed \(dateFormatter.string(from: checkpoint.endDate!))"
+            sublabel.text = "completed \(checkpoint.endDate)"
         }
     }
     

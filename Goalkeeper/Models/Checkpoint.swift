@@ -25,15 +25,16 @@ import UIKit
 //}
 
 struct Checkpoint: Codable {
+    let id: Int
     var name: String
-    var date: Date
+    var date: String
     var isFinished: Bool
-    var startDate: Date
-    var endDate: Date?
+    var startDate: String
+    var endDate: String
 }
 
 struct CheckpointsResponse: Codable {
-    var results: [Checkpoint]
+    var data: [Checkpoint]
 }
 
 

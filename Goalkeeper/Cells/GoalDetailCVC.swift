@@ -9,7 +9,7 @@
 import UIKit
 
 protocol buttonClicked: class {
-    func changedCheckpointStatus(name: String, date: Date, isFinished: Bool, startDate: Date, endDate: Date?)
+    func changedCheckpointStatus(id: Int, name: String, date: String, isFinished: Bool, startDate: String, endDate: String)
 }
 protocol changeMotivation: class {
     func changedMotivation(newText: String)
@@ -35,10 +35,17 @@ class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDel
     let shadowRadius: CGFloat = 8
     let reuseCellIdentifier = "tableViewCellReuseIdentifier"
     
+    var netDateFormatter = DateFormatter()
+    
     override init(frame: CGRect) {
-        super.init(frame:frame)
+        super.init(frame: frame)
         contentView.layer.masksToBounds = false
         contentView.clipsToBounds = false
+        
+        netDateFormatter.dateStyle = .medium
+        netDateFormatter.timeStyle = .none
+        netDateFormatter.timeZone = .current
+        netDateFormatter.dateFormat = "MM/dd/yyyy"
        
         line = UIImageView()
         line.translatesAutoresizingMaskIntoConstraints = false
@@ -190,34 +197,26 @@ class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDel
 }
 
 extension GoalDetailCVC: buttonClicked {
-    func changedCheckpointStatus(name: String, date: Date, isFinished: Bool, startDate: Date, endDate: Date?) {
+    func changedCheckpointStatus(id: Int, name: String, date: String, isFinished: Bool, startDate: String, endDate: String) {
         if (c.count > 1) {
             for i in 0...c.count-1 {
-                if (c[i].name == name
-                    && c[i].date == date
-                    && c[i].isFinished == isFinished
-                    && c[i].startDate == startDate
-                    && ((c[i].endDate == nil && endDate == nil) || (c[i].endDate != nil && endDate != nil))) {
+                if (c[i].id == id) {
                         c[i].isFinished = !c[i].isFinished
                         if (c[i].isFinished) {
-                            c[i].endDate = Date()
+                            c[i].endDate = netDateFormatter.string(from: Date())
                         }
                         if (!c[i].isFinished) {
-                            c[i].endDate = nil
+                            c[i].endDate = ""
                         }
             }}
         }
-        else if (c[0].name == name
-            && c[0].date == date
-            && c[0].isFinished == isFinished
-            && c[0].startDate == startDate
-            && ((c[0].endDate == nil && endDate == nil) || (c[0].endDate != nil && endDate != nil))) {
+        else if (c[0].id == id) {
                 c[0].isFinished = !c[0].isFinished
                 if (c[0].isFinished) {
-                    c[0].endDate = Date()
+                    c[0].endDate = netDateFormatter.string(from: Date())
                 }
                 if (!c[0].isFinished) {
-                    c[0].endDate = nil
+                    c[0].endDate = ""
                 }
         }
         titleLabel.removeFromSuperview()

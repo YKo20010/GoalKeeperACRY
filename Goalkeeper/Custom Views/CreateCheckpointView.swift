@@ -12,6 +12,8 @@ class CreateCheckpointView: UIView {
     
     weak var delegate: createCheckpoint?
     
+    var goalID: Int = -1
+    
     var d_name: UITextField = UITextField()
     var d_dateLabel: UILabel = UILabel()
     
@@ -23,9 +25,16 @@ class CreateCheckpointView: UIView {
     var n_noButton: UIButton!
     var rec: UIImageView!
     
+    var netDateFormatter = DateFormatter()
+    
     init(frame: CGRect, viewHeight: CGFloat, viewWidth: CGFloat) {
         super.init(frame: frame)
         self.backgroundColor = .clear
+        
+        netDateFormatter.dateStyle = .medium
+        netDateFormatter.timeStyle = .none
+        netDateFormatter.timeZone = .current
+        netDateFormatter.dateFormat = "MM/dd/yyyy"
         
         d_name.translatesAutoresizingMaskIntoConstraints = false
         d_name.backgroundColor = .clear
@@ -138,7 +147,7 @@ class CreateCheckpointView: UIView {
             d_dateLabel.text = "by \(dateFormatter.string(from: date))"
             n_yesButton.setTitle("Save", for: .normal)
             n_noButton.setTitle("Cancel", for: .normal)
-            let newCheckpoint = Checkpoint(name: d_name.text!, date: date, isFinished: false, startDate: Date(), endDate: nil)
+            let newCheckpoint = Checkpoint(id: -1, name: d_name.text!, date: netDateFormatter.string(from: date), isFinished: false, startDate: netDateFormatter.string(from: Date()), endDate: "")
             self.delegate?.createdCheckpoint(newCheckpoint: newCheckpoint)
         }
     }

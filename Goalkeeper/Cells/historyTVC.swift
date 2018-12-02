@@ -114,7 +114,7 @@ class historyTVC: UITableViewCell {
         startDate.text = "start: \(goal.startDate)"
         byDate.text = "by: \(goal.date)"
         if goal.endDate != nil {
-            reachedDate.text = "reached: \(goal.endDate!)"
+            reachedDate.text = "reached: \(goal.endDate)"
         }
         else {
             reachedDate.text = ""

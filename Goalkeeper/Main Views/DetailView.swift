@@ -58,6 +58,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     var completeButton: UIButton!
     let dateFormatter = DateFormatter()
     
+    var t_id: Int = -1
     var t_Name: String = "Title"
     var t_Description: String = "default"
     var t_Date: Date = Date()
@@ -284,7 +285,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     func updateCompleteButton() {
         completeButton.isHidden = false
         for checkpoint in t_checkpoints {
-            if (checkpoint.endDate == nil) {
+            if (checkpoint.endDate == "") {
                 completeButton.isHidden = true
             }
         }
@@ -492,6 +493,7 @@ extension DetailView: ChangeCheckpointStatus {
         createView.d_dateLabel.text = "by \(dateFormatter.string(from: Date()))"
         createView.date = Date()
         createView.d_datePicker.date = Date()
+        createView.goalID = t_id
         createView.isHidden = false
         blurView.isHidden = false
         backButton.isHidden = true
@@ -502,7 +504,7 @@ extension DetailView: ChangeCheckpointStatus {
 
 extension DetailView: createCheckpoint {
     func createdCheckpoint(newCheckpoint: Checkpoint) {
-        t_checkpoints.append(newCheckpoint)
+        NetworkManager.postCheckpoint(id: t_id, checkpoint: newCheckpoint)
         cancelCreateCheckpoint()
     }
     func showCheckpointCreationAlert() {

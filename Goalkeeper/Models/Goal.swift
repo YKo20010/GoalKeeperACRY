@@ -15,12 +15,11 @@ struct Goal: Codable {
     var date: String
     var description: String
     var startDate: String
-    var endDate: String?
-    //var checkpoints: [Checkpoint]
+    var endDate: String
 }
 
 struct GoalsResponse: Codable {
-    var results: [Goal]
+    var data: [Goal]
 }
 
 //class Goal {

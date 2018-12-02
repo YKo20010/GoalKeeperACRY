@@ -12,12 +12,11 @@ import SwiftyJSON
 
 class NetworkManager {
     
-    private static let baseURL = "http://104.196.28.226/api/"
-    private static let localBaseURL = "http://localhost:5000/api/"
-    private static let goalsURL = "http://104.196.28.226/api/goals/"
+    private static let localBaseURL = "http://35.196.246.200/api/"
+    //private static let localBaseURL = "http://localhost:5000/api/"
     ///api/goals/
     static func getGoals(_ didGetGoals: @escaping ([Goal]) -> Void) {
-        Alamofire.request(goalsURL, method: .get).validate().responseData { (response) in
+        Alamofire.request("\(localBaseURL)goals/", method: .get).validate().responseData { (response) in
             switch response.result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
@@ -25,7 +24,7 @@ class NetworkManager {
                 }
                 let jsonDecoder = JSONDecoder()
                 if let i = try? jsonDecoder.decode(GoalsResponse.self, from: data) {
-                    didGetGoals(i.results)
+                    didGetGoals(i.data)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -43,7 +42,7 @@ class NetworkManager {
                 }
                 let jsonDecoder = JSONDecoder()
                 if let i = try? jsonDecoder.decode(CheckpointsResponse.self, from: data) {
-                    didGetCheckpoints(i.results)
+                    didGetCheckpoints(i.data)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -58,10 +57,9 @@ class NetworkManager {
             "date": goal.date,
             "description": goal.description,
             "startDate": goal.startDate,
-            "endDate": goal.endDate
+            "endDate": ""
         ]
-        print(parameters)
-        Alamofire.request(postGURL, method: .post, parameters: parameters, encoding: URLEncoding.default).validate().responseJSON { (response) in
+        Alamofire.request(postGURL, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseJSON { (response) in
             switch response.result {
             case .success(let data):
                 print(data)
@@ -81,8 +79,26 @@ class NetworkManager {
             "startDate": goal.startDate,
             "endDate": goal.endDate
         ]
-        print(parameters)
-        Alamofire.request(editGID, method: .post, parameters: parameters).validate().responseJSON { (response) in
+        Alamofire.request(editGID, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let data):
+                print(data)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    ///api/goal/{goal_id}/checkpoint/{checkpoint_id}/
+    static func editCheckpoint(id: Int, ckptID: Int, checkpoint: Checkpoint) -> Void {
+        let editCID = "\(localBaseURL)goal/\(id)/checkpoint/\(ckptID)/"
+        let parameters: Parameters = [
+            "name": checkpoint.name,
+            "date": checkpoint.date,
+            "isFinished": checkpoint.isFinished,
+            "startDate": checkpoint.startDate,
+            "endDate": checkpoint.endDate
+        ]
+        Alamofire.request(editCID, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseJSON { (response) in
             switch response.result {
             case .success(let data):
                 print(data)
@@ -110,21 +126,22 @@ class NetworkManager {
                 print(error)
             }
         }
-        
     }
     ///api/goal/{id}/
     static func deleteGoal(id: Int) -> Void {
         let idURL = "\(localBaseURL)goal/\(id)/"
-        Alamofire.request(idURL, method: .delete)
+        Alamofire.request(idURL, method: .delete, encoding: URLEncoding.default).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let data):
+                print(data)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     ///api/goal/{goal_id}/checkpoint/{checkpoint_id}/
     static func deleteCheckpoint(id: Int, ckptID: Int) -> Void {
         let ckptIDURL = "\(localBaseURL)goal/\(id)/checkpoint/\(ckptID)/"
         Alamofire.request(ckptIDURL, method: .delete)
     }
-    
-    
-    
-    
-    
 }

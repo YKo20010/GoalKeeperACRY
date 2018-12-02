@@ -74,11 +74,11 @@ class CustomTabBarController: UITabBarController {
         nav_setting.title = ""
         nav_setting.tabBarItem.image = UIImage(named: "profile")
         
-        
-        
         homeController.delegate = calendarController
 /*********************     Set ViewControllers for TabBarController    ********************/
         viewControllers = [nav_calendar, nav_progress, nav_home, nav_history, nav_setting]
+        
+        
     }
     
 }

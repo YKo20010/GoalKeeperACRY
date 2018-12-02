@@ -206,8 +206,7 @@ class CreateView: UIView, UITextViewDelegate {
                 self.delegate?.showCreationAlert()
                 return
             }
-//            let newGoal = Goal(name: d_name.text!, date: netDateFormatter.string(from: date), description: d_description.text!, checkpoints: [], startDate: netDateFormatter.string(from: Date()), endDate: nil)
-            let newGoal = Goal(id: -1, name: d_name.text!, user: user, date: netDateFormatter.string(from: date), description: d_description.text!, startDate: netDateFormatter.string(from: Date()), endDate: nil)
+            let newGoal = Goal(id: -1, name: d_name.text!, user: user, date: netDateFormatter.string(from: date), description: d_description.text!, startDate: netDateFormatter.string(from: Date()), endDate: "")
             self.delegate?.createdGoal(newGoal: newGoal)
         }
         if (sender.titleLabel?.text == "Set") {

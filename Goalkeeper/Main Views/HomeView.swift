@@ -15,6 +15,7 @@ protocol changeGoal: class {
     func changedDate(newDate: Date)
     func changedDescription(newDescription: String)
     func changedCheckpoint(newCheckpoint: [Checkpoint])
+    func deletedCheckpoint(checkpoint: Checkpoint)
     func completedGoal()
 }
 
@@ -59,10 +60,8 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     let headerReuseIdentifier = "headerReuseIdentifier"
     var headerHeightConstraint: NSLayoutConstraint!
     var selectedGoalIndex: Int = -1
-    //var selectedGoalIndex_goals: Int = 0
     /*  Arrays  */
     var goals: [Goal] = []
-    //var selected_goals: [Goal] = []
     var dateFormatter = DateFormatter()
     var netDateFormatter = DateFormatter()
     
@@ -85,7 +84,6 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         dateFormatter.timeStyle = .none
         dateFormatter.locale = Locale(identifier: "en_US")
         
-        
         netDateFormatter.dateStyle = .medium
         netDateFormatter.timeStyle = .none
         netDateFormatter.timeZone = .current
@@ -104,55 +102,6 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         
         addBarButton = UIBarButtonItem(customView: button)
         self.navigationItem.rightBarButtonItem = addBarButton
-        
-//        /*  TODO: Network and delete this   */
-//        let c1 = Checkpoint(name: "Checkpoint1", date: Date(), isFinished: false, startDate: Date())
-//        let c2 = Checkpoint(name: "Checkpoint2", date: Date(), isFinished: false, startDate: Date())
-//        let c3 = Checkpoint(name: "Checkpoint3", date: Date(), isFinished: true, startDate: Date())
-//        c3.endDate = Date()
-//        let c4 = Checkpoint(name: "Checkpoint4", date: Date(), isFinished: true, startDate: Date())
-//        c4.endDate = Date()
-//        let c5 = Checkpoint(name: "Checkpoint5", date: Date(), isFinished: false, startDate: Date())
-//        let c6 = Checkpoint(name: "Checkpoint6", date: Date(), isFinished: false, startDate: Date())
-//        let c7 = Checkpoint(name: "Checkpoint7", date: Date(), isFinished: true, startDate: Date())
-//        c7.endDate = Date()
-//        let c8 = Checkpoint(name: "Checkpoint8", date: Date(), isFinished: true, startDate: Date())
-//        c8.endDate = Date()
-//        let c9 = Checkpoint(name: "Checkpoint9", date: Date(), isFinished: false, startDate: Date())
-//        let c10 = Checkpoint(name: "Checkpoint10", date: Date(), isFinished: false, startDate: Date())
-//        let c11 = Checkpoint(name: "Checkpoint11", date: Date(), isFinished: true, startDate: Date())
-//        c11.endDate = Date()
-//        let c12 = Checkpoint(name: "Checkpoint12", date: Date(), isFinished: true, startDate: Date())
-//        c12.endDate = Date()
-//        let c13 = Checkpoint(name: "Checkpoint13", date: Date(), isFinished: false, startDate: Date())
-//        let c14 = Checkpoint(name: "Checkpoint14", date: Date(), isFinished: false, startDate: Date())
-//        let c15 = Checkpoint(name: "Checkpoint15", date: Date(), isFinished: true, startDate: Date())
-//        c15.endDate = Date()
-//        let c16 = Checkpoint(name: "Checkpoint16", date: Date(), isFinished: true, startDate: Date())
-//        c16.endDate = Date()
-//
-//
-//        let g1 = Goal(name: "1", date: Date(timeInterval: 5256000, since: Date()), description: "description text 1", checkpoints: [], startDate: Date())
-//        let g2 = Goal(name: "2", date: Date(timeInterval: 13140000, since: Date()), description: "description text 2", checkpoints: [c4], startDate: Date())
-//        let g3 = Goal(name: "3", date: Date(timeInterval: 60*60*24*27+1, since: Date()), description: "text3", checkpoints: [c1], startDate: Date())
-//        let g4 = Goal(name: "4", date: Date(timeInterval: 60*60*24*1+1, since: Date()), description: "text4", checkpoints: [c5, c2], startDate: Date())
-//        let g5 = Goal(name: "5", date: Date(timeInterval: 31540000+1, since: Date()), description: "text5", checkpoints: [c6, c7, c3], startDate: Date())
-//        let g6 = Goal(name: "6", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c8, c9, c10, c11], startDate: Date())
-//        let g7 = Goal(name: "7", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c12, c13], startDate: Date())
-//        g7.endDate = Date()
-//        let g8 = Goal(name: "8", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [], startDate: Date())
-//        g8.endDate = Date()
-//        let g9 = Goal(name: "9", date: Date(timeInterval: 60*60*24*365*10+1, since: Date()), description: "text6", checkpoints: [c14, c15], startDate: Date())
-//        g9.endDate = Date()
-//        goals = [g9, g7, g8, g1, g5, g6, g4, g2, g3]
-        //selected_goals = goals
-        
-        NetworkManager.getGoals() { (goals) in
-            self.goals = goals
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
         
         headerView = HeaderView(frame: .zero, textSize: 40/895*viewHeight)
         headerView.translatesAutoresizingMaskIntoConstraints = false
@@ -223,6 +172,9 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         
         setupConstraints()
         setupDeleteGoalNotification()
+        
+        netReloadCollectionView()
+        
     }
 
     /******************************** MARK: Swipe Delete Notification Setup ********************************/
@@ -392,6 +344,7 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         detailView.t_Date = netDateFormatter.date(from: goal.date)!
         //detailView.t_checkpoints = goal.checkpoints
         detailView.t_checkpoints = []
+        detailView.t_id = goal.id
         detailView.viewHeight = viewHeight
         detailView.viewWidth = viewWidth
         self.delegateShowDetail?.presentDetail(detailController: detailView)
@@ -420,12 +373,15 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         if (sender == n_yesButton) {
             self.delegate?.addedEvent(title: "goal \"\(goals[(deleteIndex?.item)!].name)\" deleted", date: Date())
             NetworkManager.deleteGoal(id: goals[(deleteIndex?.item)!].id)
-            goals.remove(at: (deleteIndex?.item)!)
+            //goals.remove(at: (deleteIndex?.item)!)
             //selected_goals = goals
-            collectionView.deleteItems(at: [deleteIndex!])
+            //collectionView.deleteItems(at: [deleteIndex!])
         }
-        if (sender == n_noButton) {
-            collectionView.reloadData()
+//        if (sender == n_noButton) {
+//            collectionView.reloadData()
+//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.netReloadCollectionView()
         }
         deleteIndex = nil
         n_background.isHidden = true
@@ -436,7 +392,6 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         addButton.isEnabled = true
         collectionView.isUserInteractionEnabled = true
         blurView.isHidden = true
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -447,6 +402,15 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     func animateHeader() {
         self.headerHeightConstraint.constant = 211/895*viewHeight
         UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
+    }
+    
+    func netReloadCollectionView() {
+        NetworkManager.getGoals { (goals) in
+            self.goals = goals.filter{$0.endDate == "" && $0.user == self.user}
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
 }
 
@@ -482,40 +446,57 @@ extension HomeView: UIScrollViewDelegate {
     }
 }
 
-
 extension HomeView: changeGoal {
     func changedName(newName: String) {
         goals[selectedGoalIndex].name = newName
-        collectionView.reloadData()
+        NetworkManager.editGoal(id: goals[selectedGoalIndex].id, goal: goals[selectedGoalIndex])
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.netReloadCollectionView()
+        }
     }
     func changedDate(newDate: Date) {
         goals[selectedGoalIndex].date = netDateFormatter.string(from: newDate)
-        collectionView.reloadData()
+        NetworkManager.editGoal(id: goals[selectedGoalIndex].id, goal: goals[selectedGoalIndex])
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.netReloadCollectionView()
+        }
     }
     func changedDescription(newDescription: String) {
         goals[selectedGoalIndex].description = newDescription
-        collectionView.reloadData()
+        NetworkManager.editGoal(id: goals[selectedGoalIndex].id, goal: goals[selectedGoalIndex])
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.netReloadCollectionView()
+        }
     }
     func changedCheckpoint(newCheckpoint: [Checkpoint]) {
-//        goals[selectedGoalIndex].checkpoints = newCheckpoint
-//        collectionView.reloadData()
+        for checkpoint in newCheckpoint {
+            NetworkManager.editCheckpoint(id: goals[selectedGoalIndex].id, ckptID: checkpoint.id, checkpoint: checkpoint)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.netReloadCollectionView()
+        }
+    }
+    func deletedCheckpoint(checkpoint: Checkpoint) {
+        NetworkManager.deleteCheckpoint(id: goals[selectedGoalIndex].id, ckptID: checkpoint.id)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.netReloadCollectionView()
+        }
     }
     func completedGoal() {
         goals[selectedGoalIndex].endDate = netDateFormatter.string(from: Date())
+        NetworkManager.editGoal(id: goals[selectedGoalIndex].id, goal: goals[selectedGoalIndex])
         self.delegate?.addedEvent(title: "goal \"\(goals[selectedGoalIndex].name)\" met", date: Date())
-        collectionView.reloadData()
-    }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.netReloadCollectionView()
+        }
     //TODO: Network and filter for incomplete goals
+    }
 }
 
 extension HomeView: createGoal {
     func createdGoal(newGoal: Goal) {
-        goals.append(newGoal)
-        print(newGoal.date)
-        
-        collectionView.reloadData()
-        collectionView.scrollToItem(at: NSIndexPath(row: goals.count-1, section: 0) as IndexPath, at: .bottom, animated: true)
-        //self.delegate?.addGoal(newGoal: newGoal)
+        //goals.append(newGoal)
+        //collectionView.reloadData()
         self.delegate?.addedEvent(title: "goal \"\(newGoal.name)\" set", date: Date())
         NetworkManager.postGoal(goal: newGoal)
         createView.isHidden = true
@@ -523,6 +504,10 @@ extension HomeView: createGoal {
         collectionView.isScrollEnabled = true
         collectionView.allowsSelection = true
         blurView.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.netReloadCollectionView()
+        }
+//        collectionView.scrollToItem(at: NSIndexPath(row: goals.count-1, section: 0) as IndexPath, at: .bottom, animated: true)
     }
     func cancelCreate() {
         createView.isHidden = true
@@ -530,6 +515,7 @@ extension HomeView: createGoal {
         collectionView.isScrollEnabled = true
         collectionView.allowsSelection = true
         blurView.isHidden = true
+        self.netReloadCollectionView()
     }
     func showCreationAlert() {
         self.present(alert, animated: true)
