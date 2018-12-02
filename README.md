@@ -1,7 +1,7 @@
 # GoalKeeper &#169;2018 by A.C.R.Y.
-<strong> Set goals for yourself, mark and track your progress. </strong> 
-
 Created by: <i>Yanlam Ko (iOS), Avani Aggrwal (iOS), Richard Wang (Backend)</i> | Designed by: <i>Cecilia Lu</i>
+
+<strong> Set goals for yourself, mark and track your progress. </strong> 
 
 <p>GoalKeeper is an app that is designed to help the user track their goals.</p> 
 <p>The user first starts off by logging in through a Google account, after which they are greeted by their name. The home screen in the app allows users to add goals for themselves by setting a name, potential date of completion, and a description for motivation. When a goal is clicked on, a detail screen is brought up that is specific to the goal. This detail view allows the user to add and delete checkpoints, edit the goal, view which checkpoints are completed, and the date that they were completed. This screen also gives users the option to check off checkpoints. Once the user has met all checkpoints, a button for completing the goal appears.</p>
