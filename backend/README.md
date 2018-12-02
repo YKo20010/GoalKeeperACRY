@@ -1,6 +1,6 @@
 # GoalKeeper Backend
 
-This is an API that maintains the database for the GoalKeeper project.
+An API that maintains the database for the GoalKeeper project.
 
 ## Usage
 
