@@ -19,13 +19,13 @@ GoalKeeper also provides a calendar screen that allows users to see when their g
 
 iOS:
 
--Autolayout is used with NSLayoutConstraint. Every screen on our app has parts that were put together on the screen using constraints, which we needed NSLayoutConstraint for. NSLayoutConstraint was used to make sure that every item that we had on the screen was put in the place that our design showed it to be in.
+- NSLayoutConstraint used to place views as per the design, and fit multiple screen dimensions.
 
--We used both UICollectionViews and UITableViews. For example, our HomeView screen contains a UICollectionView to show a list of the user's goals, and some information about these goals. Additionally, on the DetailView screen, a UICollectionView is used to present the checkpoints and the motivation panels. A UITableView is embedded within cell for the checkpoints on this screen in order to list out all of the checkpoints and give the user the option to check them off as completed.
+- UICollectionView implemented in HomeView, DetailView, and EventsView to display goals, checkpoints, motivation, and key dates. UITableView implemented in ProgressView and HistoryView to present current and completed goals. UITableView embedded in CollectionViewCell to list checkpoints of a specific goal within the DetailView.
 
--We used a UITabBarController to navigate between screens. At the bottom of each screen, a tab bar displaying icons for each screen is displayed. By clicking on any of the icons, the user will be brought to their desired page.
+- UITabBarController displayed at bottom of main ViewControllers with icons for each screen, and ability to navigate between screens. User is brought to their desired page upon click of an icon.
 
--In this app, we used two APIs. First, we used the Google sign in API. This allows the user to be greeted by name by the app. Additionally, the user's data can be saved by connecting it to their Google accounts. We also used an API created by our team's backend member, Richard. This API takes in user data and updates the API with this data. 
+- GoogleSignIn API implemented to greet users by their first name. User's data filtered through the connection to their Google accounts. Goals API (http://35.196.246.200/api/goals/), created by Richard Wang (backend), stores UI configured goal/checkpoint changes.
 
 Backend:
 
