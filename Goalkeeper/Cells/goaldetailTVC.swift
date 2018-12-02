@@ -18,6 +18,7 @@ class goaldetailTVC: UITableViewCell {
     var c_isFinished: Bool = false
     var c_startDate: String = ""
     var c_endDate: String = ""
+    var goalID: Int = -1
     
     var circle: UIImageView = UIImageView()
     var circle2: UIButton = UIButton()
@@ -86,7 +87,8 @@ class goaldetailTVC: UITableViewCell {
     }
     
     @objc func didClick() {
-        self.delegate?.changedCheckpointStatus(id: c_id, name: c_name, date: c_date, isFinished: c_isFinished, startDate: c_startDate, endDate: c_endDate)
+        self.delegate?.changedCheckpointStatus()
+        NetworkManager.editCheckpoint(id: goalID, ckptID: c_id, checkpoint: Checkpoint(id: c_id, name: c_name, date: c_date, isFinshed: !c_isFinished, startDate: c_startDate, endDate: c_endDate))
     }
     
     func configure(for checkpoint: Checkpoint) {
@@ -95,10 +97,10 @@ class goaldetailTVC: UITableViewCell {
         c_id = checkpoint.id
         c_date = checkpoint.date
         c_startDate = checkpoint.startDate
-        c_isFinished = checkpoint.isFinished
+        c_isFinished = checkpoint.isFinshed
         c_endDate = checkpoint.endDate
         
-        if (checkpoint.isFinished) {
+        if (checkpoint.isFinshed) {
             circle2.backgroundColor = UIColor(red: 201/255, green: 142/255, blue: 25/255, alpha: 1.0)
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium

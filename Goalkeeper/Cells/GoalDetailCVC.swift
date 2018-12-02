@@ -9,7 +9,7 @@
 import UIKit
 
 protocol buttonClicked: class {
-    func changedCheckpointStatus(id: Int, name: String, date: String, isFinished: Bool, startDate: String, endDate: String)
+    func changedCheckpointStatus()
 }
 protocol changeMotivation: class {
     func changedMotivation(newText: String)
@@ -18,6 +18,8 @@ protocol changeMotivation: class {
 class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDelegate {
     
     weak var delegate2: ChangeCheckpointStatus?
+    
+    var goalID: Int = -1
     
     var titleLabel: UILabel!
     var motivationTextView: UITextView!
@@ -174,16 +176,18 @@ class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDel
         cell.selectionStyle = .none
         let checkpoint = c[indexPath.row]
         cell.configure(for: checkpoint)
+        cell.goalID = self.goalID
         cell.delegate = self
         return cell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
+            NetworkManager.deleteCheckpoint(id: goalID, ckptID: c[indexPath.row].id)
             c.remove(at: indexPath.row)
             titleLabel.removeFromSuperview()
             tableView.removeFromSuperview()
-            self.delegate2?.changedCheckpointStatus(nc: c)
+            self.delegate2?.changedCheckpointStatus()
         }
     }
     
@@ -197,31 +201,10 @@ class GoalDetailCVC: UICollectionViewCell, UITableViewDataSource, UITableViewDel
 }
 
 extension GoalDetailCVC: buttonClicked {
-    func changedCheckpointStatus(id: Int, name: String, date: String, isFinished: Bool, startDate: String, endDate: String) {
-        if (c.count > 1) {
-            for i in 0...c.count-1 {
-                if (c[i].id == id) {
-                        c[i].isFinished = !c[i].isFinished
-                        if (c[i].isFinished) {
-                            c[i].endDate = netDateFormatter.string(from: Date())
-                        }
-                        if (!c[i].isFinished) {
-                            c[i].endDate = ""
-                        }
-            }}
-        }
-        else if (c[0].id == id) {
-                c[0].isFinished = !c[0].isFinished
-                if (c[0].isFinished) {
-                    c[0].endDate = netDateFormatter.string(from: Date())
-                }
-                if (!c[0].isFinished) {
-                    c[0].endDate = ""
-                }
-        }
+    func changedCheckpointStatus() {
         titleLabel.removeFromSuperview()
         tableView.removeFromSuperview()
-        self.delegate2?.changedCheckpointStatus(nc: c)
+        self.delegate2?.changedCheckpointStatus()
     }
 }
 

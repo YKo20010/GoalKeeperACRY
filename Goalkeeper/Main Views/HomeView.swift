@@ -342,8 +342,6 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         detailView.t_Name = goal.name
         detailView.t_Description = goal.description
         detailView.t_Date = netDateFormatter.date(from: goal.date)!
-        //detailView.t_checkpoints = goal.checkpoints
-        detailView.t_checkpoints = []
         detailView.t_id = goal.id
         detailView.viewHeight = viewHeight
         detailView.viewWidth = viewWidth

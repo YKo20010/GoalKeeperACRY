@@ -18,7 +18,7 @@ protocol ChangeMotivationTitleDelegate: class{
 }
 
 protocol ChangeCheckpointStatus: class {
-    func changedCheckpointStatus(nc: [Checkpoint])
+    func changedCheckpointStatus()
     func beginAddCheckpoint()
 }
 
@@ -237,6 +237,16 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         checkpointCreateAlert.message = "Please input a [String] for the name of the checkpoint."
         checkpointCreateAlert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: .none))
         setupConstraints()
+        reloadCheckpoints()
+    }
+    
+    func reloadCheckpoints() {
+        NetworkManager.getCheckpoints(id: t_id) { (checkpoints) in
+            self.t_checkpoints = checkpoints
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     func setupConstraints() {
@@ -410,6 +420,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         cell.setupConstraints()
         cell.titleLabel.text = self.titles[indexPath.item]
         cell.motivationTextView.text = t_Description
+        cell.goalID = t_id
         if (titles[indexPath.item] == "motivation") {
             cell.motivationTextView.isHidden = false
             cell.tableView.isHidden = true
@@ -444,6 +455,14 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     func animateHeader() {
         self.headerHeightConstraint.constant = 211/895*viewHeight
         UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {self.view.layoutIfNeeded()}, completion: nil)
+    }
+    func netReloadData() {
+        NetworkManager.getCheckpoints(id: t_id) { (checkpoints) in
+            self.t_checkpoints = checkpoints
+            DispatchQueue.main.async{
+               self.collectionView.reloadData()
+            }
+        }
     }
 }
 
@@ -483,10 +502,11 @@ extension DetailView: pickDate {
 }
 
 extension DetailView: ChangeCheckpointStatus {
-    func changedCheckpointStatus(nc: [Checkpoint]) {
-        t_checkpoints = nc
+    func changedCheckpointStatus() {
         updateCompleteButton()
-        self.collectionView.reloadData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.netReloadData()
+        }
     }
     func beginAddCheckpoint() {
         createView.d_name.text = "New Checkpoint"
@@ -512,7 +532,9 @@ extension DetailView: createCheckpoint {
     }
     func cancelCreateCheckpoint() {
         updateCompleteButton()
-        collectionView.reloadData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.reloadCheckpoints()
+        }
         createView.isHidden = true
         blurView.isHidden = true
         backButton.isHidden = false

@@ -68,6 +68,25 @@ class NetworkManager {
             }
         }
     }
+    ///api/goal/{id}/checkpoint/
+    static func postCheckpoint(id: Int, checkpoint: Checkpoint) -> Void {
+        let createCID = "\(localBaseURL)goal/\(id)/checkpoint/"
+        let parameters: Parameters = [
+            "name": checkpoint.name,
+            "date": checkpoint.date,
+            "isFinished": checkpoint.isFinshed,
+            "startDate": checkpoint.startDate,
+            "endDate": checkpoint.endDate
+        ]
+        Alamofire.request(createCID, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let data):
+                print(data)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
     ///api/goal/{id}/
     static func editGoal(id: Int, goal: Goal) -> Void {
         let editGID = "\(localBaseURL)goal/\(id)/"
@@ -92,33 +111,14 @@ class NetworkManager {
     static func editCheckpoint(id: Int, ckptID: Int, checkpoint: Checkpoint) -> Void {
         let editCID = "\(localBaseURL)goal/\(id)/checkpoint/\(ckptID)/"
         let parameters: Parameters = [
+            "id": checkpoint.id,
             "name": checkpoint.name,
             "date": checkpoint.date,
-            "isFinished": checkpoint.isFinished,
+            "isFinished": checkpoint.isFinshed,
             "startDate": checkpoint.startDate,
             "endDate": checkpoint.endDate
         ]
         Alamofire.request(editCID, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseJSON { (response) in
-            switch response.result {
-            case .success(let data):
-                print(data)
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    ///api/goal/{id}/checkpoint/
-    static func postCheckpoint(id: Int, checkpoint: Checkpoint) -> Void {
-        let createCID = "\(localBaseURL)goal/\(id)/checkpoint/"
-        let parameters: Parameters = [
-            "name": checkpoint.name,
-            "date": checkpoint.date,
-            "isFinished": checkpoint.isFinished,
-            "startDate": checkpoint.startDate,
-            "endDate": checkpoint.endDate
-        ]
-        print(parameters)
-        Alamofire.request(createCID, method: .post, parameters: parameters, encoding: URLEncoding.default).validate().responseJSON { (response) in
             switch response.result {
             case .success(let data):
                 print(data)

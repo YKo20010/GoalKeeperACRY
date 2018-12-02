@@ -28,7 +28,7 @@ struct Checkpoint: Codable {
     let id: Int
     var name: String
     var date: String
-    var isFinished: Bool
+    var isFinshed: Bool
     var startDate: String
     var endDate: String
 }
