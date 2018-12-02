@@ -24,10 +24,11 @@ def get_goals():
 def create_goal():
   """Create a new goal."""
   goal_body = json.loads(request.data)
-  if 'name' not in goal_body or 'date' not in goal_body or 'description' not in goal_body or 'startDate' not in goal_body or 'endDate' not in goal_body:
+  if 'name' not in goal_body or 'user' not in goal_body or 'date' not in goal_body or 'description' not in goal_body or 'startDate' not in goal_body or 'endDate' not in goal_body:
     return json.dumps({'success': False, 'error': 'Missing fields. Make sure all of the following fields are present: name, date, description, startDate, endDate.'}), 404
   goal = Goal(
       name=goal_body.get('name'),
+      user=goal_body.get('user'),
       date=goal_body.get('date'),
       description=goal_body.get('description'),
       startDate=goal_body.get('startDate'),
@@ -53,6 +54,7 @@ def update_goal(goal_id):
   if goal is not None:
     goal_body = json.loads(request.data)
     goal.name = goal_body.get('name', goal.name)
+    goal.user = goal_body.get('user', goal.user)
     goal.date = goal_body.get('date', goal.date)
     goal.description = goal_body.get('description', goal.description)
     goal.startDate = goal_body.get('startDate', goal.startDate)
