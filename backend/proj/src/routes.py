@@ -117,7 +117,7 @@ def update_checkpoint(goal_id, checkpoint_id):
       checkpoint_body = json.loads(request.data)
       checkpoint.name = checkpoint_body.get('name', checkpoint.name)
       checkpoint.date = checkpoint_body.get('date', checkpoint.date)
-      checkpoint.description = checkpoint_body.get('isFinished', checkpoint.isFinished)
+      checkpoint.isFinished = checkpoint_body.get('isFinished', checkpoint.isFinished)
       checkpoint.startDate = checkpoint_body.get('startDate', checkpoint.startDate)
       checkpoint.endDate = checkpoint_body.get('endDate', checkpoint.endDate)
       db.session.commit()
