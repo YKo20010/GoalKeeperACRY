@@ -1,3 +1,3 @@
 # API
 
-The API allows for the creation, alternation, and deletion of goals and subgoals.
+Create, delete, and modify goals and checkpoints.
