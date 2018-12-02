@@ -32,7 +32,7 @@ iOS Requirements:
 
 -We used a UITabBarController to navigate between screens. At the bottom of each screen, a tab bar displaying icons for each screen is displayed. By clicking on any of the icons, the user will be brought to their desired page.
 
--In this app, we used two APIs. First, we used the Google sign in API. This allows the user to be greeted by name by the app. Additionally, the user's data can be saved by connecting it to their Google accounts. We also used an API created by our team's backend member, Richard. 
+-In this app, we used two APIs. First, we used the Google sign in API. This allows the user to be greeted by name by the app. Additionally, the user's data can be saved by connecting it to their Google accounts. We also used an API created by our team's backend member, Richard. This API takes in user data and updates the API with this data. 
 
 Backend Requirements:
 
