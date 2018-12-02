@@ -312,7 +312,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
     /******************************** MARK: Action Functions ********************************/
     func updateCompleteButton() {
         completeButton.isHidden = false
-        
+        footer.isHidden = false
         for checkpoint in t_checkpoints {
             if (checkpoint.endDate == "") {
                 completeButton.isHidden = true
@@ -320,6 +320,7 @@ class DetailView: UIViewController, UICollectionViewDataSource, UICollectionView
         }
         if (!blurView.isHidden) {
             completeButton.isHidden = true
+            footer.isHidden = true
         }
     }
     
