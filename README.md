@@ -35,6 +35,9 @@ Created by: <i>Yanlam Ko (iOS), Avani Aggrwal (iOS), Richard Wang (Backend)</i> 
 <p>Visual progress bars</p>
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/ProgressView.png" width="207" height="447.5" />
 
+<p>Profile Screen</p>
+<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/ProfileView.png" width="207" height="447.5" />
+
 ### iOS:
 
 &#10141; NSLayoutConstraint used to place views as per the design, and fit multiple screen dimensions.
