@@ -44,7 +44,8 @@ class historyTVC: UITableViewCell {
             ])
         
         tab.translatesAutoresizingMaskIntoConstraints = false
-        tab.backgroundColor = UIColor(red: 99/255, green: 237/255, blue: 170/255, alpha: 1.0)
+        //tab.backgroundColor = UIColor(red: 99/255, green: 237/255, blue: 170/255, alpha: 1.0)
+        tab.backgroundColor = UIColor.white
         tab.clipsToBounds = true
         tab.layer.masksToBounds = true
         rec.addSubview(tab)
@@ -118,6 +119,31 @@ class historyTVC: UITableViewCell {
         }
         else {
             reachedDate.text = ""
+        }
+        if let dateFromString = netDateFormatter.date(from: goal.endDate) {
+            var timeDifference: CGFloat = CGFloat(dateFromString.timeIntervalSince(netDateFormatter.date(from: goal.date)!))
+            timeDifference /= (60*60*24)
+            if (timeDifference > 90) {
+                tab.backgroundColor = UIColor(red: 247/255, green: 136/255, blue: 136/255, alpha: 1.0)
+            }
+            else if (timeDifference > 60) {
+                tab.backgroundColor = UIColor(red: 247/255, green: 187/255, blue: 136/255, alpha: 1.0)
+            }
+            else if (timeDifference > 30) {
+                tab.backgroundColor = UIColor(red: 239/255, green: 196/255, blue: 151/255, alpha: 1.0)
+            }
+            else if (timeDifference >= 0) {
+                tab.backgroundColor = UIColor(red: 229/255, green: 239/255, blue: 151/255, alpha: 1.0)
+            }
+            else if (timeDifference > -30) {
+                tab.backgroundColor = UIColor(red: 186/255, green: 239/255, blue: 151/255, alpha: 1.0)
+            }
+            else if (timeDifference > -60) {
+                tab.backgroundColor = UIColor(red: 151/255, green: 239/255, blue: 168/255, alpha: 1.0)
+            }
+            else {
+                tab.backgroundColor = UIColor(red: 151/255, green: 239/255, blue: 217/255, alpha: 1.0)
+            }
         }
     }
     

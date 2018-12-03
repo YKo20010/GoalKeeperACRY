@@ -131,22 +131,6 @@ class HistoryView: UIViewController, UISearchBarDelegate, UISearchDisplayDelegat
         cell.configure(for: goal)
         cell.setNeedsUpdateConstraints()
         cell.selectionStyle = .none
-        if let dateFromString = netDateFormatter.date(from: goal.endDate) {
-            var timeDifference: CGFloat = CGFloat(dateFromString.timeIntervalSince(netDateFormatter.date(from: goal.date)!))
-            timeDifference /= (60*60*24*365)
-            if (timeDifference > (255 - 178)) {
-                timeDifference = 255 - 178
-            }
-            if (timeDifference < -255 + 178) {
-                timeDifference = 178 - 255
-            }
-            if (timeDifference < 0) {
-                cell.tab.backgroundColor = UIColor(red: (255 - (178 + abs(timeDifference)))/255, green: 255/255, blue: 178/255, alpha: 1.0)
-            }
-            else {
-                cell.tab.backgroundColor = UIColor(red: 255/255, green: (255 - timeDifference)/255, blue: 178/255, alpha: 1.0)
-            }
-        }
         return cell
     }
     
