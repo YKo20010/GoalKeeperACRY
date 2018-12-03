@@ -33,6 +33,8 @@ Created by: <i>Yanlam Ko (iOS), Avani Aggrwal (iOS), Richard Wang (Backend)</i> 
 
 &#10141; [Flask](http://flask.pocoo.org/) - Web framework
 
+&#10141; [Docker](https://www.docker.com/) - Containerization
+
 &#10141; [Google Cloud](https://cloud.google.com/) - Server hosting
 
 &#10141; a link to the full API Spec can be found [here](https://paper.dropbox.com/doc/GoalKeeper-API-Spec--AS7PspOfFNUfAe53Jn032H6qAg-CrsHYKwhBpOZc3oiUL6pb)
