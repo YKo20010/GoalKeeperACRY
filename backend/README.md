@@ -10,6 +10,7 @@ A link to the full API Spec can be found [here](https://paper.dropbox.com/doc/Go
 
 * [SQLAlchemy](https://www.sqlalchemy.org/) - The ORM used
 * [Flask](http://flask.pocoo.org/) - Web framework
+* [Docker](https://www.docker.com/) - Containerization
 * [Google Cloud](https://cloud.google.com/) - Server hosting
 
 ## Authors

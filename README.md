@@ -1,15 +1,11 @@
-# GoalKeeperACRY
-Cornell AppDev Hack Challenge | 
-Avani Aggrwal: iOS | 
-Cecilia Lu: Design | 
-Richard Wang: Backend | 
-Yanlam Ko: iOS
+# GoalKeeper
+Created by: <i>Yanlam Ko (iOS), Avani Aggrwal (iOS), Richard Wang (Backend)</i> | Designed by: <i>Cecilia Lu</i>
 
+<strong> Set goals for yourself, mark and track your progress. </strong> 
 
-App Name: GoalKeeper 
-
-Set goals for yourself, mark and track your progress.
-
+<p>GoalKeeper is an app that is designed to help the user track their goals.</p> 
+<p>The user first starts off by logging in through a Google account, after which they are greeted by their name. The home screen in the app allows users to add goals for themselves by setting a name, potential date of completion, and a description for motivation. When a goal is clicked on, a detail screen is brought up that is specific to the goal. This detail view allows the user to add and delete checkpoints, edit the goal, view which checkpoints are completed, and the date that they were completed. This screen also gives users the option to check off checkpoints. Once the user has met all checkpoints, a button for completing the goal appears.</p>
+<p>GoalKeeper also provides a calendar screen (linked to the phone's calendar) that allows users to see when their goals have been made or met, a progress screen, which provides a visual documentation of the progress of each goal, a history screen, to scroll through and search completed goals, and a profile screen, on which the user can log out of their Google account and view the number of current and completed goals.</p>
 
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/LoginView.png" width="207" height="447.5" />
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/LoadView.png" width="207" height="447.5" />
@@ -19,20 +15,39 @@ Set goals for yourself, mark and track your progress.
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/CalendarView2.png" width="207" height="447.5" />
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/ProgressView.png" width="207" height="447.5" />
 
+### iOS:
 
-GoalKeeper is an app that is designed to help the user track their goals. The user firsts starts off by logging in through a Google account, after which they are greeted by their name. The home screen in the app allows users to add goals for themselves by setting a name, potential date of completion, and checkpoints for each goal. When each goal is clicked on, a new screen is brought up that is specific to the goal. This new screen lists details about the goals, such as which of the checkpoints are completed and the date that they were completed. This screen also gives users the option to check off checkpoints and list a motivation for themselves for completing this goal. We have also provided a calendar screen that allows users to see when their goals should be completed on a big calendar. Another screen is a progress screen, which provides a visual documentation of the progress of each goal. A progress bar is displayed for the goals on this screen. Finally, our last screen, is a profile screen, on which the user can log out of their Google account and view how many goals they have completed. 
+&#10141; NSLayoutConstraint used to place views as per the design, and fit multiple screen dimensions.
 
-Requirements addressed in our app:
+&#10141; UICollectionView implemented in HomeView, DetailView, and EventsView to display goals, checkpoints, motivation, and key dates. UITableView implemented in ProgressView and HistoryView to present current and completed goals. UITableView embedded in CollectionViewCell to list checkpoints of a specific goal within the DetailView.
 
-iOS Requirements:
+&#10141; UITabBarController displayed at bottom of main ViewControllers with icons for each screen, and ability to navigate between screens. User is brought to their desired page upon click of an icon.
 
--Autolayout is used with NSLayoutConstraint. Every screen on our app has parts that were put together on the screen using constraints, which we needed NSLayoutConstraint for. NSLayoutConstraint was used to make sure that every item that we had on the screen was put in the place that our design showed it to be in.
+&#10141;GoogleSignIn API implemented to greet users by their first name. User's data filtered through the connection to their Google accounts. Goals API (http://35.196.246.200/api/goals/), created by Richard Wang (backend), stores UI configured goal/checkpoint changes.
 
--We used both UICollectionViews and UITableViews. For example, our HomeView screen contains a UICollectionView to show a list of the user's goals, and some information about these goals. Additionally, on the DetailView screen, a UICollectionView is used to present the checkpoints and the motivation panels. A UITableView is embedded within cell for the checkpoints on this screen in order to list out all of the checkpoints and give the user the option to check them off as completed.
+&#10141;Note: ProgressView displays percentage of <i>entire</i> goal reached -- in calculations, the weight of completing the actual goal is identical to the weight of each checkpoint
 
--We used a UITabBarController to navigate between screens. At the bottom of each screen, a tab bar displaying icons for each screen is displayed. By clicking on any of the icons, the user will be brought to their desired page.
+### Backend:
 
--In this app, we used two APIs. First, we used the Google sign in API. This allows the user to be greeted by name by the app. Additionally, the user's data can be saved by connecting it to their Google accounts. We also used an API created by our team's backend member, Richard. This API takes in user data and updates the API with this data. 
+&#10141; [SQLAlchemy](https://www.sqlalchemy.org/) - The ORM used
 
-Backend Requirements:
+&#10141; [Flask](http://flask.pocoo.org/) - Web framework
 
+&#10141; [Docker](https://www.docker.com/) - Containerization
+
+&#10141; [Google Cloud](https://cloud.google.com/) - Server hosting
+
+&#10141; a link to the full API Spec can be found [here](https://paper.dropbox.com/doc/GoalKeeper-API-Spec--AS7PspOfFNUfAe53Jn032H6qAg-CrsHYKwhBpOZc3oiUL6pb)
+
+### Authors:
+
+&#10141; [Yanlam Ko](https://github.com/YKo20010)
+
+&#10141; [Avani Aggrwal](https://github.com/avaniaggrwal)
+
+&#10141; [Richard Wang](https://github.com/richardlwang)
+
+
+
+
+<p>&#169;2018 by A.C.R.Y.</p>
