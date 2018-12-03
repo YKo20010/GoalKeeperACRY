@@ -15,11 +15,13 @@ class LoginView: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
 
     
     var rec: UIImageView!
+    var rec2: UIImageView!
     var titleLabel: UILabel!
     var subLabel: UILabel!
     var signInButton: GIDSignInButton!
+    var buttonRec: UIImageView!
     
-    var rec2: UIImageView!
+    var rec3: UIImageView!
     var welcomeLabel: UILabel!
     var loadAnimation: LOTAnimationView!
     
@@ -28,8 +30,13 @@ class LoginView: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
         
         rec = UIImageView()
         rec.translatesAutoresizingMaskIntoConstraints = false
-        rec.backgroundColor = UIColor(red: 134/255, green: 187/255, blue: 220/255, alpha: 0.65)
+        rec.backgroundColor = UIColor(red: 176/255, green: 210/255, blue: 232/255, alpha: 1.0)
         view.addSubview(rec)
+        
+        rec3 = UIImageView()
+        rec3.translatesAutoresizingMaskIntoConstraints = false
+        rec3.backgroundColor = UIColor(red: 176/255, green: 210/255, blue: 232/255, alpha: 1.0)
+        view.addSubview(rec3)
         
         titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -45,6 +52,16 @@ class LoginView: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
         subLabel.font = UIFont.systemFont(ofSize: 20, weight: .light)
         view.addSubview(subLabel)
         
+        buttonRec = UIImageView()
+        buttonRec.translatesAutoresizingMaskIntoConstraints = false
+        buttonRec.backgroundColor = UIColor.white
+        buttonRec.layer.borderColor = UIColor(red: 176/255, green: 210/255, blue: 232/255, alpha: 1.0).cgColor
+        buttonRec.layer.borderWidth = 1
+        buttonRec.layer.cornerRadius = 25
+        buttonRec.clipsToBounds = true
+        buttonRec.layer.masksToBounds = true
+        view.addSubview(buttonRec)
+        
         var error: NSError?
         GGLContext.sharedInstance().configureWithError(&error)
         if (error != nil) {
@@ -57,24 +74,36 @@ class LoginView: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
         
         signInButton = GIDSignInButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
         signInButton.translatesAutoresizingMaskIntoConstraints = false
-        signInButton.layer.shadowColor = UIColor(red: 190/255, green: 172/255, blue: 172/255, alpha: 1.0).cgColor
-        signInButton.layer.shadowRadius = 8
-        signInButton.layer.shadowOpacity = 0.5
-        signInButton.layer.masksToBounds = false
-        signInButton.clipsToBounds = false
-        signInButton.layer.shadowOffset = CGSize(width: 6, height: 6)
+        signInButton.layer.borderColor = UIColor.white.cgColor
+        signInButton.layer.borderWidth = 5
+        signInButton.layer.cornerRadius = 25
+        signInButton.layer.masksToBounds = true
+        signInButton.clipsToBounds = true
         signInButton.center = view.center
         signInButton.colorScheme = .light
+        signInButton.contentMode = .scaleAspectFill
         view.addSubview(signInButton)
         NSLayoutConstraint.activate([
             signInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             signInButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
             ])
         NSLayoutConstraint.activate([
+            buttonRec.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            buttonRec.centerYAnchor.constraint(equalTo: signInButton.centerYAnchor),
+            buttonRec.widthAnchor.constraint(equalToConstant: 140),
+            buttonRec.heightAnchor.constraint(equalToConstant: 50)
+            ])
+        NSLayoutConstraint.activate([
             rec.topAnchor.constraint(equalTo: view.topAnchor),
             rec.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             rec.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             rec.bottomAnchor.constraint(equalTo: signInButton.topAnchor, constant: -50)
+            ])
+        NSLayoutConstraint.activate([
+            rec3.heightAnchor.constraint(equalToConstant: 5),
+            rec3.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            rec3.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            rec3.bottomAnchor.constraint(equalTo: signInButton.topAnchor, constant: -43)
             ])
         NSLayoutConstraint.activate([
             subLabel.bottomAnchor.constraint(equalTo: rec.bottomAnchor, constant: -50),
@@ -146,7 +175,9 @@ class LoginView: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
             titleLabel.isHidden = true
             subLabel.isHidden = true
             signInButton.isHidden = true
-
+            buttonRec.isHidden = true
+            rec3.isHidden = true
+            
             let tabview = CustomTabBarController()
             tabview.settingController.url = user.profile.imageURL(withDimension: 400)
             tabview.settingController.t_Name = user.profile.name.lowercased()
@@ -166,6 +197,8 @@ class LoginView: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
                 self.subLabel.isHidden = false
                 self.signInButton.isHidden = false
                 self.loadAnimation.isHidden = true
+                self.buttonRec.isHidden = false
+                self.rec3.isHidden = false
             }
         }
     }
