@@ -15,7 +15,7 @@ Created by: <i>Yanlam Ko (iOS), Avani Aggrwal (iOS), Richard Wang (Backend)</i> 
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/CalendarView2.png" width="207" height="447.5" />
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/ProgressView.png" width="207" height="447.5" />
 
-iOS:
+### iOS:
 
 &#10141; NSLayoutConstraint used to place views as per the design, and fit multiple screen dimensions.
 
@@ -23,10 +23,29 @@ iOS:
 
 &#10141; UITabBarController displayed at bottom of main ViewControllers with icons for each screen, and ability to navigate between screens. User is brought to their desired page upon click of an icon.
 
-&#10141; GoogleSignIn API implemented to greet users by their first name. User's data filtered through the connection to their Google accounts. Goals API (http://35.196.246.200/api/goals/), created by Richard Wang (backend), stores UI configured goal/checkpoint changes.
+&#10141;GoogleSignIn API implemented to greet users by their first name. User's data filtered through the connection to their Google accounts. Goals API (http://35.196.246.200/api/goals/), created by Richard Wang (backend), stores UI configured goal/checkpoint changes.
 
-Backend:
+&#10141;Note: ProgressView displays percentage of <i>entire</i> goal reached -- in calculations, the weight of completing the actual goal is identical to the weight of each checkpoint
 
-<p>Note: ProgressView displays percentage of <i>entire</i> goal reached -- in calculations, the weight of completing the actual goal is identical to the weight of each checkpoint</p>
-<p> </p>
+### Backend:
+
+&#10141; [SQLAlchemy](https://www.sqlalchemy.org/) - The ORM used
+
+&#10141; [Flask](http://flask.pocoo.org/) - Web framework
+
+&#10141; [Google Cloud](https://cloud.google.com/) - Server hosting
+
+&#10141; a link to the full API Spec can be found [here](https://paper.dropbox.com/doc/GoalKeeper-API-Spec--AS7PspOfFNUfAe53Jn032H6qAg-CrsHYKwhBpOZc3oiUL6pb)
+
+### Authors:
+
+&#10141; [Yanlam Ko](https://github.com/YKo20010)
+
+&#10141; [Avani Aggrwal](https://github.com/avaniaggrwal)
+
+&#10141; [Richard Wang](https://github.com/richardlwang)
+
+
+
+
 <p>&#169;2018 by A.C.R.Y.</p>
