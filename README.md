@@ -25,6 +25,8 @@ Created by: <i>Yanlam Ko (iOS), Avani Aggrwal (iOS), Richard Wang (Backend)</i> 
 <p>Create a goal:</p>
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/MakeGoal.png" width="207" height="447.5" />
 
+<p>Checkpoints and motivation for each goal</p>
+<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/CompleteCheckpoints.png" width="207" height="447.5" />
 
 <p>Calendar showing important dates:</p>
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/CalendarView.png" width="207" height="447.5" />
