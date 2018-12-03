@@ -14,7 +14,7 @@ Created by: <i>Yanlam Ko (iOS), Avani Aggrwal (iOS), Richard Wang (Backend)</i> 
 
 
 <p>Loading screen:</p>
-<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/LoadView.png" width="207" height="447.5" />
+<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/WelcomeScreen.png" width="207" height="447.5" />
 
 <p>Main Goal Screen:</p>
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/HomeView.png" width="207" height="447.5" />
@@ -26,9 +26,12 @@ Created by: <i>Yanlam Ko (iOS), Avani Aggrwal (iOS), Richard Wang (Backend)</i> 
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/MakeGoal.png" width="207" height="447.5" />
 
 
-<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/CalendarView.png" width="207" height="447.5" />
+<p>Calendar showing important dates:</p>
+<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/CalendarView.png" width="207" height="447.5" />
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/CalendarView2.png" width="207" height="447.5" />
-<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/ProgressView.png" width="207" height="447.5" />
+
+<p>Visual progress bars</p>
+<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/ProgressView.png" width="207" height="447.5" />
 
 ### iOS:
 
