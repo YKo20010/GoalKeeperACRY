@@ -8,29 +8,29 @@ Created by: <i>Yanlam Ko (iOS), Avani Aggrwal (iOS), Richard Wang (Backend)</i> 
 <p>GoalKeeper also provides a calendar screen (linked to the phone's calendar) that allows users to see when their goals have been made or met, a progress screen, which provides a visual documentation of the progress of each goal, a history screen, to scroll through and search completed goals, and a profile screen, on which the user can log out of their Google account and view the number of current and completed goals.</p>
 
 <p> Login screens:</p>
-<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/LoginView.png" width="207" height="447.5" />
-
+<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/screenshots/Login.png" width="207" height="447.5" />
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/LoginScreen.png" width="207" height="447.5" />
-
 
 <p>Loading screen:</p>
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/WelcomeScreen.png" width="207" height="447.5" />
 
 <p>Main Goal Screen:</p>
-<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/HomeView.png" width="207" height="447.5" />
-
-<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/DeleteView.png" width="207" height="447.5" />
+<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/screenshots/home.png" width="207" height="447.5" />
 
 
 <p>Create a goal:</p>
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/MakeGoal.png" width="207" height="447.5" />
+<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/screenshots/AddGoal.png" width="207" height="447.5"/>
+<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/screenshots/DeleteGoal.png" width="207" height="447.5"/>
 
 <p>Checkpoints and motivation for each goal</p>
+<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/screenshots/detail.png" width="207" height="447.5" />
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/CompleteCheckpoints.png" width="207" height="447.5" />
+<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/screenshots/NewCheckpoint.png" width="207" height="447.5" />
+<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/screenshots/EditGoal.png" width="207" height="447.5" />
 
 <p>Calendar showing important dates:</p>
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/CalendarView.png" width="207" height="447.5" />
-<img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/screenshots/CalendarView2.png" width="207" height="447.5" />
 
 <p>Visual progress bars</p>
 <img src="https://github.com/YKo20010/GoalKeeperACRY/blob/master/App%20Screenshots/ProgressView.png" width="207" height="447.5" />
