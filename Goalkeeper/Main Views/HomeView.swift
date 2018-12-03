@@ -370,12 +370,12 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         n_noButton.isHidden = false
         addButton.isEnabled = false
         blurView.isHidden = false
-        collectionView.isUserInteractionEnabled = false
         deleteIndex = indexPath
     }
     @objc func delete(sender: UIButton) {
         if (sender == n_yesButton) {
             self.delegate?.addedEvent(title: "goal \"\(goals[(deleteIndex?.item)!].name)\" deleted", date: Date())
+            collectionView.reloadData()
             NetworkManager.deleteGoal(id: goals[(deleteIndex?.item)!].id)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.netReloadCollectionView()
@@ -391,7 +391,6 @@ class HomeView: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         n_yesButton.isHidden = true
         n_noButton.isHidden = true
         addButton.isEnabled = true
-        collectionView.isUserInteractionEnabled = true
         blurView.isHidden = true
     }
     
@@ -470,9 +469,6 @@ extension HomeView: changeGoal {
         }
     }
     func changedCheckpoint(newCheckpoint: [Checkpoint]) {
-//        for checkpoint in newCheckpoint {
-//            NetworkManager.editCheckpoint(id: goals[selectedGoalIndex].id, ckptID: checkpoint.id, checkpoint: checkpoint)
-//        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.netReloadCollectionView()
         }
@@ -490,7 +486,6 @@ extension HomeView: changeGoal {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.netReloadCollectionView()
         }
-    //TODO: Network and filter for incomplete goals
     }
 }
 
@@ -508,7 +503,7 @@ extension HomeView: createGoal {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.netReloadCollectionView()
         }
-//        collectionView.scrollToItem(at: NSIndexPath(row: goals.count-1, section: 0) as IndexPath, at: .bottom, animated: true)
+       collectionView.scrollToItem(at: NSIndexPath(row: goals.count-1, section: 0) as IndexPath, at: .bottom, animated: true)
     }
     func cancelCreate() {
         createView.isHidden = true

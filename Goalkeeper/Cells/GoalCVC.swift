@@ -197,8 +197,6 @@ class GoalCVC: UICollectionViewCell, UIGestureRecognizerDelegate {
             let w = self.contentView.frame.width
             let h = self.contentView.frame.height
             self.contentView.frame = CGRect(x: p.x, y: 0, width: w, height: h)
-//            self.deleteLabel.frame = CGRect(x: p.x + w + deleteLabel.frame.size.width, y: 0, width: 100, height: 110/148*h)
-            
         }
     }
     
@@ -243,3 +241,6 @@ class GoalCVC: UICollectionViewCell, UIGestureRecognizerDelegate {
     }
 
 }
+
+
+
