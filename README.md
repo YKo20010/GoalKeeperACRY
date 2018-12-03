@@ -7,30 +7,30 @@ Created by: <i>Yanlam Ko (iOS), Avani Aggrwal (iOS), Richard Wang (Backend)</i> 
 <p>The user first starts off by logging in through a Google account, after which they are greeted by their name. The home screen in the app allows users to add goals for themselves by setting a name, potential date of completion, and a description for motivation. When a goal is clicked on, a detail screen is brought up that is specific to the goal. This detail view allows the user to add and delete checkpoints, edit the goal, view which checkpoints are completed, and the date that they were completed. This screen also gives users the option to check off checkpoints. Once the user has met all checkpoints, a button for completing the goal appears.</p>
 <p>GoalKeeper also provides a calendar screen (linked to the phone's calendar) that allows users to see when their goals have been made or met, a progress screen, which provides a visual documentation of the progress of each goal, a history screen, to scroll through and search completed goals, and a profile screen, on which the user can log out of their Google account and view the number of current and completed goals.</p>
 
-<p> Login screens:</p>
-<img src="App%20Screenshots/screenshots/Login.png" width="207" height="447.5"> <img src="App%20Screenshots/LoginScreen.png" width="207" height="447.5"> <img src="App%20Screenshots/WelcomeScreen.png" width="207" height="447.5" />
-
+#### Login and Loading Screens:
+<img src="App%20Screenshots/screenshots/Login.png" width="207" height="447.5"> <img src="App%20Screenshots/LoginScreen.png" width="207" height="447.5"> <img src="App%20Screenshots/WelcomeScreen.png" width="207" height="447.5">
+<img src="Images/colleges.png" width=285>
 <p>Main Goal Screen:</p>
-<img src="App%20Screenshots/screenshots/home.png" width="207" height="447.5" />
+<img src="App%20Screenshots/screenshots/home.png" width="207" height="447.5">
 
 
-<p>Create a goal:</p>
-<img src="App%20Screenshots/MakeGoal.png" width="207" height="447.5"> <img src="App%20Screenshots/screenshots/AddGoal.png" width="207" height="447.5"> <img src="App%20Screenshots/screenshots/DeleteGoal.png" width="207" height="447.5"/>
+#### Create a Goal:
+<img src="App%20Screenshots/MakeGoal.png" width="207" height="447.5"> <img src="App%20Screenshots/screenshots/AddGoal.png" width="207" height="447.5"> <img src="App%20Screenshots/screenshots/DeleteGoal.png" width="207" height="447.5>
 
-<p>Checkpoints and motivation for each goal</p>
-<img src="App%20Screenshots/screenshots/detail.png" width="207" height="447.5" > <img src="App%20Screenshots/CompleteCheckpoints.png" width="207" height="447.5" > <img src="App%20Screenshots/screenshots/NewCheckpoint.png" width="207" height="447.5" > <img src="App%20Screenshots/screenshots/EditGoal.png" width="207" height="447.5" />
+#### Goal Detail: Checkpoints, Motivation, Checkpoint Creation, Goal Editing:
+<img src="App%20Screenshots/screenshots/detail.png" width="207" height="447.5"> <img src="App%20Screenshots/CompleteCheckpoints.png" width="207" height="447.5"> <img src="App%20Screenshots/screenshots/NewCheckpoint.png" width="207" height="447.5"> <img src="App%20Screenshots/screenshots/EditGoal.png" width="207" height="447.5">
 
-<p>Calendar showing important dates:</p>
-<img src="App%20Screenshots/CalendarView.png" width="207" height="447.5" />
+#### Calendar Showing Key Dates:
+<img src="App%20Screenshots/CalendarView.png" width="207" height="447.5">
 
-<p>Visual progress bars</p>
-<img src="App%20Screenshots/ProgressView.png" width="207" height="447.5" />
+#### Visual Progress Bars:
+<img src="App%20Screenshots/ProgressView.png" width="207" height="447.5">
 
-<p>History</p>
-<img src="App%20Screenshots/screenshots/HistorySearch.png" width="207" height="447.5"> <img src="App%20Screenshots/screenshots/History.png" width="207" height="447.5" />
+#### History and History Search:
+<img src="App%20Screenshots/screenshots/History.png" width="207" height="447.5"> <img src="App%20Screenshots/screenshots/HistorySearch.png" width="207" height="447.5">
 
-<p>Profile Screen</p>
-<img src="App%20Screenshots/ProfileView.png" width="207" height="447.5" />
+#### Profile:
+<img src="App%20Screenshots/ProfileView.png" width="207" height="447.5">
 
 ### iOS:
 
