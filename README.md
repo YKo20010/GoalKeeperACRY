@@ -11,7 +11,7 @@ Created by: <i>Yanlam Ko (iOS), Avani Aggrwal (iOS), Richard Wang (Backend)</i> 
 <img src="App%20Screenshots/screenshots/Login.png" width="207" height="447.5"> <img src="App%20Screenshots/LoginScreen.png" width="207" height="447.5"> <img src="App%20Screenshots/WelcomeScreen.png" width="207" height="447.5">
 
 #### Home Screen: Goals Display, Create/Delete Goals
-<img src="App%20Screenshots/screenshots/home.png" width="207" height="447.5"> <img src="App%20Screenshots/MakeGoal.png" width="207" height="447.5"> <img src="App%20Screenshots/screenshots/AddGoal.png" width="207" height="447.5"> <img src= "App%20Screenshots/screenshots/DeleteGoal.png" width="207" height="447.5>
+<img src="App%20Screenshots/screenshots/home.png" width="207" height="447.5"> <img src="App%20Screenshots/MakeGoal.png" width="207" height="447.5"> <img src="App%20Screenshots/screenshots/AddGoal.png" width="207" height="447.5"> <img src= "App%20Screenshots/screenshots/DeleteGoal.png" width="207" height="447.5">
 
 #### Goal Detail: Checkpoints, Motivation, Checkpoint Creation, Goal Editing:
 <img src="App%20Screenshots/screenshots/detail.png" width="207" height="447.5"> <img src="App%20Screenshots/CompleteCheckpoints.png" width="207" height="447.5"> <img src="App%20Screenshots/screenshots/NewCheckpoint.png" width="207" height="447.5"> <img src="App%20Screenshots/screenshots/EditGoal.png" width="207" height="447.5">
